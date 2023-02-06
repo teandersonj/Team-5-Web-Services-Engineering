@@ -4,7 +4,7 @@ Team 5's Git Repository for Web Services Engineering
 
 ## Sprint 1 (02/02/2023 - 03/02/2023)
 
-# Goals & Objectives
+### Goals & Objectives
 - [ ] Conduct Sprint Planning, Forecasting, & Burndown Chart
 - [ ] Create Figma Prototype for Application
 - [ ] Create Basic Backend Functionality for Application
@@ -12,6 +12,6 @@ Team 5's Git Repository for Web Services Engineering
 - [ ] Create Basic Testing Scenarios
 - [ ] Create Interaction between Backend and Frontend
 
-# Sprint Forecast
+### Sprint Forecast
 **Forecasted Point Completion:** TBD
 *Reasoning TBD (pending 02/06 sprint planning meeting)*
