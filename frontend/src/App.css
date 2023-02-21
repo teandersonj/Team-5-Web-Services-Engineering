@@ -1,38 +1,139 @@
-.App {
-  text-align: center;
+* {
+  /* Clear up inconsistencies between browsers and normalize sizing */
+  /* margin: 0;
+  padding: 0; */
+  box-sizing: border-box;
+  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+:root {
+  /* Use these as var(--color-white) ... */
+  --color-white: #F7F7F7;
+  --color-black: #1F2421;
+  --color-gray: #858585;
+  --color-green: #4DA078;
+  --color-light-blue: #2E8BD0;
+  --color-dark-blue: #21699B;
+  --color-gold: #ffc94b;
+  --color-red: #e13e2e;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* TODO: Ideally we should have module/component-localized CSS files and just have webpack combine them */
+
+.navBar {
+/* TODO: This results in a top navbar, useful for guest home perhaps */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--color-gray);
+  padding: 0 20px;
+  height: 60px;
+  border-bottom: 1px solid var(--color-black);
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.mainContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  flex-grow: 1;
+  /* background-color: #1F2421; */
 }
 
-.App-link {
-  color: #61dafb;
+main {
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  background-color: #f5f5f5;
+  padding: 2%;
+
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+
+/* For forms */
+/* #loginForm, #registerForm { */
+form { 
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-self: flex-start;
+  background-color: #f5f5f5;
+}
+.formRow {
+  display: flex;
+  width: 100%;
+  margin-bottom: 0.5em;
+}
+.inputVertical {
+  display: flex;
+  flex-direction: column;
+}
+.inputHorizontal {
+  display: flex;
+  flex-direction: row;
+}
+.flexButtonsEitherSide {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+
+/* For rounded blue and gray buttons */
+.roundedBlue {
+  background-color: var(--color-dark-blue);
+  color: var(--color-white);
+  border: none;
+  border-radius: 5px;
+  padding: 0.5em;
+  margin: 0.5em;
+  font-size: 1em;
+  font-weight: bold;
+  cursor: pointer;
+}
+.roundedGray {
+  background-color: var(--color-gray);
+  color: var(--color-white);
+  border: none;
+  border-radius: 5px;
+  padding: 0.5em;
+  margin: 0.5em;
+  font-size: 1em;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Styles <Link> components */
+.Link {
+  text-decoration: none;
+  color: var(--color-dark-blue);
+}
+.Link:link {
+  /* text-decoration: none;
+  color: var(--color-dark-blue); */
+}
+
+/* Maybe extract Link to a sep. comp. instead of constantly styling it independenly */
+/* .Link--underline {
+  text-decoration: underline;
+}
+.Link--light {
+  color: var(--color-light-blue);
+} */
+
+.centerContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.centerText {
+  text-align: center;
 }

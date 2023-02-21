@@ -2,7 +2,7 @@
 Team 5's Git Repository for Web Services Engineering
 [Jira Board](https://teamfivewebservices.atlassian.net/jira/software/projects/T5WSE/boards/1)
 
-**Frontend Language:** React
+**Frontend Language:** HTML, CSS, JavaScript with React
 
 **Backend Languages:** Django & Python
 
