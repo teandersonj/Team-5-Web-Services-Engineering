@@ -124,7 +124,7 @@ main {
   background-color: var(--color-black);
   height: 100%;
   padding: 2%;
-  color: white;
+  color: var(--color-white);
 }
 
 footer {
