@@ -18,15 +18,15 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   // This helps with debugging, but it's not necessary esp. for production and will
   // cause double rendering
-  <React.StrictMode>
-    {/* Provide router access to the App */}
-    {/* Additional Context Providers will go here, enclosing App */}
+  // <React.StrictMode>
+  // {/* Provide router access to the App */}
+  // {/* Additional Context Providers will go here, enclosing App */}
     <UserProvider>
       <BrowserRouter>
         <App />
       </BrowserRouter>
     </UserProvider>
-  </React.StrictMode>
+  // </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

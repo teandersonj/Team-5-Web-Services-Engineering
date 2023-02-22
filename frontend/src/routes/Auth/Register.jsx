@@ -105,9 +105,9 @@ export default function Register(props) {
                         <label>Playstyle Preference</label>
                         <select id="playstyleSelect" defaultValue={formState.playstyleSelect} onChange={handleInputChange}>
                             <option value="">Select a playstyle</option>
-                            <option value="casual">Casual</option>
-                            <option value="semi">Semi-Competitive</option>
-                            <option value="competitive">Competitive</option>
+                            <option value="Casual">Casual</option>
+                            <option value="Semi">Semi-Competitive</option>
+                            <option value="Competitive">Competitive</option>
                         </select>
                     </div>
                     <p className="flexButtonsEitherSide">

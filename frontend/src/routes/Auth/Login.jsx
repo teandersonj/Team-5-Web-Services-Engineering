@@ -1,11 +1,16 @@
 import { Link, Navigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+
+import {UserContext} from '../../providers/UserProvider';
 
 import Logo from '../../components/images/Logo.png';
 import LabeledInput from '../../components/LabeledInput';
 
 export default function Login(props) {
+    const user = useContext(UserContext);
+
     const [formState, setFormState] = useState({
+        // We'll need to determine whether they entered an email or username.
         usernameEmail: "",
         password: "",
         errors: {}
@@ -19,7 +24,15 @@ export default function Login(props) {
     const handleSubmit = (e) => {
         e.preventDefault();
         alert("Logging in example");
-        return false;
+        // This'll be retrieved from the DB
+        user.login({
+            userName: "test",
+            email: "test@test.com",
+            fName: "Test",
+            lName: "User",
+            playstyle: "Casual"
+        });
+        return () => <Navigate to="/profile" />;
     };
 
     return (
@@ -54,6 +67,12 @@ export default function Login(props) {
             <h3>Current State: </h3>
             <code>
                 {JSON.stringify(formState)}
+            </code>
+        </div>
+        <div style={{ maxWidth: "300px", wordWrap: 'break-word' }}>
+            <h3>Current State: </h3>
+            <code>
+                {JSON.stringify(user)}
             </code>
         </div>
     </>
