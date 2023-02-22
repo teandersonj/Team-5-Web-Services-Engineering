@@ -23,33 +23,27 @@ const UserProvider = ({ children }) => {
     const [user, setUser] = useState(getInitialState());
 
     useEffect(() => {
-        if (user.loggedIn) {
-            alert("logged in " + JSON.stringify(user));
-            localStorage.setItem(user, JSON.stringify(user));
-            // window.location.href = "/profile";
-            return;
-        } else alert("not logged in " + JSON.stringify(user));
+        console.log("UserProvider noticed a change in the user: ", user); 
     }, [user]);
-    
 
     // Logs in the user clientside; need to eventually call the serverside login function
-    const login = (_user) => {
-        const newUser = { ..._user, loggedIn: true };
-        setUser((prev) => ({...prev, ...newUser}));
+    const login = (userInfo) => {
+        const newUser = { ...userInfo, loggedIn: true };
+        setUser((prev) => newUser);
     }
 
     // Logs out the user clientside; need to eventually call the serverside logout function
-    const logout = () => {
+    const logout = (e) => {
         // Reset the state to the initial state
         const keys = Object.keys(user);
         // Have to reset all keyvalue pairs in this temp object before assigning it to state
         const stateReset = keys.reduce((acc, v) => ({ ...acc, [v]: undefined }), {});
         setUser({ ...stateReset, ...getInitialState() });
-        return () => <Navigate to="/" />;
+        window.location.href = "/";
     }
 
-    const updateUser = (_user) => {
-        setUser((prev) => ({ ...prev, ..._user }));
+    const updateUser = (userInfo) => {
+        setUser((prev) => ({ ...prev, ...userInfo }));
     };
 
 

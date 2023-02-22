@@ -63,62 +63,65 @@ export default function Register(props) {
         alert("Submit clicked");
     };
 
+    // We can customize the appearance of the containers holding the text-like inputs
+    const containerStyles = {
+        width: "100%"
+    };
+
     return (
         <>
-            <main>
-                <h1 style={{ margin: '0.67em 0' }}>Registration</h1>
-                <p>Already have an account? <Link className="Link" style={{ textDecoration: "underline" }} to="/login">Go to Login</Link></p>
-                <p>
+            <h1 className="pageHeading">Registration</h1>
+            <p>Already have an account? <Link className="Link" style={{ textDecoration: "underline" }} to="/login">Go to Login</Link></p>
+            <form id="registerForm" action="#" method="POST" onSubmit={handleSubmit}>
+                <div className="formRow flexButtonsEitherSide">
                     <button disabled>Login with Discord</button>
                     <button disabled>Login with Steam</button>
-                </p>
-                <form id="registerForm" action="#" method="POST" onSubmit={handleSubmit}>
-                    <div className="validationErrors">
-                        {/* If we have errors, output them in a list */}
-                        {formState.errors && <ul>{Object.keys(formState.errors).map((key) => (<li><div key={key}>{formState.errors[key]}</div></li>))}</ul>}
-                    </div>
+                </div>
+                <div className="validationErrors">
+                    {/* If we have errors, output them in a list */}
+                    {formState.errors && <ul>{Object.keys(formState.errors).map((key) => (<li><div key={key}>{formState.errors[key]}</div></li>))}</ul>}
+                </div>
 
-                    {/* TODO: Work with LabeledInput to allow for specifying other attributes such as min/max length */}
-                    <div className="formRow">
-                        <LabeledInput id="fName" label="First Name" type="text" defaultValue={formState.fName} placeholder="Enter your first name here" onChange={handleInputChange} />
+                {/* TODO: Work with LabeledInput to allow for specifying other attributes such as min/max length */}
+                <div className="formRow">
+                    <LabeledInput id="fName" label="First Name" type="text" defaultValue={formState.fName} placeholder="Enter your first name here" onChange={handleInputChange} containerStyle={containerStyles} />
+                </div>
+                <div className="formRow">
+                    <LabeledInput id="lName" label="Last Name" type="text" defaultValue={formState.lName} placeholder="Enter your last name here" onChange={handleInputChange} containerStyle={containerStyles} />
+                </div>
+                <div className="formRow">
+                    <LabeledInput id="email" label="Email Address" type="email" defaultValue={formState.email} placeholder="Enter your email here" onChange={handleInputChange} containerStyle={{ width: "100%"}}  />
+                </div>
+                <div className="formRow">
+                    <div className="inputVertical width-100">
+                        <label>Password Strength</label>
+                        <progress className="width-100" value={formState.passwordStrength} max="100"></progress>
                     </div>
-                    <div className="formRow">
-                        <LabeledInput id="lName" label="Last Name" type="text" defaultValue={formState.lName} placeholder="Enter your last name here" onChange={handleInputChange} />
-                    </div>
-                    <div className="formRow">
-                        <LabeledInput id="email" label="Email Address" type="email" defaultValue={formState.email} placeholder="Enter your email here" onChange={handleInputChange} />
-                    </div>
-                    <div className="formRow">
-                        <div className="inputVertical">
-                            <label>Password Strength</label>
-                            <progress style={{ width: "100%" }} value={formState.passwordStrength} max="100"></progress>
-                        </div>
-                    </div>
-                    <div className="formRow">
-                        <LabeledInput id="password" label="Password" type="password" defaultValue={formState.password} placeholder="Enter your password here" onChange={handleInputChange} />
-                    </div>
-                    <div className="formRow">
-                        <LabeledInput id="confirmPassword" label="Confirm Password" type="password" defaultValue={formState.passwordConfirm} placeholder="Enter your password again here" onChange={handleInputChange} />
-                    </div>
-                    <div className="formRow inputVertical">
-                        {/* TODO: Extract this since it'll be used elsewhere */}
-                        <label>Playstyle Preference</label>
-                        <select id="playstyleSelect" defaultValue={formState.playstyleSelect} onChange={handleInputChange}>
-                            <option value="">Select a playstyle</option>
-                            <option value="Casual">Casual</option>
-                            <option value="Semi">Semi-Competitive</option>
-                            <option value="Competitive">Competitive</option>
-                        </select>
-                    </div>
-                    <p className="flexButtonsEitherSide">
-                        {/* TODO: This could either move to Step 2 directly then send all collected data to server or send what we ahve to server, get a response and then go there */}
-                        {/* TODO: I think we'll have to sent this all to server first to check for existing accts, then if its validated we come back to Step 2.
+                </div>
+                <div className="formRow">
+                    <LabeledInput id="password" label="Password" type="password" defaultValue={formState.password} placeholder="Enter your password here" onChange={handleInputChange} containerStyle={containerStyles} />
+                </div>
+                <div className="formRow">
+                    <LabeledInput id="confirmPassword" label="Confirm Password" type="password" defaultValue={formState.passwordConfirm} placeholder="Enter your password again here" onChange={handleInputChange} containerStyle={containerStyles} />
+                </div>
+                <div className="formRow inputVertical">
+                    {/* TODO: Extract this since it'll be used elsewhere */}
+                    <label>Playstyle Preference</label>
+                    <select id="playstyleSelect" defaultValue={formState.playstyleSelect} onChange={handleInputChange}>
+                        <option value="">Select a playstyle</option>
+                        <option value="Casual">Casual</option>
+                        <option value="Semi">Semi-Competitive</option>
+                        <option value="Competitive">Competitive</option>
+                    </select>
+                </div>
+                <p className="flexButtonsEitherSide">
+                    {/* TODO: This could either move to Step 2 directly then send all collected data to server or send what we ahve to server, get a response and then go there */}
+                    {/* TODO: I think we'll have to sent this all to server first to check for existing accts, then if its validated we come back to Step 2.
                         If the user quits and re-logs before doing Step 2 we can bring that up again */}
-                        <button id="submit" type="submit" className="roundedBlue">Continue</button>
-                        <button className="roundedGray"><Link className="Link" style={{ color: "white" }} to="/">Cancel</Link></button>
-                    </p>
-                </form>
-            </main>
+                    <button id="submit" type="submit" className="roundedBlue">Continue</button>
+                    <button className="roundedGray"><Link className="Link" style={{ color: "white" }} to="/">Cancel</Link></button>
+                </p>
+            </form>
 
             {/* TODO: This is for debugging only */}
             <div style={{ maxWidth: "300px", wordWrap: 'break-word' }}>

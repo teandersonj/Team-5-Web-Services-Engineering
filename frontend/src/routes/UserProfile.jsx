@@ -1,13 +1,14 @@
 import React, { useContext } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { UserContext } from "../providers/UserProvider";
 
 export default function Dashboard(props) {
+    const navigate = useNavigate();
     // Make sure user is logged in and then display their info
-    const user = useContext(UserContext);
+    const { user } = useContext(UserContext);
     if (!user.loggedIn) {
         alert("You must be logged in to access this page");
-        return <Navigate to="/login" />;
+        navigate("/login");
     }
     return (
         <div>
@@ -16,9 +17,10 @@ export default function Dashboard(props) {
             <div>Current Game / Status: {user.currentGameStatus || "Unset"}</div>
             <div><button onClick={() => user.logout}>Log Out</button></div>
             <hr />
-            <button><Link className="Link roundedBlue" to="/home">Home</Link></button>
-            <button><Link className="Link roundedGray" to="/find-game">Find Game</Link></button>
-            <button><Link className="Link roundedGray" to="/find-players">Find Players</Link></button>
+            <button onClick={() => navigate("/profile")}>My Profile</button>
+            <button onClick={() => navigate("/find-games")}>Find Game</button>
+            <button onClick={() => navigate("/find-players")}>Find Players</button>
+            <button onClick={() => navigate("/user-settings")}>User/Account Settings</button>
         </div>
     );
 

@@ -1,17 +1,28 @@
+import React, { useContext, useEffect } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 
 // The root layout that will be used for all routes
 import Layout from "./layouts/RootLayout";
+
 // Import the routes that will be nested within the Layout
 import GuestHome from "./routes/GuestHome";
 import Login from "./routes/Auth/Login";
 import Register from "./routes/Auth/Register";
 import ErrorPage from "./routes/ErrorPage";
 
+import PrivateRoute from "./routes/PrivateRoute";
+import UserProfile from "./routes/UserProfile";
+import GameSearch from "./routes/GameSearch";
+import PlayerSearch from "./routes/PlayerSearch";
+import UserSettings from "./routes/UserSettings";
+
 import './App.css';
+
+import { UserContext } from "./providers/UserProvider";
 
 // The App component is the root of the React component tree
 function App() {
+  const { user } = useContext(UserContext);
   return (
     // Within Routes we define the routes that will be available to the app
     // The 'path' attribute defines the URL path that will trigger the route,
@@ -29,9 +40,15 @@ function App() {
           TODO: This may not be desired. */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        {/* Catch-all route that'll display an error page for routes not explicitly matched */}
+        {/* This represents the private routes that can't be accessed without logging in */}
+        <Route element={<PrivateRoute user={user} />}>
+          <Route path="/profile" element={<UserProfile />} />
+          <Route path="/find-games" element={<GameSearch />} />
+          <Route path="/find-players" element={<PlayerSearch />} />
+        </Route>
         <Route path="*" element={<ErrorPage />} />
       </Route>
+      {/* Catch-all route that'll display an error page for routes not explicitly matched */}
     </Routes>
   );
 }

@@ -10,11 +10,12 @@
  * @returns <LabeledInput /> LabeledInput JSX component
  */
 export default function LabeledInput(props) {
-    const { id, label, type, defaultValue, orientation="vertical", placeholder, onChange } = props;
+
+    const { id, label, type, defaultValue, orientation="vertical", placeholder, onChange, containerStyle, inputStyle, labelStyle } = props;
     return (
-        <div className={orientation === "vertical" ? "inputVertical" : "inputHorizontal"}>
+        <div className={orientation === "vertical" ? "inputVertical" : "inputHorizontal"} style={containerStyle}>
             <label htmlFor={id}>{label}: </label>
-            <input key={id} id={id} type={type} defaultValue={defaultValue} placeholder={placeholder} onChange={onChange} />
+            <input key={id} id={id} type={type} defaultValue={defaultValue} placeholder={placeholder} onChange={onChange} style={inputStyle} />
         </div>
     );
 }
