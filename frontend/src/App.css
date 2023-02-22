@@ -5,10 +5,12 @@
   box-sizing: border-box;
   font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
+/* Reset the margin on paragraphs */
 p {
   margin: 1em 0
 }
 
+/* Allow our color palette to be used as CSS variables */
 :root {
   /* Use these as var(--color-white) ... */
   --color-white: #F7F7F7;
@@ -23,6 +25,7 @@ p {
 
 /* TODO: Ideally we should have module/component-localized CSS files and just have webpack combine them */
 
+/* Controls the layout of the entire app, with variation depending on if user's logged in or not */
 .App {
   margin: 0 auto;
   padding: 0;
@@ -32,9 +35,8 @@ p {
   display: grid;
 }
 .App.GuestLayout {
-  /* When the user's not logged in, we want to display the GuestNav on top of the main content */
+  /* When a user's not logged in, don't show the nav on the left */
   grid-template:
-    "GuestNav" 60px
     "main" 1fr
     / 100%;
 }
@@ -42,23 +44,13 @@ p {
   /* When the user's logged in, we want to display the UserNav side by side with the main content */
   grid-template:
     "UserNav main" 1fr
-    / 20% 1fr
+    / 20% 1fr;
 }
-
-.GuestNav {
-  /* This could be a traditional topbar nav that appears only on guest home */
-  grid-area: GuestNav;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  background-color: var(--color-gray);
-  padding: 0 20px;
-  height: 60px;
-}
+/* End of App */
 
 .UserNav {
-  /* This'll be as we've designed: A fixed-to-left sidebar nav. We'd like it to be toggle-able */
+  /* This'll be as we've designed: A fixed-to-left sidebar nav.
+  TODO: We'd like it to be toggle-able */
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -71,6 +63,7 @@ p {
   border-right: 1px solid var(--color-black);
 }
 
+/* For buttons */
 button {
   border: none;
   outline: none;
@@ -83,7 +76,32 @@ button {
   color: var(--color-white);
   cursor: pointer;
 }
+/* For rounded blue and gray buttons */
+.roundedBlue {
+  background-color: var(--color-dark-blue);
+  color: var(--color-white);
+  border: none;
+  border-radius: 5px;
+  padding: 0.5em;
+  margin: 0.5em;
+  font-size: 1em;
+  font-weight: bold;
+  cursor: pointer;
+}
+.roundedGray {
+  background-color: var(--color-gray);
+  color: var(--color-white);
+  border: none;
+  border-radius: 5px;
+  padding: 0.5em;
+  margin: 0.5em;
+  font-size: 1em;
+  font-weight: bold;
+  cursor: pointer;
+}
+/* End Buttons */
 
+/* For text-like <input> elements */
 input[type="text"],
 input[type="password"],
 input[type="email"],
@@ -99,7 +117,6 @@ input[type="number"] {
   color: var(--color-black);
   width: 100%;
 }
-
 input[type="text"]:focus,
 input[type="password"]:focus,
 input[type="email"]:focus,
@@ -108,6 +125,7 @@ input[type="number"]:focus {
   outline: 2px solid var(--color-dark-blue);
   box-shadow: 0 0 10px 2px var(--color-light-blue);
 }
+/* End of text-like <input> elements */
 
 main {
   border: 1px solid black;
@@ -153,31 +171,8 @@ form {
   align-items: center;
   width: 100%;
 }
+/* End of forms */
 
-
-/* For rounded blue and gray buttons */
-.roundedBlue {
-  background-color: var(--color-dark-blue);
-  color: var(--color-white);
-  border: none;
-  border-radius: 5px;
-  padding: 0.5em;
-  margin: 0.5em;
-  font-size: 1em;
-  font-weight: bold;
-  cursor: pointer;
-}
-.roundedGray {
-  background-color: var(--color-gray);
-  color: var(--color-white);
-  border: none;
-  border-radius: 5px;
-  padding: 0.5em;
-  margin: 0.5em;
-  font-size: 1em;
-  font-weight: bold;
-  cursor: pointer;
-}
 
 /* Styles <Link> components */
 .Link {
@@ -200,6 +195,8 @@ form {
 .pageHeading {
   margin: 0.67em 0;
 }
+
+/* Utility classes */
 .centerContent {
   display: flex;
   flex-direction: column;
@@ -218,3 +215,4 @@ form {
 .imageShadow {
   filter: drop-shadow(0px 0px 10px var(--color-dark-blue));
 }
+/* End of utility classes */

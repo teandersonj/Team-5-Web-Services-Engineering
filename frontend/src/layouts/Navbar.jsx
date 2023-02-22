@@ -1,39 +1,16 @@
 import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../components/images/Logo.png';
 
+
+/**
+ * Navbar component that will be displayed on the left side of the screen when user is logged in
+ * @param {*} props 
+ * @returns <Navbar /> Component
+ */
 export default function Navbar(props) {
     const { user, logout } = props.userContext;
-
-    // Determine which nav to display based on whether the user is logged in
-    // Either as a top-bar or side-bar
-    return (
-        user && user.loggedIn ? <UserNav user={user} logout={logout} /> : <GuestNav user={user} />
-    );
-
-}
-
-const GuestNav = ({ user }) => {
     const navigate = useNavigate();
-    return (
-        <nav className="GuestNav">
-            <div style={{ display: "flex", flexDirection: "row", alignItems: "center"}}>
-                <img style={{ display: "block" }} src={Logo} alt="Fireside Gaming Logo" height={75} width={75} />
-                &bull;
-                <div>Fireside Gaming</div>
-            </div>
-            {/* These can be potentially converted to NavLinks for some more QoL features */}
-            <div>
-                <button onClick={() => navigate("/")}>Home</button>
-                <button onClick={() => navigate("/login")}>Login</button>
-                <button onClick={() => navigate("/register")}>Register</button>
-            </div>
-        </nav>
-    );
-};
 
-const UserNav = (props) => {
-    const navigate = useNavigate();
-    const { user, logout } = props;
     return (
         <nav className="UserNav">
             <img src={Logo} alt="Fireside Gaming Logo" height={75} width={75} />
@@ -41,9 +18,9 @@ const UserNav = (props) => {
             <div>Current Game / Status: {user.currentGameStatus || "Unset"}</div>
             <div><button onClick={logout}>Log Out</button></div>
             <hr />
-            <button onClick={() => navigate("/profile") }>Home</button>
-            <button onClick={() => navigate("/find-games") }>Find Game</button>
-            <button onClick={() => navigate("/find-players") }>Find Players</button>
+            <button onClick={() => navigate("/profile")}>Home</button>
+            <button onClick={() => navigate("/find-games")}>Find Game</button>
+            <button onClick={() => navigate("/find-players")}>Find Players</button>
         </nav>
     );
 };

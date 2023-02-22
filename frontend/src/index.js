@@ -19,9 +19,9 @@ root.render(
   // This helps with debugging, but it's not necessary esp. for production and will
   // cause double rendering
   // <React.StrictMode>
-  // {/* Provide router access to the App */}
   // {/* Additional Context Providers will go here, enclosing App */}
     <UserProvider>
+      {/* Provide router access to the App */}
       <BrowserRouter>
         <App />
       </BrowserRouter>
