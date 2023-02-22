@@ -36,14 +36,14 @@ p {
   grid-template:
     "GuestNav" 60px
     "main" 1fr
-    "footer" 1fr
+    /* "footer" 1fr */
     / 100%;
 }
 .App.UserLayout {
   /* When the user's logged in, we want to display the UserNav side by side with the main content */
   grid-template:
     "UserNav main" 1fr
-    "footer footer" 75px
+    /* "footer footer" 75px */
     / 20% 1fr
 }
 

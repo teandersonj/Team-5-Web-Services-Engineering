@@ -2,8 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../components/images/Logo.png';
 
 export default function Navbar(props) {
-    const { userContext } = props;
-    const { user, logout } = userContext;
+    const { user, logout } = props.userContext;
 
     // Determine which nav to display based on whether the user is logged in
     // Either as a top-bar or side-bar
@@ -24,6 +23,7 @@ const GuestNav = ({ user }) => {
             </div>
             {/* These can be potentially converted to NavLinks for some more QoL features */}
             <div>
+                <button onClick={() => navigate("/")}>Home</button>
                 <button onClick={() => navigate("/login")}>Login</button>
                 <button onClick={() => navigate("/register")}>Register</button>
             </div>
