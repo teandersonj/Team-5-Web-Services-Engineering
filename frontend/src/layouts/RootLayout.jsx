@@ -19,9 +19,6 @@ export default function Layout(props) {
                 <Outlet />
                 {/* Currently, whatever's in <main> in the child element/route will appeaer centered in the main-content-section */}
             </main>
-{/*             <footer>
-                <p>&copy; Fireside Games 2023</p>
-            </footer> */}
         </div>
     );
 

@@ -17,7 +17,10 @@ const UserProvider = ({ children }) => {
         apiToken: null,
         refreshToken: null,
         memberSince: null,
-        currentGameStatus: null
+        currentGameStatus: null,
+        currentParty: null,
+        friendsList: null,
+        blockedPlayers: null 
     });
 
     const [user, setUser] = useState(getInitialState());
