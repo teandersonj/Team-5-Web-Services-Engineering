@@ -3,7 +3,7 @@ import { Navigate, Outlet } from "react-router-dom";
 
 const PrivateRoute = ({ user, redirectPath = '/', children }) => {
     // If authorized, render child elements
-    // If not, return element that will navigate to home (login?) page
+    // If not, navigate to redirectPath
     if (!user.loggedIn) {
         return <Navigate to={redirectPath} replace />;
     }

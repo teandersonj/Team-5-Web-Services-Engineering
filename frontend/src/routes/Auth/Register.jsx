@@ -72,7 +72,7 @@ export default function Register(props) {
         <>
             <h1 className="pageHeading">Registration</h1>
             <p>Already have an account? <Link className="Link" style={{ textDecoration: "underline" }} to="/login">Go to Login</Link></p>
-            <form id="registerForm" action="#" method="POST" onSubmit={handleSubmit}>
+            <form id="registerForm" aria-labelledby="Registration Form" action="#" method="POST" onSubmit={handleSubmit}>
                 <div className="formRow flexButtonsEitherSide">
                     <button disabled>Login with Discord</button>
                     <button disabled>Login with Steam</button>
@@ -106,8 +106,8 @@ export default function Register(props) {
                 </div>
                 <div className="formRow inputVertical">
                     {/* TODO: Extract this since it'll be used elsewhere */}
-                    <label>Playstyle Preference</label>
-                    <select id="playstyleSelect" defaultValue={formState.playstyleSelect} onChange={handleInputChange}>
+                    <label htmlFor='playstyleSelect'>Playstyle Preference</label>
+                    <select id="playstyleSelect" name="playstyleSelect" defaultValue={formState.playstyleSelect} onChange={handleInputChange}>
                         <option value="">Select a playstyle</option>
                         <option value="Casual">Casual</option>
                         <option value="Semi">Semi-Competitive</option>

@@ -42,7 +42,7 @@ export default function Login(props) {
             <h1 className="pageHeading">Fireside Gaming</h1>
             <img className="imageShadow" src={Logo} alt="Fireside Gaming Logo" />
             <h2 className="pageHeading">Login</h2>
-            <form id="loginForm" action="#" method="post" onSubmit={handleSubmit}>
+            <form id="loginForm" aria-labelledby="Login Form" action="#" method="post" onSubmit={handleSubmit}>
                 <LabeledInput id="usernameEmail" label="Username / Email" placeholder="Enter email or username here" type="text" onChange={handleInputChange} />
                 <LabeledInput id="password" label="Password" placeholder="Enter password here" type="password" onChange={handleInputChange} />
                 <div>

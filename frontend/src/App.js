@@ -24,29 +24,31 @@ import { UserContext } from "./providers/UserProvider";
 function App() {
   const { user } = useContext(UserContext);
   return (
-    // Within Routes we define the routes that will be available to the app
-    // The 'path' attribute defines the URL path that will trigger the route,
-    // and the 'element' attribute defines the component that will be rendered
-    <Routes>
-      {/* This first route represents the root layout. Nested routes appear as 
+    <div id="app" data-testid="app">
+{/* Within Routes we define the routes that will be available to the app.
+    The 'path' attribute defines the URL path that will trigger the route,
+    and the 'element' attribute defines the component that will be rendered */}
+      <Routes>
+        {/* This first route represents the root layout. Nested routes appear as 
         children within the Layout by means of an Outlet. This allows some elements
         to persist across page changes, such as a nav area. */}
-      <Route path="/" element={<Layout />}>
-        {/* The 'index' attribute means navigating to '/' will show the Login page */}
-        <Route index element={<Login />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        {/* This represents the private routes that can't be accessed without logging in */}
-        <Route element={<PrivateRoute user={user} />}>
-          <Route path="/profile" element={<UserProfile />} />
-          <Route path="/find-games" element={<GameSearch />} />
-          <Route path="/find-players" element={<PlayerSearch />} />
-          <Route path="/settings" element={<UserSettings />} />
+        <Route path="/" element={<Layout />}>
+          {/* The 'index' attribute means navigating to '/' will show the Login page */}
+          <Route index element={<Login />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          {/* This represents the private routes that can't be accessed without logging in */}
+          <Route element={<PrivateRoute user={user} />}>
+            <Route path="/profile" element={<UserProfile />} />
+            <Route path="/find-games" element={<GameSearch />} />
+            <Route path="/find-players" element={<PlayerSearch />} />
+            <Route path="/settings" element={<UserSettings />} />
+          </Route>
+          {/* Catch-all route that'll display an error page for routes not explicitly matched */}
+          <Route path="*" element={<ErrorPage />} />
         </Route>
-        {/* Catch-all route that'll display an error page for routes not explicitly matched */}
-        <Route path="*" element={<ErrorPage />} />
-      </Route>
-    </Routes>
+      </Routes>
+    </div>
   );
 }
 
