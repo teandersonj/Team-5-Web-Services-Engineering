@@ -3,10 +3,13 @@ import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router-dom';
 
+/**
+ * Desired behavior: "As a new user, I want to register/create an account to gain access to the application's features."
+ * Acceptance criteria: "The Register component should be rendered and accept user input via the registration form. That input should be validated before sending to the server. If the user enters invalid credentials, an error message should be displayed. If the user enters valid credentials, they should be alerted to the successful registration and redirected to the dashboard/user profile. Ideally we'd verify their email before proceeding."
+ */
+
 // Import the Register component
 import Register from '../routes/Auth/Register';
-
-
 
 const RegisterComponent = () => {
     return (
@@ -15,11 +18,6 @@ const RegisterComponent = () => {
         </BrowserRouter>
     );
 };
-
-/**
- * Desired behavior: "As a new user, I want to register/create an account to gain access to the application's features."
- * Acceptance criteria: "The Register component should be rendered and accept user input via the registration form. That input should be validated before sending to the server. If the user enters invalid credentials, an error message should be displayed. If the user enters valid credentials, they should be alerted to the successful registration and redirected to the dashboard/user profile. Ideally we'd verify their email before proceeding."
- */
 
 // Test whether the Register component renders
 test('renders Register component', () => {

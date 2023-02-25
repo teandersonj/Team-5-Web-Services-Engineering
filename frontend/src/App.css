@@ -1,13 +1,10 @@
 * {
-  /* Clear up inconsistencies between browsers and normalize sizing */
-  margin: 0;
-  padding: 0; 
   box-sizing: border-box;
   font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
-/* Reset the margin on paragraphs */
-p {
-  margin: 1em 0
+body {
+    margin: 0;
+    padding: 0;
 }
 
 /* Allow our color palette to be used as CSS variables */
@@ -110,7 +107,7 @@ input[type="number"] {
   outline: none;
   border-radius: 5px;
   padding: 0.5em;
-  margin: 0.5em;
+  margin: 0.5em auto;
   font-size: 1em;
   font-weight: bold;
   background-color: var(--color-white);
@@ -194,6 +191,7 @@ form {
 
 .pageHeading {
   margin: 0.67em 0;
+  font-size: 2.5em;
 }
 
 /* Utility classes */
@@ -203,16 +201,49 @@ form {
   align-items: center;
   justify-content: center;
 }
-
 .centerText {
   text-align: center;
 }
-
 .width-100 {
   width: 100%;
 }
-
 .imageShadow {
   filter: drop-shadow(0px 0px 10px var(--color-dark-blue));
 }
+.flexDirectionColumn {
+  display: flex;
+  flex-direction: column;
+}
+.flexDirectionRow {
+  display: flex;
+  flex-direction: row;
+}
+.justifySelfCenter {
+  display: flex;
+  justify-self: center;
+}
+.alignSelfCenter {
+  display: flex;
+  align-self: center;
+}
+.justifyContentSpaceBetween {
+  display: flex;
+  justify-content: space-between;
+}
+.justifyContentCenter {
+  display: flex;
+  justify-content: center;
+}
+.alignItemsCenter {
+  align-items: center;
+}
 /* End of utility classes */
+
+.Logo, .Avatar {
+  width: 100%;
+  max-width: 200px;
+  height: auto;
+  border-radius: 50%;
+  border: 1px solid var(--color-black);
+  box-shadow: 0 0 10px 2px var(--color-dark-blue);
+}
