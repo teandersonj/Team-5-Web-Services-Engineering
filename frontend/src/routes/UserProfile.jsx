@@ -15,7 +15,7 @@ export default function UserProfile(props) {
     return (
         <div>
             <h1 className="centerText">User Profile (Dashboard)</h1>
-            <div><strong>UserName: {user.userName}</strong></div>
+            <div><strong>username: {user.username}</strong></div>
             <div>Current Game / Status: {user.currentGameStatus || "Unset"}</div>
             <div><button onClick={() => logout()}>Log Out</button></div>
             <hr />

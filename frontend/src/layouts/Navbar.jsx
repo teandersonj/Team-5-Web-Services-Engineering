@@ -17,7 +17,7 @@ export default function Navbar(props) {
             {/* TODO: This'll be where the user's avatar appears */}
             <img src={Logo} alt="User Avatar" className="Avatar imageShadow" />
             <div className="flexDirectionColumn justifyContentCenter">
-                <div className="alignSelfCenter"><strong>UserName: {user.userName}</strong></div>
+                <div className="alignSelfCenter"><strong>Username: {user.username}</strong></div>
                 <div className="alignSelfCenter">Current Game / Status: {user.currentGameStatus || "Unset"}</div>
                 <div className="alignSelfCenter"><button onClick={() => logout()}>Log Out</button></div>
             </div>

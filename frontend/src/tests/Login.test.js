@@ -1,8 +1,10 @@
 import React from "react";
 import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import Login from "../routes/Auth/Login";
 import { BrowserRouter } from "react-router-dom";
+
+import UserProvider, { UserContext } from "../providers/UserProvider";
+import Login from "../routes/Auth/Login";
 
 /**
  * Desired behavior:
@@ -19,23 +21,25 @@ import { BrowserRouter } from "react-router-dom";
 
 const LoginComponent = () => {
     return (
-        <BrowserRouter>
-            <Login />
-        </BrowserRouter>
+        <>
+            <BrowserRouter>
+                <UserProvider>
+                    <Login />
+                </UserProvider>
+            </BrowserRouter>
+        </>
     );
 };
 
 /* Perform various tests on the Login component */
 test("renders the login component", () => {
-    render(
-        // The Login component is nested within a BrowserRouter because it uses the useNavigate hook
-        // to redirect the user to the home page after logging in. This could probably be mocked, but
-        // I'm not sure how to do that yet.
-        <LoginComponent />
-    );
+    // The Login component is nested within a BrowserRouter because it uses the useNavigate hook
+    // to redirect the user to the home page after logging in. This could probably be mocked, but
+    // I'm not sure how to do that yet.
+    render(<LoginComponent />);
     // Check if the login component is rendered in document.body
-    // We know the component will have "Fireside Gaming" as its heading
-    expect(screen.getByText("Fireside Gaming")).toBeInTheDocument();
+    // We know the component will have "Remember me" in the contents
+    expect(screen.getByText("Remember me")).toBeInTheDocument();
 
 });
 

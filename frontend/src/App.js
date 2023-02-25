@@ -6,9 +6,10 @@ import { Toaster } from "react-hot-toast";
 import Layout from "./layouts/RootLayout";
 
 // Import the routes that will be nested within the Layout
-// import GuestHome from "./routes/GuestHome";
 import Login from "./routes/Auth/Login";
 import Register from "./routes/Auth/Register";
+import ContinueRegistration from "./routes/Auth/ContinueRegistration";
+import FinishRegistration from "./routes/Auth/FinishRegistration";
 import ErrorPage from "./routes/ErrorPage";
 
 import PrivateRoute from "./routes/PrivateRoute";
@@ -57,6 +58,8 @@ function App() {
           <Route index element={<Login />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/register/continue" element={<ContinueRegistration />} />
+          <Route path="/register/finish" element={<FinishRegistration />} />
           {/* This represents the private routes that can't be accessed without logging in */}
           <Route element={<PrivateRoute user={user} />}>
             <Route path="/profile" element={<UserProfile />} />

@@ -1,12 +1,13 @@
 import { useContext, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import LabeledInput from '../../components/LabeledInput';
 
 export default function Register(props) {
+    // TODO: We need to have a way the user to move back and forth through the form "steps" preserving state
+    const navigate = useNavigate();
+
     // Define initial state. Ideally we'd define this in a function and just call it here so we can
     // return to the initial state on resets or something
-
-    // TODO: We need to have a way the user to move back and forth through the form "steps" preserving state
     const [formState, setFormState] = useState({
         fName: "",
         lName: "",
@@ -60,12 +61,11 @@ export default function Register(props) {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        alert("Submit clicked");
-    };
+        // TODO: We need to validate the form before we submit it to the backend for further validation and processing
+        // For now let's just show the Confirm Registration page
+        // Push the new path to history
 
-    // We can customize the appearance of the containers holding the text-like inputs
-    const containerStyles = {
-        width: "100%"
+        return navigate('/register/continue', { state: { fName: formState.fName, email: formState.email }, replace: true });
     };
 
     return (
@@ -84,13 +84,13 @@ export default function Register(props) {
 
                 {/* TODO: Work with LabeledInput to allow for specifying other attributes such as min/max length */}
                 <div className="formRow">
-                    <LabeledInput id="fName" label="First Name" type="text" defaultValue={formState.fName} placeholder="Enter your first name here" onChange={handleInputChange} containerStyle={containerStyles} />
+                    <LabeledInput id="fName" label="First Name" type="text" defaultValue={formState.fName} placeholder="Enter your first name here" onChange={handleInputChange} containerClassName="width-100" />
                 </div>
                 <div className="formRow">
-                    <LabeledInput id="lName" label="Last Name" type="text" defaultValue={formState.lName} placeholder="Enter your last name here" onChange={handleInputChange} containerStyle={containerStyles} />
+                    <LabeledInput id="lName" label="Last Name" type="text" defaultValue={formState.lName} placeholder="Enter your last name here" onChange={handleInputChange} containerClassName="width-100" />
                 </div>
                 <div className="formRow">
-                    <LabeledInput id="email" label="Email Address" type="email" defaultValue={formState.email} placeholder="Enter your email here" onChange={handleInputChange} containerStyle={{ width: "100%"}}  />
+                    <LabeledInput id="email" label="Email Address" type="email" defaultValue={formState.email} placeholder="Enter your email here" onChange={handleInputChange} containerClassName="width-100" />
                 </div>
                 <div className="formRow">
                     <div className="inputVertical width-100">
@@ -99,10 +99,10 @@ export default function Register(props) {
                     </div>
                 </div>
                 <div className="formRow">
-                    <LabeledInput id="password" label="Password" type="password" defaultValue={formState.password} placeholder="Enter your password here" onChange={handleInputChange} containerStyle={containerStyles} />
+                    <LabeledInput id="password" label="Password" type="password" defaultValue={formState.password} placeholder="Enter your password here" onChange={handleInputChange} containerClassName="width-100" />
                 </div>
                 <div className="formRow">
-                    <LabeledInput id="confirmPassword" label="Confirm Password" type="password" defaultValue={formState.passwordConfirm} placeholder="Enter your password again here" onChange={handleInputChange} containerStyle={containerStyles} />
+                    <LabeledInput id="confirmPassword" label="Confirm Password" type="password" defaultValue={formState.passwordConfirm} placeholder="Enter your password again here" onChange={handleInputChange} containerClassName="width-100" />
                 </div>
                 <div className="formRow inputVertical">
                     {/* TODO: Extract this since it'll be used elsewhere */}

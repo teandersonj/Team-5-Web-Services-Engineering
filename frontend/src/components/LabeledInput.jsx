@@ -5,6 +5,7 @@
  * @param {props.label} Label - The label to display before the input
  * @param {props.type} Type - The type of input to display (text, email, password, etc.)
  * @param {props.value} DefaultValue - The defaultValue of the input
+ * @param {props.disabled} Disabled - Whether or not the input is disabled
  * @param {props.orientation} Orientation - Horizontal: Display the label and input side by side. Vertical: Display the label above the input
  * @param {props.placeholder} Placeholder - The placeholder text to display in the input
  * @param {props.onChange} onChange - The function to call when the input changes
@@ -17,14 +18,14 @@
  * @returns <LabeledInput /> LabeledInput JSX component
  */
 export default function LabeledInput(props) {
-    const { id, label, type, defaultValue, orientation = "vertical", placeholder, onChange, containerStyle, labelStyle, inputStyle, containerClassName, labelClassName, inputClassName } = props;
+    const { id, label, type, defaultValue, disabled, orientation = "vertical", placeholder, onChange, containerStyle, labelStyle, inputStyle, containerClassName, labelClassName, inputClassName } = props;
     
     let orientationStyle = orientation === "horizontal" ? { display: "flex", flexDirection: "row", alignItems: "center" } : { display: "flex", flexDirection: "column", alignItems: "flex-start" };
 
     return (
         <div className={containerClassName} style={{ ...containerStyle, ...orientationStyle }}>
             <label htmlFor={id} className={labelClassName} style={labelStyle}>{label}</label>
-            <input key={id} id={id} name={id} type={type} defaultValue={defaultValue} placeholder={placeholder} onChange={onChange} className={inputClassName} style={inputStyle} />
+            <input disabled={!!disabled} key={id} id={id} name={id} type={type} defaultValue={defaultValue} placeholder={placeholder} onChange={onChange} className={inputClassName} style={inputStyle} />
         </div>
     );
 };

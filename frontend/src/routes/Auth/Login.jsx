@@ -37,14 +37,14 @@ export default function Login(props) {
         // Pass the login info to server for validation and retrieve the rest of their details
         // If successful, update the user state and navigate to the profile page
         const newUser = {
-            userName: "test",
+            username: "test",
             email: "test@test.com",
             fName: "Test",
             lName: "User",
             playstyle: "Casual"
         };
         userLogin(newUser);
-        toast.success(`Welcome back, ${newUser.userName}!`);
+        toast.success(`Welcome, ${newUser.username}!`);
         return navigate("/profile");
     };
 

@@ -10,7 +10,7 @@ const UserProvider = ({ children }) => {
 
     const getInitialState = () => ({
         loggedIn: false,
-        userName: null,
+        username: null,
         fName: null,
         lName: null,
         email: null,
@@ -34,13 +34,16 @@ const UserProvider = ({ children }) => {
     // This is one way to do it without using cookies to store the session info
     // However it is vulnerable to XSS attacks 
     useEffect(() => {
-        console.log("UserProvider noticed a change in the user: ", user, " \nUpdating user in localStorage... "); 
+        // console.log("UserProvider noticed a change in the user: ", user, " \nUpdating user in localStorage... "); 
         // Update the user in localStorage
         localStorage.setItem("user", JSON.stringify(user));
     }, [user]);
 
     // Logs in the user clientside; need to eventually call the serverside login function
     const login = (userInfo) => {
+        // TODO: Send the login info to the server to validate and login, retrieving the rest of the user's details
+        // If successful, update the user state and navigate to the profile page
+        
         const newUser = { ...userInfo, loggedIn: true };
         setUser((prev) => newUser);
     }
@@ -60,7 +63,6 @@ const UserProvider = ({ children }) => {
     const updateUser = (userInfo) => {
         setUser((prev) => ({ ...prev, ...userInfo }));
     };
-
 
     return (
         // The value prop is what will be available to any component that consumes this context

@@ -122,6 +122,14 @@ input[type="number"]:focus {
   outline: 2px solid var(--color-dark-blue);
   box-shadow: 0 0 10px 2px var(--color-light-blue);
 }
+/* We need to style disabled inputs differently */
+input[type="text"]:disabled,
+input[type="password"]:disabled,
+input[type="email"]:disabled,
+input[type="number"]:disabled {
+  background-color: var(--color-gray);
+  color: var(--color-white);
+}
 /* End of text-like <input> elements */
 
 main {
@@ -189,12 +197,12 @@ form {
   color: var(--color-light-blue);
 } */
 
+
+/* Utility classes */
 .pageHeading {
   margin: 0.67em 0;
   font-size: 2.5em;
 }
-
-/* Utility classes */
 .centerContent {
   display: flex;
   flex-direction: column;
@@ -239,6 +247,7 @@ form {
 }
 /* End of utility classes */
 
+/* For the <img> elements */
 .Logo, .Avatar {
   width: 100%;
   max-width: 200px;
@@ -247,3 +256,4 @@ form {
   border: 1px solid var(--color-black);
   box-shadow: 0 0 10px 2px var(--color-dark-blue);
 }
+/* End of <img> elements */

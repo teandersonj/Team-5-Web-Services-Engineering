@@ -17,15 +17,15 @@ import UserProvider from '../providers/UserProvider';
 // Test whether the App component renders
 test('renders App component', () => {
   render(
-    <UserProvider>
       <BrowserRouter>
-        <App />
+        <UserProvider>
+          <App />
+        </UserProvider>
       </BrowserRouter>
-    </UserProvider>
-  );
+    );
 
   // Check if the App component is rendered in document.body
   // Look for the div with ID app
   const appElement = screen.getByTestId('app');
-  expect(appElement).toBeInTheDocument();
+  return expect(appElement).toBeInTheDocument();
 });
