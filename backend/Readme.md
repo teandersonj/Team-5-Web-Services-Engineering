@@ -1,3 +1,28 @@
+# Running backend server
+* First, create a virtual environment and activate it, and then install the requirements
+```bash
+python -m venv venv
+venv\Scripts\activate [note for Windows use venv\Scripts\activate.bat]
+```
+* Make database migrations and run them
+````bash
+python manage.py makemigrations
+python manage.py migrate
+````
+* Run the server
+````bash
+python manage.py runserver
+````
+* Open the API page at http://127.0.0.1:8000/api/
+
+# Running administration functions
+* Create a superuser **OR** use the default superuser (root:password)
+````bash
+python manage.py createsuperuser
+````
+* Follow the above steps to run the server
+* Open the admin page at http://127.0.0.1:8000/admin/
+
 https://blog.devgenius.io/django-rest-framework-react-authentication-workflow-2022-part-2-d299b7fef875
 
 https://sushil-kamble.medium.com/django-rest-framework-react-authentication-workflow-2022-part-1-a21f22b3f358
