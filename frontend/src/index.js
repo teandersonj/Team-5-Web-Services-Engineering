@@ -5,27 +5,18 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import UserProvider from './providers/UserProvider';
 
-// This is the new data router that gives some interesting features,
-// however it is more complex that just using <BrowserRouter> and <Routes>
-// const browswerRouter = createBrowserRouter([
-//   { path: '/', element: <App /> },
-//   { path: '/login', element: <Login /> },
-//   { path: '/register', element: <Register /> },
-//   { path: '*', element: <ErrorPage /> },
-// ]});
-
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   // This helps with debugging, but it's not necessary esp. for production and will
   // cause double rendering
   // <React.StrictMode>
   // {/* Additional Context Providers will go here, enclosing App */}
-    <UserProvider>
-      {/* Provide router access to the App */}
-      <BrowserRouter>
+  // {/* Provide router access to the App */ }
+    <BrowserRouter>
+      <UserProvider>
         <App />
-      </BrowserRouter>
-    </UserProvider>
+      </UserProvider>
+    </BrowserRouter>
   // </React.StrictMode>
 );
 

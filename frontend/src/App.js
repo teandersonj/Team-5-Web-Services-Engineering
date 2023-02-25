@@ -1,5 +1,6 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 
 // The root layout that will be used for all routes
 import Layout from "./layouts/RootLayout";
@@ -22,12 +23,31 @@ import { UserContext } from "./providers/UserProvider";
 
 // The App component is the root of the React component tree
 function App() {
-  const { user } = useContext(UserContext);
+  const { user, login: userLogin } = useContext(UserContext);
+
+  // Normally, when the page is refreshed, the user will be logged out, because the state is lost.
+  // This useEffect will check if the user is logged in, and if so, log them back in.
+  // This is done by checking if there's a user object in local storage.
+  // If there is, we'll set the user state to that object via the UserContext.
+  // This will trigger a re-render, and the user will be logged in.
+  // Note: This means when we login we must also store the user object in local storage.
+  // We could do an API call here to check if the session is still valid server-side,
+  useEffect(() => {
+    const userItem = JSON.parse(localStorage.getItem("user"));
+    if (userItem && userItem.loggedIn) {
+      userLogin(userItem);
+    }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  // Leaving the dependency array empty will cause this effect to only run once on mount (e.g. page load)
+  
+
   return (
     <div id="app" data-testid="app">
-{/* Within Routes we define the routes that will be available to the app.
-    The 'path' attribute defines the URL path that will trigger the route,
-    and the 'element' attribute defines the component that will be rendered */}
+      {/* Allows us to use toast() to generate toast notifications */}
+      <Toaster />
+      {/* Within Routes we define the routes that will be available to the app.
+      The 'path' attribute defines the URL path that will trigger the route,
+      and the 'element' attribute defines the component that will be rendered */}
       <Routes>
         {/* This first route represents the root layout. Nested routes appear as 
         children within the Layout by means of an Outlet. This allows some elements
