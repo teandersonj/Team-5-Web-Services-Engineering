@@ -1,3 +1,4 @@
 from django.db import models
-
-# Create your models here.
+from api.apimodels import game
+from api.apimodels import player
+from api.apimodels import blockeduser
