@@ -1,4 +1,7 @@
+import { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+import { UserContext } from '../../providers/UserProvider';
 
 /**
  * Here we alert the user to verify their email and then redirect them to the login page.
@@ -7,6 +10,15 @@ import { useNavigate } from 'react-router-dom';
  * @returns <FinishRegistration />
  */
 export default function FinishRegistration(props) {
+    // Check if the user's logged in and redirect them if they are
+    const { user } = useContext(UserContext);
+    useEffect(() => {
+        if (user.loggedIn) {
+            navigate('/');
+        }
+    }, []);
+
+
     const navigate = useNavigate();
 
     const handleClick = () => {

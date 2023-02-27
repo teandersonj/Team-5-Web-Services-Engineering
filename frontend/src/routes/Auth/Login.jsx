@@ -7,6 +7,7 @@ import validateElement from '../../services/Validation';
 
 import Logo from '../../components/images/Logo.png';
 import LabeledInput from '../../components/LabeledInput';
+import ValidationErrorList from '../../components/ValidationErrorList';
 
 export default function Login(props) {
     const navigate = useNavigate();
@@ -55,21 +56,22 @@ export default function Login(props) {
             // If there were no returned errors from the validation function,
             // we know the input is valid, so we can remove its key from the errors object
             const newErrors = { ...formState.errors };
-            newErrors[target.id] = undefined;
+            delete newErrors[target.id];
 
             // And update the state with that input's errors removed
-            // We don't need to keep track of the previous state here because we're not overwriting anything
-            setFormState({ errors: newErrors });
+            setFormState((prev) => ({ ...prev, errors: newErrors }));
         }
         return;
     };
 
+    // TODO: Disable the submit button if there are any errors in the formState.errors object
     const handleSubmit = (e) => {
         e.preventDefault();
         // We should re-validate the form
         // And we could style the inputs to indicate which ones are invalid
         // But for now we'll just check if there are any errors in the formState.errors object
         if (Object.keys(formState.errors).length > 0) {
+            console.log(formState.errors)
             toast.error("Check your inputs and try again");
             return false;
         }
@@ -108,25 +110,11 @@ export default function Login(props) {
             <h2 className="pageHeading">Login</h2>
             <form id="loginForm" aria-labelledby="Login Form" action="#" method="post" onSubmit={handleSubmit}>
                 {/* We want to put any errors relevant to a specific input, above the input
-                    For now, we'll just account for client-side errors, which'll be in formState.errors*/}
-                {/* Note that the top-level error keys will only indicate which field has errors, the actual errors are stored in the child object
-                    with keys starting with the field's ID. We need to iterate through the object to get the actual errors */}
-                {/* TODO: Extract this somehow as it'll be used frequently */}
-                {formState.errors.username && (
-                    <ul>
-                        {Object.entries(formState.errors.username).map(([k, v], idx) => (
-                            <li key={k} className="error">{`${v}`}</li>
-                        ))}
-                    </ul>
-                )}
+                    For now, we'll just account for client-side errors, which'll be in formState.errors[inputID]*/}
+                {/* Note that the top-level error keys will only indicate which field has errors, the actual errors are stored as its children/values */}
+                {formState.errors.username && <ValidationErrorList errors={formState.errors.username} />}
                 <LabeledInput id="username" label="Username / Email" placeholder="Enter email or username here" type="text" orientation="vertical" containerClassName="formRow" required onChange={handleInputChange} />
-                {formState.errors.password && (
-                    <ul>
-                        {Object.entries(formState.errors.password).map(([k, v], idx) => (
-                            <li key={k} className="error">{`${v}`}</li>
-                        ))}
-                    </ul>
-                )}
+                {formState.errors.password && <ValidationErrorList errors={formState.errors.password} />}
                 <LabeledInput id="password" label="Password" placeholder="Enter password here" type="password" orientation="vertical" containerClassName="formRow" required onChange={handleInputChange} />
                 <div className="formRow">
                     <label>

@@ -41,6 +41,19 @@ export const InputValidationRules = {
             message: "Password must only contain letters, numbers, and $@!.,+-"
         }
     },
+    confirmPassword: {
+        // Same as password, except we'll pass in the password value to compare to instead of specifying the pattern
+        type: "password",
+        // required: true,
+        minLength: {
+            value: 8,
+            message: "Password must be at least 8 characters"
+        },
+        maxLength: {
+            value: 100,
+            message: "Password must be less than 100 characters"
+        }
+    },
     fName: {
         type: "text",
         // required: true,
@@ -83,17 +96,18 @@ export const InputValidationRules = {
  * Validates a single element based on the rules defined in InputValidationRules
  * @param {HTMLElement} element - The element to validate, should have ID, type, and value properties aligning with the InputValidationRules object 
  * @param {string} overrideType - Allows the type of the element to be overridden, useful for when the element type is not the same as the validation type
+ * @param {string} overridePattern - Allows the pattern of the element to be overridden, useful for when the desired pattern is not the same as one of the predefined patterns
+ * -- Use it like {value: "^[a-zA-Z]+$", message: "Last name must only contain letters"}
  * @returns An object of errors {[validationRule1]: "Error Message for Rule 1", ...} for the specific element or an empty object if no errors
  */
-export default function validateElement(element, overrideType=null) {
+export default function validateElement(element, overrideType=null, overridePattern=null) {
     const elValue = element.value;
     const elRules = InputValidationRules[overrideType || element.id];
-    console.log(overrideType || element.type);
     let errs = {};
     switch (overrideType || element.type) {
         case "email":
-            if (!elValue.match(elRules.pattern.value)) {
-                errs = { ...errs, pattern: elRules.pattern.message };
+            if (!elValue.match(new RegExp(overridePattern?.value || elRules.pattern.value))) {
+                errs = { ...errs, pattern: overridePattern?.message || elRules.pattern.message };
             }
             break;
         case "text":
@@ -104,8 +118,8 @@ export default function validateElement(element, overrideType=null) {
             } else if (elValue.length > elRules.maxLength.value) {
                 errs = { ...errs, maxLength: elRules.maxLength.message };
             }
-            if (elValue.length > 0 && !elValue.match(new RegExp(elRules.pattern.value))) {
-                errs = { ...errs, pattern: elRules.pattern.message };
+            if (elValue.length > 0 && !elValue.match(new RegExp(overridePattern?.value || elRules.pattern.value))) {
+                errs = { ...errs, pattern: overridePattern?.message || elRules.pattern.message };
             }
             break;
         case "password":
@@ -114,8 +128,8 @@ export default function validateElement(element, overrideType=null) {
             } else if (elValue.length > elRules.maxLength.value) {
                 errs = { ...errs, maxLength: elRules.maxLength.message };
             }
-            if (elValue.length > 0 && !elValue.match(new RegExp(elRules.pattern.value))) {
-                errs = { ...errs, pattern: elRules.pattern.message };
+            if (elValue.length > 0 && !elValue.match(new RegExp(overridePattern?.value || elRules.pattern.value))) {
+                errs = { ...errs, pattern: overridePattern?.message || elRules.pattern.message };
             }
             break;
         default:
