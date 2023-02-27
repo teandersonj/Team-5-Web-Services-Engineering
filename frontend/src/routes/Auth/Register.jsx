@@ -15,7 +15,8 @@ export default function Register(props) {
         password: "",
         confirmPassword: "",
         passwordStrength: 0,
-        playstyleSelect: "",
+        playstyle: "",
+        formStep: 1,
         errors: {}
     });
 
@@ -93,7 +94,7 @@ export default function Register(props) {
                     <LabeledInput id="email" label="Email Address" type="email" defaultValue={formState.email} placeholder="Enter your email here" onChange={handleInputChange} containerClassName="width-100" />
                 </div>
                 <div className="formRow">
-                    <div className="inputVertical width-100">
+                    <div className="flexDirectionColumn width-100">
                         <label>Password Strength</label>
                         <progress className="width-100" value={formState.passwordStrength} max="100"></progress>
                     </div>
@@ -104,10 +105,10 @@ export default function Register(props) {
                 <div className="formRow">
                     <LabeledInput id="confirmPassword" label="Confirm Password" type="password" defaultValue={formState.passwordConfirm} placeholder="Enter your password again here" onChange={handleInputChange} containerClassName="width-100" />
                 </div>
-                <div className="formRow inputVertical">
+                <div className="formRow flexDirectionColumn">
                     {/* TODO: Extract this since it'll be used elsewhere */}
-                    <label htmlFor='playstyleSelect'>Playstyle Preference</label>
-                    <select id="playstyleSelect" name="playstyleSelect" defaultValue={formState.playstyleSelect} onChange={handleInputChange}>
+                    <label htmlFor='playstyle'>Playstyle Preference</label>
+                    <select id="playstyle" name="playstyle" defaultValue={formState.playstyle} onChange={handleInputChange}>
                         <option value="">Select a playstyle</option>
                         <option value="Casual">Casual</option>
                         <option value="Semi">Semi-Competitive</option>
@@ -115,8 +116,9 @@ export default function Register(props) {
                     </select>
                 </div>
                 <p className="flexButtonsEitherSide">
-                    {/* TODO: This could either move to Step 2 directly then send all collected data to server or send what we ahve to server, get a response and then go there */}
-                    {/* TODO: I think we'll have to sent this all to server first to check for existing accts, then if its validated we come back to Step 2.
+                    {/* TODO: This could either move to Step 2 directly then from there send all collected data to server at once
+                    or send what we have here to server for validation, get a response and then go there */}
+                    {/* TODO: I think we'll have to send this all to server first to check for existing accts, then if its validated we come back to Step 2.
                         If the user quits and re-logs before doing Step 2 we can bring that up again */}
                     <button id="submit" type="submit" className="roundedBlue">Continue</button>
                     <button className="roundedGray"><Link className="Link" style={{ color: "white" }} to="/">Cancel</Link></button>

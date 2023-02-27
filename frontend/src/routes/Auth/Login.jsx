@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
 import { UserContext } from '../../providers/UserProvider';
+import validateElement from '../../services/Validation';
 
 import Logo from '../../components/images/Logo.png';
 import LabeledInput from '../../components/LabeledInput';
@@ -18,34 +19,86 @@ export default function Login(props) {
         }
     }, []);
 
-
     const [formState, setFormState] = useState({
         // TODO: We'll need to determine whether they entered an email or username.
-        usernameEmail: "",
+        username: "",
         password: "",
         errors: {}
     });
 
     const handleInputChange = (event) => {
         const { id, value } = event.target;
+        // Perform validation on the specific input that changed
+        validateOnChange(event);
+        // Update the state with the input's new value
         setFormState((prev) => ({ ...prev, [id]: value }));
+    };
+
+    const validateOnChange = ({ target }) => {
+        // Validate the changed input, if there are any errors they'll be returned as an object
+        // like { [validationRule]: "Validation error message" }
+        // If there are no errors, the object will be empty
+        // We have to check if the username is being used as an email entry and validate it accordingly
+        const validationResult = target.id === "username" && target.value.includes("@") ? validateElement(target, "email") : validateElement(target);
+
+        // If there were new errors...
+        if (Object.keys(validationResult).length > 0) {
+            // We can associate the result of the validation function with the input's id
+            // so we'll have an object like errors: { [inputId]: { [validationRule]: "Validation error message" } }
+            // Have to keep track of the previous errors so we don't overwrite them later
+            const errors = { ...formState.errors, [target.id]: validationResult };
+            
+            // Now we begin to update our state here with the new errors,
+            // keeping hold of the previous state (including other inputs' errors)
+            setFormState((prev) => ({ ...prev, errors }));
+        } else {
+            // If there were no returned errors from the validation function,
+            // we know the input is valid, so we can remove its key from the errors object
+            const newErrors = { ...formState.errors };
+            newErrors[target.id] = undefined;
+
+            // And update the state with that input's errors removed
+            // We don't need to keep track of the previous state here because we're not overwriting anything
+            setFormState({ errors: newErrors });
+        }
+        return;
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        alert("Logging in example");
-        // Pass the login info to server for validation and retrieve the rest of their details
-        // If successful, update the user state and navigate to the profile page
-        const newUser = {
-            username: "test",
-            email: "test@test.com",
-            fName: "Test",
-            lName: "User",
-            playstyle: "Casual"
-        };
-        userLogin(newUser);
-        toast.success(`Welcome, ${newUser.username}!`);
-        return navigate("/profile");
+        // We should re-validate the form
+        // And we could style the inputs to indicate which ones are invalid
+        // But for now we'll just check if there are any errors in the formState.errors object
+        if (Object.keys(formState.errors).length > 0) {
+            toast.error("Check your inputs and try again");
+            return false;
+        }
+
+        // Need to detect if the user entered an email or username
+        // If it's an email we'll pass it as an email, otherwise we'll pass it as a username
+        const newUser = formState.username.includes("@") ?
+            {
+                email: formState.username,
+                password: formState.password
+            } :
+            {
+                username: formState.username,
+                password: formState.password
+            };
+
+        // Pass the user's login info to the userLogin function,
+        // which will send it to the server for validation
+        // If there's an error, it'll return an object with an errors property
+        // And we can display those errors to the user
+        const result = userLogin(newUser);
+        if (result.errors) {
+            toast.error("Login failed, check your inputs and try again");
+            setFormState((prev) => ({ ...prev, ...result.errors }));
+            return false;
+        } else {
+            toast.success("Login successful");
+            return true;
+        }
     };
 
     return (
@@ -54,8 +107,27 @@ export default function Login(props) {
             <img className="Logo imageShadow" src={Logo} alt="Fireside Gaming Logo" />
             <h2 className="pageHeading">Login</h2>
             <form id="loginForm" aria-labelledby="Login Form" action="#" method="post" onSubmit={handleSubmit}>
-                <LabeledInput id="usernameEmail" label="Username / Email" placeholder="Enter email or username here" type="text" onChange={handleInputChange} orientation="vertical" containerClassName="formRow"/>
-                <LabeledInput id="password" label="Password" placeholder="Enter password here" type="password" onChange={handleInputChange} orientation="vertical" containerClassName="formRow"/>
+                {/* We want to put any errors relevant to a specific input, above the input
+                    For now, we'll just account for client-side errors, which'll be in formState.errors*/}
+                {/* Note that the top-level error keys will only indicate which field has errors, the actual errors are stored in the child object
+                    with keys starting with the field's ID. We need to iterate through the object to get the actual errors */}
+                {/* TODO: Extract this somehow as it'll be used frequently */}
+                {formState.errors.username && (
+                    <ul>
+                        {Object.entries(formState.errors.username).map(([k, v], idx) => (
+                            <li key={k} className="error">{`${v}`}</li>
+                        ))}
+                    </ul>
+                )}
+                <LabeledInput id="username" label="Username / Email" placeholder="Enter email or username here" type="text" orientation="vertical" containerClassName="formRow" required onChange={handleInputChange} />
+                {formState.errors.password && (
+                    <ul>
+                        {Object.entries(formState.errors.password).map(([k, v], idx) => (
+                            <li key={k} className="error">{`${v}`}</li>
+                        ))}
+                    </ul>
+                )}
+                <LabeledInput id="password" label="Password" placeholder="Enter password here" type="password" orientation="vertical" containerClassName="formRow" required onChange={handleInputChange} />
                 <div className="formRow">
                     <label>
                         <input type="checkbox" />

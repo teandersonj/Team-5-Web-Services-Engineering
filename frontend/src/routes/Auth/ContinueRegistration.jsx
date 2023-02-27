@@ -35,9 +35,8 @@ export default function ContinueRegistration(props) {
         errors: {}
     });
 
-    const handleUsernameChange = (event) => {
-        const { id, value } = event.target;
-        setFormState((prev) => ({ ...prev, [id]: value }));
+    const inputStyle = {
+        visibility: "hidden", margin: 0, padding: 0
     };
 
     const labelStyles = {
@@ -51,6 +50,11 @@ export default function ContinueRegistration(props) {
             borderRadius: "50px",
             filter: "drop-shadow(0 5px 5px var(--color-light-blue))"
         }
+    };
+
+    const handleUsernameChange = (event) => {
+        const { id, value } = event.target;
+        setFormState((prev) => ({ ...prev, [id]: value }));
     };
 
     const handleRadioChange = (event) => {
@@ -69,10 +73,6 @@ export default function ContinueRegistration(props) {
         newState["avatar"] = value;
         Object.assign(document.querySelector(`label[for='${newState["avatar"]}']`).style, labelStyles.checked);
         setFormState(newState);
-    };
-
-    const inputStyle = {
-        visibility: "hidden", margin: 0, padding: 0
     };
 
     const handleSubmit = (event) => {

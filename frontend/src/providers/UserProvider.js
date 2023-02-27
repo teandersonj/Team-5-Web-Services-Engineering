@@ -43,18 +43,42 @@ const UserProvider = ({ children }) => {
     const login = (userInfo) => {
         // TODO: Send the login info to the server to validate and login, retrieving the rest of the user's details
         // If successful, update the user state and navigate to the profile page
-        
+        // await axios.post("/api/login", userInfo).then((res) => {
+        //     console.log("Login response: ", res);
+        //     if (res.status === 200) {
+        //         // Update the user state
+        //         const newUser = { ...res.data, loggedIn: true };
+        //         setUser((prev) => newUser);
+        //         // Navigate to the profile page
+        //         return navigate("/profile");
+        //     } else {
+        //         // TODO: Display an error message
+        //         console.log("Login failed");
+        //     }
+        // }).catch((err) => {
+        //     console.log("Error logging in: ", err);
+        //     // Get validation errors from the server
+        //     if (err.response.data.errors) {
+        //         const errors = err.response.data.errors;
+        //         console.log("Validation errors: ", errors);
+        //         return errors;
+        //      }
+        // });
+
+        // For now we just take whatever's input in the
+        // login form and populate the user state with it
         const newUser = { ...userInfo, loggedIn: true };
         setUser((prev) => newUser);
+        navigate("/profile");
+        return true;
+        
     }
 
     // Logs out the user clientside; need to eventually call the serverside logout function
     const logout = (e) => {
-        // Reset the state to the initial state
-        const keys = Object.keys(user);
         // Have to reset all keyvalue pairs in this temp object before assigning it to state
         // Otherwise, the state will be set to the initial state, but state will still have any new keys added
-        const stateReset = keys.reduce((acc, v) => ({ ...acc, [v]: undefined }), {});
+        const stateReset = Object.keys(user).reduce((acc, v) => ({ ...acc, [v]: undefined }), {});
         // This should reset the state to the initial state and remove the user from localStorage
         setUser({ ...stateReset, ...getInitialState() });
         navigate("/");

@@ -18,6 +18,7 @@ body {
   --color-dark-blue: #21699B;
   --color-gold: #ffc94b;
   --color-red: #e13e2e;
+  --color-pink: #e13e7e;
 }
 
 /* TODO: Ideally we should have module/component-localized CSS files and just have webpack combine them */
@@ -130,6 +131,13 @@ input[type="number"]:disabled {
   background-color: var(--color-gray);
   color: var(--color-white);
 }
+.inputInvalid {
+  background-color: var(--color-pink);
+  color: var(--color-white);
+  border: 1px solid var(--color-red);
+  /* We could use transitions to only show this error styling for a little bit to alert
+    the user then hide it to enable normal input accessibility */
+}
 /* End of text-like <input> elements */
 
 main {
@@ -160,14 +168,6 @@ form {
   display: flex;
   width: 100%;
   margin-bottom: 0.5em;
-}
-.inputVertical {
-  display: flex;
-  flex-direction: column;
-}
-.inputHorizontal {
-  display: flex;
-  flex-direction: row;
 }
 .flexButtonsEitherSide {
   display: flex;
