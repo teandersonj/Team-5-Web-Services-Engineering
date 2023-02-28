@@ -127,7 +127,7 @@ export default function Login(props) {
                 <div className="formRow centerContent">
                     <input type="submit" className="roundedBlue" value="Login" />
                 </div>
-                <div className="flexButtonsEitherSide">
+                <div className="flexDirectionRow justifyContentSpaceBetween">
                     <button disabled>Login with Discord</button>
                     <button disabled>Login with Steam</button>
                 </div>
@@ -138,12 +138,6 @@ export default function Login(props) {
                 <h3>Form State: </h3>
                 <code>
                     {JSON.stringify(formState)}
-                </code>
-            </div>
-            <div style={{ maxWidth: "300px", wordWrap: "break-word" }}>
-                <h3>User State: </h3>
-                <code>
-                    {JSON.stringify(user)}
                 </code>
             </div>
         </>

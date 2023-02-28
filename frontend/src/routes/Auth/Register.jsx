@@ -125,7 +125,7 @@ export default function Register(props) {
             <h1 className="pageHeading">Registration</h1>
             <p>Already have an account? <Link className="Link" style={{ textDecoration: "underline" }} to="/login">Go to Login</Link></p>
             <form id="registerForm" aria-labelledby="Registration Form" action="#" method="POST" onSubmit={handleSubmit}>
-                <div className="formRow flexButtonsEitherSide">
+                <div className="formRow flexDirectionRow justifyContentSpaceBetween">
                     <button disabled>Login with Discord</button>
                     <button disabled>Login with Steam</button>
                 </div>
@@ -143,7 +143,6 @@ export default function Register(props) {
                 </div>
                 {formState.errors.password && <ValidationErrorList errors={formState.errors.password} />}
                 <LabeledInput id="password" label="Password" type="password" defaultValue={formState.password} placeholder="Enter your password here" onChange={handleInputChange} containerClassName="width-100 formRow" required />
-                {/* TODO: need to ensure both match */}
                 {formState.errors.confirmPassword && <ValidationErrorList errors={formState.errors.confirmPassword} />}
                 <LabeledInput id="confirmPassword" label="Confirm Password" type="password" defaultValue={formState.passwordConfirm} placeholder="Enter your password again here" onChange={handleInputChange} containerClassName="width-100 formRow" required />
                 <div className="formRow flexDirectionColumn">
@@ -156,11 +155,11 @@ export default function Register(props) {
                         <option value="Competitive">Competitive</option>
                     </select>
                 </div>
-                <p className="flexButtonsEitherSide">
-                    {/* TODO: This could either move to Step 2 directly then from there send all collected data to server at once
-                    or send what we have here to server for validation, get a response and then go there */}
-                    {/* TODO: I think we'll have to send this all to server first to check for existing accts, then if its validated we come back to Step 2.
-                        If the user quits and re-logs before doing Step 2 we can bring that up again */}
+                <p className="flexDirectionRow justifyContentSpaceBetween">
+                    {/* TODO: This could either move to Continue Registration then from there send all collected data to server at once
+                    or send what we have here to server for validation, get a response and then go there 
+                    I think we'll have to send this all to server first to check for existing accts, then if its validated we come back to Step 2.
+                    If the user quits and re-logs before doing Step 2 we can bring that up again */}
                     <button id="submit" form="registerForm" type="submit" className="roundedBlue">Continue</button>
                     <button className="roundedGray"><Link className="Link" style={{ color: "white" }} to="/">Cancel</Link></button>
                 </p>

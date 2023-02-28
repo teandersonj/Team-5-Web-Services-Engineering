@@ -8,7 +8,7 @@ export default function ErrorPage() {
     return (
         <div style={style}>
             {/* The error may not be 404, however IDK if we can get the status code unless using data router */}
-            <h1>Error 404: Page Not Found</h1>
+            <h1 className="pageHeading centerText">Error 404: Page Not Found</h1>
             <br />
             The page you were looking for doesn't exist. Check your URL for proper spelling or go back and try again.
             <br />

@@ -169,15 +169,7 @@ form {
   width: 100%;
   margin-bottom: 0.5em;
 }
-.flexButtonsEitherSide {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-}
 /* End of forms */
-
 
 /* Styles <Link> components */
 .Link {

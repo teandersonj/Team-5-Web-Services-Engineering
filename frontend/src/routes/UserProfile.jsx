@@ -6,24 +6,30 @@ export default function UserProfile(props) {
     const navigate = useNavigate();
 
     // Make sure user is logged in and then display their info
-    const { user, logout } = useContext(UserContext);
+    const { user } = useContext(UserContext);
     if (!user.loggedIn) {
         alert("You must be logged in to access this page");
         navigate("/login");
     }
-    
+
     return (
-        <div>
-            <h1 className="centerText">User Profile (Dashboard)</h1>
+        <>
+            <h1 className="centerText pageHeading">User Profile (Dashboard)</h1>
             <div><strong>username: {user.username}</strong></div>
             <div>Current Game / Status: {user.currentGameStatus || "Unset"}</div>
-            <div><button onClick={() => logout()}>Log Out</button></div>
-            <hr />
-            <button onClick={() => navigate("/profile")}>My Profile</button>
-            <button onClick={() => navigate("/find-games")}>Find Game</button>
-            <button onClick={() => navigate("/find-players")}>Find Players</button>
-            <button onClick={() => navigate("/settings")}>User/Account Settings</button>
-        </div>
+            <div>
+                <button onClick={() => navigate("/find-games")}>Find Game</button>
+                <button onClick={() => navigate("/find-players")}>Find Players</button>
+                <button onClick={() => navigate("/settings")}>User/Account Settings</button>
+            </div>
+            <hr className="width-100" />
+            <div style={{ maxWidth: "300px", wordWrap: "break-word" }}>
+                <h3>User State: </h3>
+                <code>
+                    {JSON.stringify(user)}
+                </code>
+            </div>
+        </>
     );
 
 }

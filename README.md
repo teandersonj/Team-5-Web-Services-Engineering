@@ -21,3 +21,6 @@ Team 5's Git Repository for Web Services Engineering
 ### Sprint Forecast
 **Forecasted Point Completion:** TBD
 *Reasoning TBD (pending 02/06 sprint planning meeting)*
+
+# Building and running the project
+TODO ...
