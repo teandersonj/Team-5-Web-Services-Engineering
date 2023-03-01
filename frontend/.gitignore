@@ -5,6 +5,8 @@
 /.pnp
 .pnp.js
 
+*.swp # vim swap files
+
 # testing
 /coverage
 
