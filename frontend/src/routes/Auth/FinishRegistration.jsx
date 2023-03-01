@@ -28,10 +28,11 @@ export default function FinishRegistration(props) {
     return (
         <>
             <div className="flexDirectionColumn">
-                <h1 className="pageHeading">Registration Complete</h1>
-                <p>Account Created. We have sent a verification email to the email you provided.</p>
-                <em>For now this is just a dummy page.</em>
-                <button className="alignSelfCenter roundedBlue" onClick={handleClick}>Continue to Login</button>
+                <h1 className="pageHeading centerText">Registration Complete</h1>
+                <p>Account Created. We have sent a verification email to the email you provided.
+                    <br /><em>For now this is just a dummy page.</em>
+                </p>
+                <button className="alignSelfCenter roundedBlue" onClick={handleClick}>Continue</button>
             </div>
         </>
     )

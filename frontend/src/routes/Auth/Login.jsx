@@ -5,7 +5,6 @@ import toast from 'react-hot-toast';
 import { UserContext } from '../../providers/UserProvider';
 import validateElement from '../../services/Validation';
 
-import Logo from '../../components/images/Logo.png';
 import LabeledInput from '../../components/LabeledInput';
 import ValidationErrorList from '../../components/ValidationErrorList';
 
@@ -106,7 +105,7 @@ export default function Login(props) {
     return (
         <>
             <h1 className="pageHeading"><span style={{ color: "var(--color-gold)" }}>Fireside</span> Gaming</h1>
-            <img className="Logo imageShadow" src={Logo} alt="Fireside Gaming Logo" />
+            <img className="Logo imageShadow" src="/img/logo.png" alt="Fireside Gaming Logo" />
             <h2 className="pageHeading">Login</h2>
             <form id="loginForm" aria-labelledby="Login Form" action="#" method="post" onSubmit={handleSubmit}>
                 {/* We want to put any errors relevant to a specific input, above the input

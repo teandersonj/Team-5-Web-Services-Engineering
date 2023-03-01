@@ -1,6 +1,4 @@
 import { Link, useNavigate } from 'react-router-dom';
-import Logo from '../components/images/Logo.png';
-
 
 /**
  * Navbar component that will be displayed on the left side of the screen when user is logged in
@@ -15,7 +13,7 @@ export default function Navbar(props) {
     return (
         <nav className="UserNav">
             {/* TODO: This'll be where the user's avatar appears */}
-            <img src={Logo} alt="User Avatar" className="Avatar imageShadow" />
+            <img src="/img/logo.png" alt="User Avatar" className="avatar imageShadow" />
             <div className="flexDirectionColumn justifyContentCenter">
                 <div className="alignSelfCenter"><strong>Username: {user.username}</strong></div>
                 <div className="alignSelfCenter">Current Game / Status: {user.currentGameStatus || "Unset"}</div>

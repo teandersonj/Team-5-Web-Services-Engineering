@@ -240,7 +240,7 @@ form {
 /* End of utility classes */
 
 /* For the <img> elements */
-.Logo, .Avatar {
+.Logo {
   width: 100%;
   max-width: 200px;
   height: auto;
@@ -248,4 +248,23 @@ form {
   border: 1px solid var(--color-black);
   box-shadow: 0 0 10px 2px var(--color-dark-blue);
 }
+.avatar {
+  width: 100px;
+  height: 100px;
+}
 /* End of <img> elements */
+
+/* For avatar selection page */
+.avatarContainer label {
+  display: inline-block;
+  border-radius: 20px;
+  overflow: hidden;
+  width: 100px;
+  height: 100px;
+}
+.avatarContainer label img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+/* End of avatar selection page */
