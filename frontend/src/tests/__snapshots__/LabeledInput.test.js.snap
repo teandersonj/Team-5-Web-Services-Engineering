@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LabeledInput Component Tests Renders with certain props (Labeled Email Required Input with Attributes) 1`] = `
+<div>
+  <div
+    style="display: flex; flex-direction: row; align-items: center;"
+  >
+    <label
+      for="email"
+    >
+      Email
+    </label>
+    <input
+      disabled=""
+      id="email"
+      name="email"
+      placeholder="Enter your email"
+      required=""
+      type="email"
+      value="test@test.com"
+    />
+  </div>
+</div>
+`;
+
+exports[`LabeledInput Component Tests Renders with certain props (Labeled Password Optional Input with Attributes) 1`] = `
+<div>
+  <div
+    style="display: flex; flex-direction: column; align-items: flex-start;"
+  >
+    <label
+      for="password"
+    >
+      Password
+    </label>
+    <input
+      id="password"
+      name="password"
+      placeholder="Enter your password"
+      type="password"
+      value="password"
+    />
+  </div>
+</div>
+`;
+
+exports[`LabeledInput Component Tests Renders without props 1`] = `
+<div>
+  <div
+    style="display: flex; flex-direction: column; align-items: flex-start;"
+  >
+    <label>
+      Input
+    </label>
+    <input
+      type="text"
+      value=""
+    />
+  </div>
+</div>
+`;

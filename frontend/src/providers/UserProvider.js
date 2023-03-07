@@ -22,7 +22,10 @@ const UserProvider = ({ children }) => {
         currentGameStatus: null,
         currentParty: null,
         friendsList: null,
-        blockedPlayers: null 
+        blockedPlayers: null,
+        // Need to know how long they've been logged in for/when they first logged/or used refresh token
+        loggedInDateTime: null,
+        lastRefreshDateTime: null,
     });
 
     const [user, setUser] = useState(getInitialState());
