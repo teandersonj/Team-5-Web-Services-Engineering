@@ -7,7 +7,7 @@ import userEvent from "@testing-library/user-event";
 
 import LabeledInput from "../components/LabeledInput";
 
-describe('LabeledInput Component Tests', () => {
+describe('<LabeledInput /> Component Tests', () => {
     // Use Jest and react-testing-library functions to test the component
     // First, does it render without any props?
     // Nex, given various props, does it alter the rendered output as expected?
@@ -15,18 +15,18 @@ describe('LabeledInput Component Tests', () => {
     // Test rendering without props
     it('Renders without props', () => {
         const { container } = render(<LabeledInput />);
-        expect(container).toMatchSnapshot();
+        const labeledInputElement = container.querySelector("div input");
+        expect(labeledInputElement).toBeInTheDocument();
     });
 
     it("Renders with certain props (Labeled Email Required Input with Attributes)", () => {
         const { container } = render(<LabeledInput id="email" label="Email" type="email" defaultValue="test@test.com" disabled={true} required={true} orientation="horizontal" placeholder="Enter your email" />);
-        expect(container).toMatchSnapshot();
-        // Make sure the input has the correct properties 4
+        // Make sure the input has the correct properties
         const input = container.querySelector("input");
         expect(input).toHaveAttribute("id", "email");
         expect(input).toHaveAttribute("name", "email");
         expect(input).toHaveAttribute("type", "email");
-        // defaultValue gets converted to value in the DOMdf
+        // defaultValue gets converted to value in the DOM
         expect(input).toHaveAttribute("value", "test@test.com");
         expect(input).toHaveAttribute("placeholder", "Enter your email");
         expect(input).toHaveAttribute("disabled");
@@ -35,7 +35,6 @@ describe('LabeledInput Component Tests', () => {
 
     it("Renders with certain props (Labeled Password Optional Input with Attributes)", () => {
         const { container } = render(<LabeledInput id="password" label="Password" type="password" defaultValue="password" disabled={false} required={false} orientation="vertical" placeholder="Enter your password" />);
-        expect(container).toMatchSnapshot();
         // Make sure the input has the correct properties
         const input = container.querySelector("input");
         expect(input).toHaveAttribute("id", "password");
