@@ -3,7 +3,7 @@
  * @param {string props.id} ID - The ID of the input, used to identify it
  * -- Currently, the ID is also used as the name of the input
  * @param {string props.label} Label - The label to display before the input
- * @param {string props.type} Type - The type of input to display (text, email, password, etc.)
+ * @param {string props.type} Type - The type of input to display (text(area), email, password, etc.)
  * @param {string props.value} [DefaultValue] - The defaultValue of the input
  * @param {bool props.disabled} [Disabled] - Whether or not the input is disabled
  * @param {bool props.required} [Required] - Whether or not the input is required
@@ -27,7 +27,11 @@ export default function LabeledInput(props) {
     return (
         <div className={containerClassName} style={{ ...containerStyle, ...orientationStyle }}>
             <label htmlFor={id} className={labelClassName} style={labelStyle}>{label}</label>
-            <input disabled={!!disabled} key={id} id={id} name={id} type={type} defaultValue={defaultValue} placeholder={placeholder} className={inputClassName} style={inputStyle} required={!!required} {...rest} />
+            {(type === "textarea") ?
+                <textarea disabled={!!disabled} key={id} id={id} name={id} defaultValue={defaultValue} placeholder={placeholder} className={inputClassName} style={inputStyle} required={!!required} {...rest} />
+                :
+                <input disabled={!!disabled} key={id} id={id} name={id} type={type} defaultValue={defaultValue} placeholder={placeholder} className={inputClassName} style={inputStyle} required={!!required} {...rest} />
+            }
         </div>
     );
 };

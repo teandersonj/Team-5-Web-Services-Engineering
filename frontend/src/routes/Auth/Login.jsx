@@ -17,7 +17,7 @@ export default function Login(props) {
         if (user.loggedIn) {
             navigate("/profile");
         }
-    }, []);
+    });
 
     const [formState, setFormState] = useState({
         // TODO: We'll need to determine whether they entered an email or username.

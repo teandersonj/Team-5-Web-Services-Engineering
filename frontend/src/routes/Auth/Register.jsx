@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
-
+import { UserContext } from '../../providers/UserProvider';
 import validateElement from '../../services/Validation';
 
 import LabeledInput from '../../components/LabeledInput';
@@ -10,6 +10,14 @@ import ValidationErrorList from '../../components/ValidationErrorList';
 export default function Register(props) {
     // TODO: We need to have a way the user to move back and forth through the form "steps" preserving state
     const navigate = useNavigate();
+    const { user } = useContext(UserContext);    
+    
+    // On page refresh or initial load, check if the user's already logged in
+    useEffect(() => {
+        if (user.loggedIn) {
+            navigate("/profile");
+        }
+    });
 
     const getInitialState = () => ({
         fName: "",

@@ -103,7 +103,8 @@ button {
 input[type="text"],
 input[type="password"],
 input[type="email"],
-input[type="number"] {
+input[type="number"],
+textarea, select {
   border: none;
   outline: none;
   border-radius: 5px;
@@ -114,11 +115,15 @@ input[type="number"] {
   background-color: var(--color-white);
   color: var(--color-black);
   width: 100%;
+  min-width: 125px;
 }
+
 input[type="text"]:focus,
 input[type="password"]:focus,
 input[type="email"]:focus,
-input[type="number"]:focus {
+input[type="number"]:focus,
+textarea:focus,
+select:focus {
   /* On focus, maybe have a box-shadow / glow outline appear */
   outline: 2px solid var(--color-dark-blue);
   box-shadow: 0 0 10px 2px var(--color-light-blue);
@@ -127,7 +132,9 @@ input[type="number"]:focus {
 input[type="text"]:disabled,
 input[type="password"]:disabled,
 input[type="email"]:disabled,
-input[type="number"]:disabled {
+input[type="number"]:disabled,
+textarea:disabled,
+select:disabled {
   background-color: var(--color-gray);
   color: var(--color-white);
 }
@@ -155,6 +162,33 @@ main {
   padding: 2%;
   color: var(--color-white);
 }
+
+.sectionContainer {
+  /* This is used to layout the leftSection and rightSections either side-to-side or top-to-bottom depending on viewport width */
+  /* We'll use a grid to have better control over section width, since leftSection will take up 25% width on desktop */
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  grid-template-areas: "leftSection" "rightSection";
+  grid-gap: 1em;
+  width: 100%;
+  height: 100%;
+}
+.leftSection {
+
+}
+.rightSection {
+  
+}
+/* On large enough screens show the sections side by side */
+@media screen and (min-width: 768px) {
+  .sectionContainer {
+    grid-template-columns: 25% 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: "leftSection rightSection";
+  }
+}
+
 
 /* For forms */
 /* #loginForm, #registerForm { */
@@ -230,12 +264,23 @@ form {
   display: flex;
   justify-content: space-between;
 }
+.justifyContentSpaceEvenly {
+  display: flex;
+  justify-content: space-evenly;
+}
 .justifyContentCenter {
   display: flex;
   justify-content: center;
 }
+.justifyContentStretch {
+  display: flex;
+  justify-content: stretch;
+}
 .alignItemsCenter {
   align-items: center;
+}
+.flexGrow-1 {
+  flex-grow: 1;
 }
 /* End of utility classes */
 

@@ -11,7 +11,7 @@ describe("<ValidationErrorList /> Component", () => {
         expect(validationErrorListElement).not.toBeInTheDocument();
     });
 
-    it("Doesn't render with certain props (Empty Errors Object)", () => {
+    it("Doesn't render with empty errors oabject)", () => {
         const { container } = render(<ValidationErrorList errors={{}} />);
         const validationErrorListElement = container.querySelector("ul");
         expect(validationErrorListElement).not.toBeInTheDocument();

@@ -21,9 +21,10 @@ export default function Navbar(props) {
             </div>
             <hr />
             <div className="flexDirectionColumn justifyContentSpaceBetween">
-                <button onClick={() => navigate("/profile")}>Home</button>
+                <button onClick={() => navigate("/profile")}>My Profile</button>
                 <button onClick={() => navigate("/find-games")}>Find Game</button>
                 <button onClick={() => navigate("/find-players")}>Find Players</button>
+                <button onClick={() => navigate("/account-settings")}>User /<br />Account Settings</button>
             </div>
         </nav>
     );
