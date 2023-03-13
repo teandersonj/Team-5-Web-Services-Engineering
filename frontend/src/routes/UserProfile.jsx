@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../providers/UserProvider";
 
@@ -8,6 +8,16 @@ export default function UserProfile(props) {
     const navigate = useNavigate();
     const { user } = useContext(UserContext);
     
+    const [formState, setFormState] = useState({
+        username: "",
+        status: "",
+        playstyle: "",
+        bio: "",
+        favoriteGames: [],
+        recentGames: [],
+        disabled: false,
+        errors: {}
+    });
     // TODO: We can reuse this page for other users' profiles, so we need to be able to pass in a user object
     // from the parent component, and if it's not passed in, we'll use the user object from the UserContext
     // assuming it's the current user's profile
@@ -18,6 +28,7 @@ export default function UserProfile(props) {
         <>
             {/* TODO:  We could have the username here so it's like {Username's} Profile */}
             <h1 className="pageHeading centerText">User Profile</h1>
+            <p>TOOO: Description of this page?</p>
             <hr className="width-100" />
             <div className="sectionContainer">
                 <div className="leftSection flexDirectionColumn centerText">

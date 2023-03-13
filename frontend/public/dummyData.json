@@ -1,0 +1,94 @@
+{
+    "games": [
+        {
+            "id": 1,
+            "name": "Game 1",
+            "description": "Game 1 description",
+            "image": "http: //placehold.it/100",
+            "genre": "Action",
+            "totalPlayerCount": 15,
+            "activePlayerCount": 5,
+            "activePlayers": [
+                {
+                    "id": 1,
+                    "username": "User 1",
+                    "avatar": "http://placehold.it/100",
+                    "blocked": true,
+                    "status": "offline",
+                    "lastSeen": "2016-03-01T12:00:00Z",
+                    "bio": "User 1 bio",
+                    "totalGames": 2,
+                    "totalFriends": 2
+                },
+                {
+                    "id": 2,
+                    "username": "User 2",
+                    "avatar": "http://placehold.it/100",
+                    "blocked": true,
+                    "status": "offline",
+                    "lastSeen": "2016-03-01T12:00:00Z",
+                    "bio": "User 2 bio",
+                    "totalGames": 2,
+                    "totalFriends": 2
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "name": "Game 2",
+            "description": "Game 2 description",
+            "image": "http://placehold.it/100",
+            "genre": "Action",
+            "totalPlayerCount": 15,
+            "activePlayerCount": 5,
+            "recommendedPlayers": [
+                {
+                    "id": 1,
+                    "username": "User 1",
+                    "avatar": "http://placehold.it/100",
+                    "blocked": true,
+                    "status": "offline",
+                    "lastSeen": "2016-03-01T12:00:00Z",
+                    "bio": "User 1 bio",
+                    "totalGames": 2,
+                    "totalFriends": 2
+                },
+                {
+                    "id": 2,
+                    "username": "User 2",
+                    "avatar": "http://placehold.it/100",
+                    "blocked": true,
+                    "status": "offline",
+                    "lastSeen": "2016-03-01T12:00:00Z",
+                    "bio": "User 2 bio",
+                    "totalGames": 2,
+                    "totalFriends": 2
+                }
+            ]
+        }
+    ],
+    "users": [
+        {
+            "id": 1,
+            "username": "User 1",
+            "avatar": "http://placehold.it/100",
+            "blocked": true,
+            "status": "offline",
+            "lastSeen": "2016-03-01T12:00:00Z",
+            "bio": "User 1 bio",
+            "totalGames": 2,
+            "totalFriends": 2
+        },
+        {
+            "id": 2,
+            "username": "User 2",
+            "avatar": "http://placehold.it/100",
+            "blocked": true,
+            "status": "offline",
+            "lastSeen": "2016-03-01T12:00:00Z",
+            "bio": "User 2 bio",
+            "totalGames": 2,
+            "totalFriends": 2
+        }
+    ]
+}

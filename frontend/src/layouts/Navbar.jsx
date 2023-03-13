@@ -19,10 +19,10 @@ export default function Navbar(props) {
                 <div className="alignSelfCenter">Current Game / Status: {user.currentGameStatus || "Unset"}</div>
                 <div className="alignSelfCenter"><button onClick={() => logout()}>Log Out</button></div>
             </div>
-            <hr />
+            <hr className="width-100" />
             <div className="flexDirectionColumn justifyContentSpaceBetween">
                 <button onClick={() => navigate("/profile")}>My Profile</button>
-                <button onClick={() => navigate("/find-games")}>Find Game</button>
+                <button onClick={() => navigate("/find-games")}>Find Games</button>
                 <button onClick={() => navigate("/find-players")}>Find Players</button>
                 <button onClick={() => navigate("/account-settings")}>User /<br />Account Settings</button>
             </div>

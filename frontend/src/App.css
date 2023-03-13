@@ -12,7 +12,7 @@ body {
   /* Use these as var(--color-white) ... */
   --color-white: #F7F7F7;
   --color-black: #1F2421;
-  --color-gray: #858585;
+  --color-gray: #5b5b5b;
   --color-green: #4DA078;
   --color-light-blue: #2E8BD0;
   --color-dark-blue: #21699B;
@@ -59,6 +59,7 @@ body {
   background-color: var(--color-gray);
   padding: 30px 20px;
   border-right: 1px solid var(--color-black);
+  color: var(--color-white)
 }
 
 /* For buttons */
@@ -86,6 +87,9 @@ button {
   font-weight: bold;
   cursor: pointer;
 }
+.roundedBlue:hover {
+  background-color: var(--color-light-blue);
+}
 .roundedGray {
   background-color: var(--color-gray);
   color: var(--color-white);
@@ -96,6 +100,9 @@ button {
   font-size: 1em;
   font-weight: bold;
   cursor: pointer;
+}
+.roundedGray:hover {
+  background-color: var(--color-black);
 }
 /* End Buttons */
 
@@ -152,7 +159,7 @@ main {
   grid-area: main;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   align-self: stretch;
   flex-wrap: nowrap;
@@ -173,12 +180,6 @@ main {
   grid-gap: 1em;
   width: 100%;
   height: 100%;
-}
-.leftSection {
-
-}
-.rightSection {
-  
 }
 /* On large enough screens show the sections side by side */
 @media screen and (min-width: 768px) {
@@ -299,7 +300,7 @@ form {
 }
 /* End of <img> elements */
 
-/* For avatar selection page */
+/* For avatar selection / Continue Registration page */
 .avatarContainer label {
   display: inline-block;
   border-radius: 20px;
@@ -313,3 +314,21 @@ form {
   height: auto;
 }
 /* End of avatar selection page */
+
+/* For GameCard */
+.GameCard {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: space-between;
+  align-self: stretch;
+  height: 100%;
+  color: var(--color-white);
+  border-radius: 10px;
+  box-shadow: 0 0 10px 2px var(--color-gray);
+  background-color: var(--color-gray);
+  width: 75%;
+  padding: 2%;
+  margin: 10px auto;
+  border: 1px solid var(--color-white);
+}
