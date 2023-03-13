@@ -28,6 +28,7 @@ export default function Register(props) {
         passwordStrength: 0,
         playstyle: "",
         formStep: 1,
+        disabled: false,
         errors: {}
     });
 
@@ -116,14 +117,19 @@ export default function Register(props) {
     // TODO: Disable the submit button if there are any errors in the formState.errors object
     const handleSubmit = (event) => {
         event.preventDefault();
-        // TODO: We need to validate the form before we submit it to the backend for further validation and processing
-        // For now let's just show the Confirm Registration page
-
+        // Disable the form while we're processing to prevent double submissions
+        setFormState((prev) => ({ ...prev, disabled: true }));
+        
+        // Ensure there are no validation errors
         if (Object.keys(formState.errors).length > 0) {
             console.log(formState.errors)
             toast.error("Check your inputs and try again");
+            setFormState((prev) => ({ ...prev, disabled: false }));
             return false;
         }
+
+        // Send what we have to server here? or send it all to Continue Registration Page and then send it all to the server
+        // when the user submits that form?
 
         return navigate('/register/continue', { state: { fName: formState.fName, email: formState.email }, replace: true });
     };
@@ -168,7 +174,7 @@ export default function Register(props) {
                     or send what we have here to server for validation, get a response and then go there 
                     I think we'll have to send this all to server first to check for existing accts, then if its validated we come back to Step 2.
                     If the user quits and re-logs before doing Step 2 we can bring that up again */}
-                    <button id="submit" form="registerForm" type="submit" className="roundedBlue">Continue</button>
+                    <button id="submit" form="registerForm" type="submit" className="roundedBlue" disabled={formState.disabled}>Continue</button>
                     <button className="roundedGray"><Link className="Link" style={{ color: "white" }} to="/">Cancel</Link></button>
                 </p>
             </form>

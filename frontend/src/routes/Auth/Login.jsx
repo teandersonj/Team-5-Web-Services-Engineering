@@ -23,6 +23,7 @@ export default function Login(props) {
         // TODO: We'll need to determine whether they entered an email or username.
         username: "",
         password: "",
+        disabled: false,
         errors: {}
     });
 
@@ -66,6 +67,10 @@ export default function Login(props) {
     // TODO: Disable the submit button if there are any errors in the formState.errors object
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        // Disable the submit button so the user can't spam the form
+        setFormState((prev) => ({ ...prev, disabled: true }));
+        
         // We should re-validate the form
         // And we could style the inputs to indicate which ones are invalid
         // But for now we'll just check if there are any errors in the formState.errors object
@@ -94,7 +99,7 @@ export default function Login(props) {
         const result = userLogin(newUser);
         if (result.errors) {
             toast.error("Login failed, check your inputs and try again");
-            setFormState((prev) => ({ ...prev, ...result.errors }));
+            setFormState((prev) => ({ ...prev, ...result.errors, disabled: false }));
             return false;
         } else {
             toast.success("Login successful");
@@ -124,7 +129,7 @@ export default function Login(props) {
                 <p>Forgot your password? Click <Link className="Link" to="/forgot-password">here</Link> to reset your password.</p>
                 <p>Don't have an account? <Link className="Link" to="/register">Register Now</Link></p>
                 <div className="formRow centerContent">
-                    <input type="submit" className="roundedBlue" value="Login" />
+                    <input type="submit" className="roundedBlue" value="Login" disabled={formState.disabled} />
                 </div>
                 <div className="flexDirectionRow justifyContentSpaceBetween">
                     <button disabled>Login with Discord</button>
