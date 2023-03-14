@@ -10,8 +10,8 @@ describe('Registration Page', () => {
         // Check if user is on Registration page (string value)
         cy.contains('Registration')
         // Fill in the input fields and validate that they are filled correctly
-        cy.get('#fName').type('Some').should('have.value', 'Some');
-        cy.get('#lName').type('Tester').should('have.value', 'Tester');
+        cy.get('#first_name').type('Some').should('have.value', 'Some');
+        cy.get('#last_name').type('Tester').should('have.value', 'Tester');
         cy.get('#email').type('test@test.com').should('have.value', 'test@test.com');
         cy.get('#password').type('p@ssw0rd!').should('have.value', 'p@ssw0rd!');
         cy.get('#confirmPassword').type('p@ssw0rd!').should('have.value', 'p@ssw0rd!');

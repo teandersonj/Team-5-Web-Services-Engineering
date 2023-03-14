@@ -23,7 +23,6 @@ export default function GameSearch(props) {
                 search: encodeURIComponent(searchState.search)
             }
         }).then((res) => {
-            console.log(res);
             if (res.status === 200) {
                 res.json().then((data) => {
                     setSearchState((prev) => ({ ...prev, results: data }));
@@ -39,7 +38,7 @@ export default function GameSearch(props) {
     return (
         <>
             <h1 className="pageHeading centerText">Find Games</h1>
-            <span>TODO: Description of this page...</span>
+            <p>Use this page to discover new games, and see who's playing them.</p>
             <hr className="width-100" />
             <div className="flexDirectionRow">
                 {/* Search Bar */}
@@ -50,13 +49,14 @@ export default function GameSearch(props) {
             <div className="flexDirectionColumn" style={{ alignSelf: "stretch" }}>
                 {/* Main Games Container */}
                 <div className="flexDirectionRow justifyContentSpaceBetween" style={{ width: "75%", margin: "0 auto" }}>
-                    {searchState.results?.games?.length > 0 && (<><div>Games</div>
+                    {/* TODO: Fix this so the container doesn't render if not needed */}
+                    {searchState.results?.games?.length > 0 && (<><div>Search Results:</div>
                     <div>{searchState.results?.games.length || 0} games found.</div></>)}
                 </div>
                 <div className="flexDirectionColumn flexWrap">
                     {searchState.results?.games?.map((game) => (
                         // TODO: Extract styling for GameCard and allow it to vary for GameSearch and when it's used in profiles
-                        <GameCard key={game.id} game={game} withPlayers={true} />
+                        <GameCard key={game.GameId} game={game} withPlayers={true} />
                     )) || <div>No games found.</div>}
                 </div>
             </div>

@@ -283,6 +283,9 @@ form {
 .flexGrow-1 {
   flex-grow: 1;
 }
+.flexWrap-True {
+  flex-wrap: wrap;
+}
 /* End of utility classes */
 
 /* For the <img> elements */
@@ -322,6 +325,44 @@ form {
   justify-content: flex-start;
   align-items: space-between;
   align-self: stretch;
+  height: 100%;
+  color: var(--color-white);
+  border-radius: 10px;
+  box-shadow: 0 0 10px 2px var(--color-gray);
+  /* background-color: var(--color-gray); */
+  width: 75%;
+  padding: 2%;
+  margin: 10px auto;
+  border: 1px solid var(--color-white);
+}
+
+.PlayerCard-small {
+  display: flex;
+  flex-direction: column;
+  max-width: 125px;
+  align-items: center;
+  flex-wrap: wrap;
+  color: var(--color-white);
+  background-color: var(--color-gray);
+  margin: 10px;
+  border: 1px solid var(--color-white);
+}
+.PlayerCard-small .LabeledInput {
+  /* Ensure the inpt field is not wider than the card */
+  max-width: 100px;
+  flex-wrap: wrap;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}
+/* For the large size player card we can show the first and last name in horizontal spread */
+.PlayerCard-large {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  align-self: stretch;
+  flex-wrap: wrap;
   height: 100%;
   color: var(--color-white);
   border-radius: 10px;

@@ -1,13 +1,14 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../providers/UserProvider";
 
+import PlayerCard from "../components/PlayerCard";
 import LabeledInput from "../components/LabeledInput";
 
 export default function UserProfile(props) {
     const navigate = useNavigate();
-    const { user } = useContext(UserContext);
-    
+    const { user, updateUser } = useContext(UserContext);
+
     const [formState, setFormState] = useState({
         username: "",
         status: "",
@@ -34,7 +35,7 @@ export default function UserProfile(props) {
                 <div className="leftSection flexDirectionColumn centerText">
                     {/* This'll be the user's avatar in a circle, and we need to have a button on the bottom right corner for Edit */}
                     <div>
-                        <img style={{ display: "block", margin: "5px auto" }} src={user.avatar || "https://via.placeholder.com/150"} alt="User Avatar" className="avatar imageShadow" />
+                        <img style={{ display: "block", margin: "5px auto" }} src={"/img/avatars/" + user.avatar + ".jpg" || "https://via.placeholder.com/150"} alt="User Avatar" className="avatar imageShadow" />
                         <button>Edit</button>
                     </div>
                     <LabeledInput type="text" id="username" label="Username" defaultValue={user.username || "Unset"} orientation="vertical" disabled />
@@ -53,13 +54,13 @@ export default function UserProfile(props) {
                     </div>
                     <div>
                         <h3>Friends List</h3>
-                        <SampleGames />
+                        <FriendsList user={user} updateUser={updateUser} />
                     </div>
                 </div>
             </div>
 
             <hr className="width-100" />
-            <div style={{ maxWidth: "300px", wordWrap: "break-word" }}>
+            <div style={{ maxHeight: "300px", maxWidth: "300px", wordWrap: "break-word", overflow: "scroll" }}>
                 <h3>User State: </h3>
                 <code>
                     {JSON.stringify(user)}
@@ -93,6 +94,37 @@ const SampleGames = (props) => {
                 <img width="50" height="50" src="https://via.placeholder.com/50" />
                 <div>Game 5</div>
             </div>
+        </div>
+    );
+};
+
+const FriendsList = (props) => {
+    // Load the user's friends list from the sample data and apply it to the user
+    // TODO: This will be stored in the context grabbed from the database 
+    useEffect(() => {
+        fetch("/dummyData.json",
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                }
+            },
+        ).then((res) => res.json()).then((data) => {
+            // Update the user's blocked users
+            const newData = {
+                ...props.user,
+                friendsList: data.users
+            }
+            props.updateUser(newData);
+            return;
+        });
+    }, [])
+
+    return (
+        <div className="flexDirectionRow justifyContentSpaceEvenly">
+            {props.user?.friendsList && props.user.friendsList?.map((friend, index) => (
+                <PlayerCard key={index} player={friend} size={"small"} />
+            ))}
         </div>
     );
 };

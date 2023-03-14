@@ -5,14 +5,14 @@ export default function GameCard(props) {
     const { game, withPlayers, style, className } = props;
 
     return (
-        <div key={game._id} className={className || "GameCard"} style={style}>
+        <div key={game.GameId} className={className || "GameCard"} style={style}>
             {/* Card Container */}
             <div className="flexDirectionRow flexGrow-1 justifyContentSpaceBetween">
                 {/* Game Info Content */}
                 {/* Game Image, Name,etc. */}
                 <div className="flexDirectionRow">
                     <div className="flexDirectionColumn justifyContentCenter centerText" style={{ flexGrow: 0.5 }}>
-                        <img style={{ display: "block", flexGrow: 0.5 }} src={"/img/Logo.png"} />
+                        <img style={{ display: "block", flexGrow: 0.5, maxHeight: "125px" }} src={"/img/Logo.png"} />
                         <div style={{ display: "flex", flexDirection: "column", flexGrow: 0.5, justifyContent: "center" }}>
                             <div>{game.name}</div>
                             <div>{game.genre}</div>
@@ -43,13 +43,13 @@ export default function GameCard(props) {
                             <p>Recommended Players</p>
                             <div className="flexDirectionRow justifyContentSpaceEvenly">
                                 {game.recommendedPlayers?.map((player) => (
-                                    <PlayerCard key={player.id} player={player} />
+                                    <PlayerCard key={player.id} player={player} size={"small"} />
                                 )) || "No recommended players"}
                             </div>
                             <p>Active Players</p>
                             <div className="flexDirectionRow justifyContentSpaceEvenly">
                                 {game.activePlayers?.map((player) => (
-                                    <PlayerCard key={player.id} player={player} />
+                                    <PlayerCard key={player.id} player={player} size={"small"} />
                                 )) || "No active players"}
                             </div>
                         </div>

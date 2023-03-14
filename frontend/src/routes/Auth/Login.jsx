@@ -1,5 +1,5 @@
-import { Link, useNavigate } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
 import { UserContext } from '../../providers/UserProvider';
@@ -8,9 +8,15 @@ import validateElement from '../../services/Validation';
 import LabeledInput from '../../components/LabeledInput';
 import ValidationErrorList from '../../components/ValidationErrorList';
 
+
+/** 
+ * Login component, used to log in a user
+ * @param {*} props
+ * @returns <Login />
+ **/
 export default function Login(props) {
     const navigate = useNavigate();
-    const { user, login: userLogin } = useContext(UserContext);
+    const { user, updateUser } = useContext(UserContext);
 
     // On page refresh or initial load, check if the user's already logged in
     useEffect(() => {
@@ -48,7 +54,7 @@ export default function Login(props) {
             // so we'll have an object like errors: { [inputId]: { [validationRule]: "Validation error message" } }
             // Have to keep track of the previous errors so we don't overwrite them later
             const errors = { ...formState.errors, [target.id]: validationResult };
-            
+
             // Now we begin to update our state here with the new errors,
             // keeping hold of the previous state (including other inputs' errors)
             setFormState((prev) => ({ ...prev, errors }));
@@ -65,47 +71,109 @@ export default function Login(props) {
     };
 
     // TODO: Disable the submit button if there are any errors in the formState.errors object
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         // Disable the submit button so the user can't spam the form
         setFormState((prev) => ({ ...prev, disabled: true }));
-        
+
         // We should re-validate the form
         // And we could style the inputs to indicate which ones are invalid
         // But for now we'll just check if there are any errors in the formState.errors object
         if (Object.keys(formState.errors).length > 0) {
-            console.log(formState.errors)
             toast.error("Check your inputs and try again");
             return false;
         }
 
         // Need to detect if the user entered an email or username
         // If it's an email we'll pass it as an email, otherwise we'll pass it as a username
-        const newUser = formState.username.includes("@") ?
-            {
-                email: formState.username,
-                password: formState.password
-            } :
-            {
-                username: formState.username,
-                password: formState.password
-            };
+        // const newUser = formState.username.includes("@") ?
+        //     {
+        //         // TODO: Will we be able to login with an email?
+        //         // email: formState.username,
+        //         username: formState.username,
+        //         password: formState.password
+        //     } :
+        // {
+        //     username: formState.username,
+        //     password: formState.password
+        // };
 
         // Pass the user's login info to the userLogin function,
         // which will send it to the server for validation
         // If there's an error, it'll return an object with an errors property
         // And we can display those errors to the user
-        const result = userLogin(newUser);
-        if (result.errors) {
-            toast.error("Login failed, check your inputs and try again");
-            setFormState((prev) => ({ ...prev, ...result.errors, disabled: false }));
+
+        // Send the login info to the server to validate and login, retrieving the rest of the user's details
+        // If successful, update the user state and navigate to the profile page
+        await fetch("/api/token/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                username: formState.username,
+                password: formState.password
+            })
+        }).then((res) => {
+            console.log("Login response: ", res);
+            if (res.status === 200) {
+                toast.success("Login successful!");
+                // Update the user state
+                const userData = {
+                    username: res.username,
+                    email: res.email,
+                    first_name: res.first_name,
+                    last_name: res.last_name,
+                    accessToken: res.access,
+                    refreshToken: res.refresh,
+                    loggedIn: true
+                };
+                // We need to fetch the Player data associated with this user
+                fetch(`/api/player/${res.id}`, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${res.access}`
+                    }
+                }).then((res) => {
+                    console.log("Player response: ", res);
+                    if (res.status === 200) {
+                        // Update the user state
+                        userData.playstyle = res.Playstyle;
+                        userData.avatar = res.Avatar;
+                        userData.playerId = res.id;
+                        userData.attitude = res.Attitude;
+                        userData.compositeSkill = res.CompositeSkill;
+                        updateUser(userData);
+                        // Navigate to the profile page
+                        return navigate("/profile");
+                    } else if (res.status === 401) {
+                        toast.error("Invalid username or password. Please try again.");
+                        // Re-enable the submit button
+                        setFormState((prev) => ({ ...prev, disabled: false }));
+                    }
+                }).catch((err) => {
+                    toast.error("Login failed, please try again");
+                    console.log("Error logging in: ", JSON.stringify(err.body) || err);
+                    // Re-enable the submit button
+                    // TODO: Show server-side errors to the user
+                    setFormState((prev) => ({ ...prev, disabled: false }));
+                    return false;
+                });
+            } else if (res.status === 401) {
+                toast.error("Invalid username or password. Please try again.");
+                // Re-enable the submit button
+                setFormState((prev) => ({ ...prev, disabled: false }));
+            }
+        }).catch((err) => {
+            toast.error("Login failed, please try again");
+            console.log("Error logging in: ", JSON.stringify(err.body) || err);
+            // Re-enable the submit button
+            setFormState((prev) => ({ ...prev, disabled: false }));
             return false;
-        } else {
-            toast.success("Login successful");
-            return true;
-        }
-    };
+        });
+    }
 
     return (
         <>

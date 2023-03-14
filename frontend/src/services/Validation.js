@@ -54,7 +54,7 @@ export const InputValidationRules = {
             message: "Password must be less than 100 characters"
         }
     },
-    fName: {
+    first_name: {
         type: "text",
         // required: true,
         minLength: {
@@ -70,7 +70,7 @@ export const InputValidationRules = {
             message: "First name must only contain letters"
         }
     },
-    lName: {
+    last_name: {
         type: "text",
         // required: true,
         minLength: {

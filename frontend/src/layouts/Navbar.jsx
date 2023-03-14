@@ -12,8 +12,7 @@ export default function Navbar(props) {
 
     return (
         <nav className="UserNav">
-            {/* TODO: This'll be where the user's avatar appears */}
-            <img src="/img/logo.png" alt="User Avatar" className="avatar imageShadow" />
+            <img src={"/img/avatars/" + user.avatar + ".jpg"} alt="User Avatar" className="avatar imageShadow" />
             <div className="flexDirectionColumn justifyContentCenter">
                 <div className="alignSelfCenter"><strong>Username: {user.username}</strong></div>
                 <div className="alignSelfCenter">Current Game / Status: {user.currentGameStatus || "Unset"}</div>
@@ -21,6 +20,7 @@ export default function Navbar(props) {
             </div>
             <hr className="width-100" />
             <div className="flexDirectionColumn justifyContentSpaceBetween">
+                <button>My Friends /<br />Party</button>
                 <button onClick={() => navigate("/profile")}>My Profile</button>
                 <button onClick={() => navigate("/find-games")}>Find Games</button>
                 <button onClick={() => navigate("/find-players")}>Find Players</button>

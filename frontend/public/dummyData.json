@@ -1,7 +1,7 @@
 {
     "games": [
         {
-            "id": 1,
+            "GameId": 1,
             "name": "Game 1",
             "description": "Game 1 description",
             "image": "http: //placehold.it/100",
@@ -34,13 +34,13 @@
             ]
         },
         {
-            "id": 2,
+            "GameId": 2,
             "name": "Game 2",
             "description": "Game 2 description",
             "image": "http://placehold.it/100",
-            "genre": "Action",
-            "totalPlayerCount": 15,
-            "activePlayerCount": 5,
+            "genre": "Strategy",
+            "totalPlayerCount": 256,
+            "activePlayerCount": 1,
             "recommendedPlayers": [
                 {
                     "id": 1,
@@ -71,7 +71,9 @@
         {
             "id": 1,
             "username": "User 1",
-            "avatar": "http://placehold.it/100",
+            "first_name": "Test",
+            "last_name": "User",
+            "avatar": "avatar3",
             "blocked": true,
             "status": "offline",
             "lastSeen": "2016-03-01T12:00:00Z",
@@ -82,11 +84,39 @@
         {
             "id": 2,
             "username": "User 2",
-            "avatar": "http://placehold.it/100",
+            "first_name": "Test",
+            "last_name": "User",
+            "avatar": "avatar2",
             "blocked": true,
             "status": "offline",
             "lastSeen": "2016-03-01T12:00:00Z",
             "bio": "User 2 bio",
+            "totalGames": 2,
+            "totalFriends": 2
+        },
+        {
+            "id": 3,
+            "username": "User 3",
+            "first_name": "Test",
+            "last_name": "User",
+            "avatar": "avatar1",
+            "blocked": false,
+            "status": "offline",
+            "lastSeen": "2016-03-01T12:00:00Z",
+            "bio": "User 3 bio",
+            "totalGames": 2,
+            "totalFriends": 2
+        },
+        {
+            "id": 4,
+            "username": "User 4",
+            "first_name": "Test",
+            "last_name": "User",
+            "avatar": "avatar4",
+            "blocked": false,
+            "status": "offline",
+            "lastSeen": "2016-03-01T12:00:00Z",
+            "bio": "User 4 bio",
             "totalGames": 2,
             "totalFriends": 2
         }

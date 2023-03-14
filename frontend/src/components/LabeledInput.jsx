@@ -20,17 +20,17 @@
  * @returns <LabeledInput /> LabeledInput JSX component
  */
 export default function LabeledInput(props) {
-    const { id, label = "Input", type = "text", defaultValue = "", disabled = false, required = false, orientation = "vertical", placeholder, containerStyle, labelStyle, inputStyle, containerClassName, labelClassName, inputClassName, ...rest } = props;
+    const { id, label = "Input", type = "text", defaultValue, disabled = false, required = false, orientation = "vertical", placeholder, containerStyle, labelStyle, inputStyle, containerClassName, labelClassName, inputClassName, ...rest } = props;
     
     let orientationStyle = orientation === "horizontal" ? { display: "flex", flexDirection: "row", alignItems: "center" } : { display: "flex", flexDirection: "column", alignItems: "flex-start" };
 
     return (
-        <div className={containerClassName} style={{ ...containerStyle, ...orientationStyle }}>
+        <div key={"container"+id} className={"LabeledInput " + (containerClassName ||"")} style={{ ...containerStyle, ...orientationStyle }}>
             <label htmlFor={id} className={labelClassName} style={labelStyle}>{label}</label>
             {(type === "textarea") ?
                 <textarea disabled={!!disabled} key={id} id={id} name={id} defaultValue={defaultValue} placeholder={placeholder} className={inputClassName} style={inputStyle} required={!!required} {...rest} />
                 :
-                <input disabled={!!disabled} key={id} id={id} name={id} type={type} defaultValue={defaultValue} placeholder={placeholder} className={inputClassName} style={inputStyle} required={!!required} {...rest} />
+                <input disabled={!!disabled} key={"input"+id} id={id} name={id} type={type} defaultValue={defaultValue} placeholder={placeholder} className={inputClassName} style={inputStyle} required={!!required} {...rest} />
             }
         </div>
     );
