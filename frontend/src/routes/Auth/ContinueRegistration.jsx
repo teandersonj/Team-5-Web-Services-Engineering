@@ -30,7 +30,7 @@ export default function ContinueRegistration(props) {
     });
     
     // Give us access to the location state passed in from the Register component
-    const { state: location } = useLocation();
+    // const { state: location } = useLocation();
 
     const [formState, setFormState] = useState({
         playstyle: "",
@@ -79,11 +79,16 @@ export default function ContinueRegistration(props) {
         event.preventDefault();
         if (formState.playstyle === "" || formState.avatar === "") {
             // TODO: Ensure username is unique and a valid avatar is selected
-            toast.error("Please select a username and avatar.");
+            toast.error("Please select your playstyle and avatar.");
             return;
         }
         
-        fetch(`/api/player/${user.id}/`, {
+        const newData = ({ ...user, playstyle: formState.playstyle, avatar: formState.avatar, loggedIn: true });
+
+        updateUser(newData);
+
+        // TODO: Create the "Player" 
+        /* fetch(`/api/player/${user.id}/`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -109,7 +114,7 @@ export default function ContinueRegistration(props) {
         }).catch((error) => {
             toast.error(error.message);
         });
-
+ */
     };
 
     // TODO: What happens when they cancel at this point??
@@ -118,16 +123,17 @@ export default function ContinueRegistration(props) {
     const handleCancel = (event) => {
         event.preventDefault();
         // Clear any saved data in user context
-        // updateUser({
-        //     first_name: "",
-        //     last_name: "",
-        //     email: "",
-        //     password: "",
-        //     playstyle: "",
-        //     username: "",
-        //     avatar: "",
-        //     loggedIn: false
-        // });
+        // TODO: Have a reset function on the User which does this totally
+        updateUser({
+            first_name: "",
+            last_name: "",
+            email: "",
+            password: "",
+            playstyle: "",
+            username: "",
+            avatar: "",
+            loggedIn: false
+        });
         navigate('/login');
     };
 

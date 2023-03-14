@@ -154,11 +154,9 @@ export default function Register(props) {
         }).then(async (response) => {
             const data = await response.json();
             if (!response.ok) {
-                alert("NOT OK");
                 console.log(data);
                 throw data || response;
             }
-            console.log(response.status);
             return data;
         }).then(async (res) => {
             const newUser = {
@@ -168,7 +166,6 @@ export default function Register(props) {
                 first_name: res.first_name,
                 last_name: res.last_name
             };
-            console.log("Success :" + JSON.stringify(res));
 
             // If the registration was successful, request an access token
             fetch('/api/token/', {
