@@ -111,8 +111,8 @@ const AccountSettings = (props) => {
                     </p>
                 </fieldset>
             </form>
-            {/* Output the form state here for debugging */}
-            <p style={{ display: "block", margin: "5px auto", width: "300px", height: "125px", wordWrap: "break-word", overflow: "scroll" }}>{JSON.stringify(formState)}</p>
+            {/* TODO: Output the form state here for debugging */}
+            {/* <p style={{ display: "block", margin: "5px auto", width: "300px", height: "125px", wordWrap: "break-word", overflow: "scroll" }}>{JSON.stringify(formState)}</p> */}
         </>
     );
 };
@@ -166,11 +166,11 @@ const BlockedUsers = (props) => {
                 {user.blockedUsers?.map((blockedUser, index) => (
                     <div key={index} style={blockedUserCardStyle}>
                         <div className="justifyContentCenter">
-                            <img style={{ display: "block" }} src={"/img/avatars/" + user.avatar + ".jpg" || "/img/Logo.png"} width="75px" height="75px" />
+                            <img style={{ display: "block" }} src={"/img/avatars/" + blockedUser.avatar + ".jpg" || "/img/Logo.png"} width="75px" height="75px" />
                         </div>
-                        <LabeledInput inputStyle={inputStyle} type="text" id="username" label="Username" defaultValue={user.username || "Unset"} orientation="vertical" disabled />
-                        <LabeledInput inputStyle={inputStyle} type="text" id="first_name" label="First Name" defaultValue={user.first_name || "Unset"} orientation="vertical" disabled />
-                        <LabeledInput inputStyle={inputStyle} type="text" id="last_name" label="Last Name" defaultValue={user.last_name || "Unset"} orientation="vertical" disabled />
+                        <LabeledInput inputStyle={inputStyle} type="text" id="username" label="Username" defaultValue={blockedUser.username || "Unset"} orientation="vertical" disabled />
+                        <LabeledInput inputStyle={inputStyle} type="text" id="first_name" label="First Name" defaultValue={blockedUser.first_name || "Unset"} orientation="vertical" disabled />
+                        <LabeledInput inputStyle={inputStyle} type="text" id="last_name" label="Last Name" defaultValue={blockedUser.last_name || "Unset"} orientation="vertical" disabled />
                         <button>Unblock User</button>
                     </div>
                 )) || <span className="centerText">You haven't blocked any users yet.</span>}

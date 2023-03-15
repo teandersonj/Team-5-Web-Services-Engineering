@@ -29,7 +29,7 @@ export default function UserProfile(props) {
         <>
             {/* TODO:  We could have the username here so it's like {Username's} Profile */}
             <h1 className="pageHeading centerText">User Profile</h1>
-            <p>TOOO: Description of this page?</p>
+            {/* <p>TOOO: Description of this page?</p> */}
             <hr className="width-100" />
             <div className="sectionContainer">
                 <div className="leftSection flexDirectionColumn centerText">
@@ -59,13 +59,14 @@ export default function UserProfile(props) {
                 </div>
             </div>
 
-            <hr className="width-100" />
+            {/* TODO: Hiding this for the presentation */}
+            {/* <hr className="width-100" />
             <div style={{ maxHeight: "300px", maxWidth: "300px", wordWrap: "break-word", overflow: "scroll" }}>
                 <h3>User State: </h3>
                 <code>
                     {JSON.stringify(user)}
                 </code>
-            </div>
+            </div> */}
         </>
     );
 }

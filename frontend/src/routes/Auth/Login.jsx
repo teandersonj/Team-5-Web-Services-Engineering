@@ -110,41 +110,55 @@ export default function Login(props) {
                 username: formState.username,
                 password: formState.password
             })
-        }).then((res) => res.json()).then(async (res) => {
+        }).then((res) => {
             if (res.ok) {
-                // Update the user state
-                newUserData.accessToken = res.access;
-                newUserData.refreshToken = res.refresh;
-                return res;
+                return res.json();
             } else if (res.status === 401) {
+                // TODO: We could extract this message or make it so the very last catch
+                // will handle it, but for now we'll just handle it here
                 toast.error("Invalid username or password. Please try again.");
                 // Re-enable the submit button
                 setFormState((prev) => ({ ...prev, disabled: false }));
-            }
+                return false;
+            } else throw new Error({
+                status: res.status,
+                error: res
+            });
+        }).then((res) => {
+            console.log("Login response: ", res);
+            // Update the user state
+            newUserData.accessToken = res.access;
+            newUserData.refreshToken = res.refresh;
             return res;
-        }).then(async (res) => {
+        }).then((res) => {
+            console.log("Login response: ", res)
             // We have the tokens, now we need to get the user's data
             // Get the user's data from the userInfo endpoint
-            await fetch("/api/user/", {
+            fetch("/api/user/", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
+                    "Authorization": `Bearer ${res.access}`
                 }
-            }).then((res)=>res.json()).then((data) => {
-                console.log("User response: ", res);
+            }).then((res) => {
                 if (res.ok) {
-                    toast.success("Login successful!");
-                    // Update the user state
-                    newUserData.username = data.username;
-                    newUserData.email = data.email;
-                    newUserData.first_name = data.first_name;
-                    newUserData.last_name = data.last_name;
-                    newUserData.loggedIn = true;
-                    // For now store what we have in the user state
-                    updateUser(newUserData);
-                }
+                    return res.json();
+                } else throw new Error({
+                    status: res.status,
+                    error: res
+                });
+            }).then((res) => {
+                toast.success("Login successful!");
+                // Update the user state
+                newUserData.username = res.data.username;
+                newUserData.email = res.data.email;
+                newUserData.first_name = res.data.first_name;
+                newUserData.last_name = res.data.last_name;
+                newUserData.loggedIn = true;
+                // TODO: For now store what we have in the user state
+                updateUser(newUserData);
             }).catch((err) => {
-                console.log("User fetch error: ", err);
+                console.log("User fetch error: ", err.status, err.error);
                 toast.error("There was an error logging in. Please try again.");
                 // Re-enable the submit button
                 setFormState((prev) => ({ ...prev, disabled: false }));
@@ -184,8 +198,10 @@ export default function Login(props) {
                             }); */
 
         }).catch((err) => {
+            // TODO: Ideally handle errors here, perhaps by passing an error object with status and message
+            // from each fetch call
             toast.error("Login failed, please try again");
-            console.log("Error logging in: ", JSON.stringify(err.body) || err);
+            console.log("Error logging in with status ", err.status, " and ", JSON.stringify(err.error) || err);
             // Re-enable the submit button
             setFormState((prev) => ({ ...prev, disabled: false }));
             return false;

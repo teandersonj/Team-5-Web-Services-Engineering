@@ -25,23 +25,27 @@ import { UserContext } from "./providers/UserProvider";
 
 // The App component is the root of the React component tree
 function App() {
-  const { user, login: userLogin } = useContext(UserContext);
+  const { user, updateUser } = useContext(UserContext);
 
   // Normally, when the page is refreshed, the user will be logged out, because the state is lost.
-  // This useEffect will check if the user is logged in, and if so, log them back in.
+  // This useEffect will check if the user is logged in, and if so, restore the state.
   // This is done by checking if there's a user object in local storage.
   // If there is, we'll set the user state to that object via the UserContext.
   // This will trigger a re-render, and the user will be logged in.
   // Note: This means when we login we must also store the user object in local storage.
   // We could do an API call here to check if the session is still valid server-side,
+  // or more likely check if their access token is still valid and request refresh if not
   useEffect(() => {
     const userItem = JSON.parse(localStorage.getItem("user"));
     if (userItem && userItem.loggedIn) {
-      userLogin(userItem);
+      // TODO: Need to bring back the login function from the Login page into userprovider
+      // userLogin(userItem);
+      // Because just setting this to what we have in local storage could use stale info and 
+      // it should be pulled from API depending if the access token is still valid
+      updateUser(userItem);
     }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
   // Leaving the dependency array empty will cause this effect to only run once on mount (e.g. page load)
-  
 
   return (
     <div id="app" data-testid="app">
