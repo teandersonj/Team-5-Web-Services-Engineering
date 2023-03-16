@@ -140,7 +140,7 @@ export default function ContinueRegistration(props) {
     return (
         <>
             <h1 className="pageHeading">Continue Registration</h1>
-            <p>You're almost done registering{user.first_name ? " " + user.first_name : "" }! <br />Finish by choosing your username and avatar.</p>
+            <p>You're almost done registering{user.first_name ? ", " + user.first_name : "" }! <br />Finish by choosing your playstyle and avatar.</p>
             <form id="continueRegistrationForm" onSubmit={handleSubmit}>
                 <div className="formRow flexDirectionColumn">
                     {/* TODO: Extract this since it'll be used elsewhere */}
@@ -185,18 +185,19 @@ export default function ContinueRegistration(props) {
             </form>
 
             {/* TODO: This is for debugging only */}
-            <div style={{ maxWidth: "300px", wordWrap: 'break-word' }}>
+{/*             <div style={{ maxWidth: "300px", wordWrap: 'break-word' }}>
                 <h3>Form State: </h3>
                 <code>
                     {JSON.stringify(formState)}
                 </code>
-            </div>
-            <div style={{ maxWidth: "300px", wordWrap: 'break-word' }}>
+            </div> */}
+            {/* TODO: Hide this for the presentation */}
+            {/* <div style={{ maxWidth: "300px", wordWrap: 'break-word' }}>
                 <h3>user State: </h3>
                 <code>
                     {JSON.stringify(user)}
                 </code>
-            </div>
+            </div> */}
         </>
     );
 };

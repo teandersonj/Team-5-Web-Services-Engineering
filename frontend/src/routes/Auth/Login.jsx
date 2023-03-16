@@ -239,12 +239,12 @@ export default function Login(props) {
             </form>
 
             {/* TODO: This is for debugging only */}
-            <div style={{ maxWidth: "300px", wordWrap: 'break-word' }}>
+            {/* <div style={{ maxWidth: "300px", wordWrap: 'break-word' }}>
                 <h3>Form State: </h3>
                 <code>
                     {JSON.stringify(formState)}
                 </code>
-            </div>
+            </div> */}
         </>
     )
 };
