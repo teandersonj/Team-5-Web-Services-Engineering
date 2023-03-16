@@ -9,6 +9,8 @@ Team 5's Git Repository for Web Services Engineering
 
 ## Sprint 1 (02/02/2023 - 03/16/2023)
 
+![Sprint 1 Burndown Diagram](/Documentation/Diagrams/Team5_Sprint1_BurndownGraph.JPG)
+
 ### Goals & Objectives
 - [x] Conduct Sprint Planning, Forecasting, & Burndown Chart
 - [x] Create Figma Prototype for Application
@@ -20,13 +22,13 @@ Team 5's Git Repository for Web Services Engineering
 - [x] Create at least 10 unit tests that pass
 
 ### Sprint Forecast
-**Forecasted Point Completion:** 39 Points
+**Forecasted Point Completion:** 33.5 Points
 
->(02/06/2023) The point schema will follow a 1:1 ratio such that 1 point is equivalent to 1 day of development effort and so forth. Any stories above 5 total points would be broken down into smaller more subsequent stories. We believe that 39 points will be necessary to complete the basic frontend, backend, and login authentication services.
+>(02/06/2023) The point schema will follow a 1:1 ratio such that 1 point is equivalent to 1 day of development effort and so forth. Any stories above 5 total points would be broken down into smaller more subsequent stories. We believe that 33.5 points will be necessary to complete the basic frontend, backend, and login authentication services.
 
 **Points Completed:** 23.5 Points
 
->(03/15/2023) While our development did not reach the 39 point total, we have still achieved our goals of creating a basic frontend and backend service as well as login authentication. We have also established the groundwork for other functionalities and pages within the application. We believe that our point totals did not match our original estimate as some stories were removed from the sprint due to redundancy, being out-of-scope, or unnecessary for the final product.
+>(03/15/2023) While our development did not reach the 35.5 point total, we have still achieved our goals of creating a basic frontend and backend service as well as login authentication. We have also established the groundwork for other functionalities and pages within the application. We believe that our point totals did not match our original estimate as some stories were removed from the sprint due to redundancy, being out-of-scope, or unnecessary for the final product. For example, during the sprint, a total of 15 points were removed for being out-of-scope or unnecessary. Of these 15 points, 5 points were introduced during the sprint causing scope unnecessary scope creep during the project. Furthermore, our burndown chart (found in the documentation folder) saw a significant decrease in the last day of the sprint as at least 5-7 tickets were in code review for a week or longer (until reviewed and finalized on the last day).
 
 # Building and running the project
 ## Prerequisites
