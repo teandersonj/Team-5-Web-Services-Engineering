@@ -4,14 +4,15 @@
   "description": "This projects represents a full-stack web app that enables users to connect with friends new and existing to play games together. They can also search and discover new games to play.",
   "main": "index.js",
   "scripts": {
-    "install-backend-dependencies": "cd backend && python -m venv venv && source venv/bin/activate && pip install -r requirements.txt",
+    "install-backend-dependencies": "cd backend && python -m venv venv && python inVenv.py run -m pip install --upgrade pip && python inVenv.py run -m pip install -r requirements.txt",
     "install-frontend-dependencies": "cd frontend && npm install",
-    "prepare-backend-database": "cd backend && source venv/bin/activate && python manage.py makemigrations && python manage.py migrate",
-    "start-backend": "cd backend && source venv/bin/activate && python manage.py runserver",
+    "prepare-backend-database": "cd backend && python inVenv.py run manage.py makemigrations && python inVenv.py run manage.py migrate",
+    "create-backend-superuser": "cd backend && python inVenv.py run manage.py createsuperuser",
+    "start-backend": "cd backend && python inVenv.py run manage.py runserver",
     "start-frontend": "cd frontend && npm start",
-    "prepare-environment": "npm run install-backend-dependencies && npm run install-frontend-dependencies && npm run prepare-backend-database",
+    "prepare-environment": "npm install && npm run install-backend-dependencies && npm run install-frontend-dependencies && npm run prepare-backend-database",
     "start": "concurrently \"npm run start-backend\" \"npm run start-frontend\"",
-    "unit-test-frontend": "cd frontend && npm testNoInteractive",
+    "unit-test-frontend": "cd frontend && npm run testNoInteractive",
     "coverage-frontend": "cd frontend && npm run coverage",
     "e2e-test-frontend": "cd frontend && npx cypress open"
   },
@@ -24,5 +25,8 @@
   "bugs": {
     "url": "https://github.com/teandersonj/Team-5-Web-Services-Engineering/issues"
   },
-  "homepage": "https://github.com/teandersonj/Team-5-Web-Services-Engineering#readme"
+  "homepage": "https://github.com/teandersonj/Team-5-Web-Services-Engineering#readme",
+  "dependencies": {
+    "concurrently": "^7.6.0"
+  }
 }

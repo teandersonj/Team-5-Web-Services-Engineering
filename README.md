@@ -42,7 +42,7 @@ python -m pip install --upgrade pip
 2. Install the dependencies
 - While in the root directory of the project, run the following command
 ```bash
-npm install && npm run prepare-environment
+npm run prepare-environment
 ```
 - This will install the dependencies required for the frontend, and install the dependencies required for the backend in a newly created virtual environment. It will also make the needed migrations to the database.
 3. Run the project
@@ -54,6 +54,18 @@ npm start
 - This will run the frontend and backend servers in development mode. The frontend will be available at [http://localhost:3000](http://localhost:3000) and the backend API interface will be available at [http://localhost:8000](http://localhost:8000).
 - A browser window should open automatically and navigate to the frontend. If it does not, you can navigate to [http://localhost:3000](http://localhost:3000) manually.
 - You can view the output of both the frontend and backend servers at once in the same terminal window where you ran the command thanks to the [concurrently](https://www.npmjs.com/package/concurrently) package.
+* **Note:** If you need to access the backend admin interface, you can do so by first creating a superuser account by running the following command in the root directory of the project and following the prompts.
+```bash
+npm run create-superuser
+```
+* Then, navigate to [http://localhost:8000/admin](http://localhost:8000/admin) and login with the credentials you created to access the admin interface.
+
+### Running only the frontend or backend
+If you only want to run the frontend or backend, you can do so by running one of the following commands in the root directory of the project:
+```bash
+npm run start-frontend
+npm run start-backend
+```
 
 # Running the tests
 ## Unit Tests
