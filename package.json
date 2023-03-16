@@ -6,7 +6,8 @@
   "scripts": {
     "install-backend-dependencies": "cd backend && python -m venv venv && python inVenv.py run -m pip install --upgrade pip && python inVenv.py run -m pip install -r requirements.txt",
     "install-frontend-dependencies": "cd frontend && npm install",
-    "prepare-backend-database": "cd backend && python inVenv.py run manage.py makemigrations && python inVenv.py run manage.py migrate",
+    "prepare-database": "cd backend && python inVenv.py run manage.py makemigrations && python inVenv.py run manage.py migrate",
+    "flush-database": "cd backend && python inVenv.py run manage.py sqlflush",
     "create-backend-superuser": "cd backend && python inVenv.py run manage.py createsuperuser",
     "start-backend": "cd backend && python inVenv.py run manage.py runserver",
     "start-frontend": "cd frontend && npm start",
