@@ -3,6 +3,8 @@ Team 5's Git Repository for Web Services Engineering
 
 [Jira Board](https://teamfivewebservices.atlassian.net/jira/software/projects/T5WSE/boards/1)
 
+[Link to Video of Working Prototype](https://kennesawedu-my.sharepoint.com/personal/jganulin_students_kennesaw_edu/_layouts/15/stream.aspx?id=%2Fpersonal%2Fjganulin%5Fstudents%5Fkennesaw%5Fedu%2FDocuments%2FTeam5ProjectDemo%2Emp4&referrer=Teams%2ETEAMS%2DELECTRON&referrerScenario=p2p%5Fns%2Dbim&ga=1)
+
 **Frontend Language:** HTML, CSS, JavaScript with React
 
 **Backend Languages:** Django & Python
