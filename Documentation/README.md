@@ -8,6 +8,8 @@ Team 5's Git Repository for Web Services Engineering
 ### Collaboration Evidence
 
 >This folder contains evidence of the collaboration between Team 5 members. In this folder, you can observe Team 5 members working on similiar files and efforts as realized through the utilization of similiar keywords.
+>
+>![Code Collaboration Evidence](/Documentation/Collaboration%20Evidence/Team5_CodeCollaboration_Sprint1.JPG)
 
 ### Daily Scrum Documents
 
@@ -28,3 +30,7 @@ Team 5's Git Repository for Web Services Engineering
 ### Testing Evidence
 
 >This folder contains evidence for the results of the Behavior Driven tests (usually end-to-end tests) and units tests.
+>
+>![E2E Tests](/Documentation/Testing%20Evidence/Team5_Sprint1_E2ELive.gif)
+>
+>![Unit Tests](/Documentation/Testing%20Evidence/Team5_Sprint1_UnitTests.png)
