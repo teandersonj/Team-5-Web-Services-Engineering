@@ -12,7 +12,7 @@ export default function Navbar(props) {
 
     return (
         <nav className="UserNav">
-            <img src={"/img/avatars/" + user.avatar + ".jpg"} alt="User Avatar" className="avatar imageShadow" />
+            <img src={"/img/avatars/" + user.avatar + ".jpg"} alt="User Avatar" className="avatar" />
             <div className="flexDirectionColumn justifyContentCenter">
                 <div className="alignSelfCenter"><strong>Username: {user.username}</strong></div>
                 <div className="alignSelfCenter">Current Game / Status: {user.currentGameStatus || "Unset"}</div>
