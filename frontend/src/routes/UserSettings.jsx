@@ -79,7 +79,6 @@ const AccountSettings = (props) => {
 
     const toggleDisabled = (e, fieldName) => {
         e.preventDefault();
-        alert("Testop " + formState[fieldName] + " " + user[fieldName] + " " + formState.disabled[fieldName] + " " + (formState[fieldName] === user[fieldName]));
 
         // Assuming this will enable changes or cancel any changes so need to determine if the field was changed and if we cancel then we need to revert the changes
         // TODO: But if we're using this button as a sort of submit button, then we need to submit the form
@@ -146,7 +145,7 @@ const AccountSettings = (props) => {
 const EditLabel = (props) => {
     return (
         <>
-            <div style={{ display: "block" }} htmlFor={props.id}>{props.label}</div>
+            {props.label}
             <button style={{ display: "block", background: "none", padding: 0, margin: 0, color: "var(--color-light-blue)" }} onClick={(e) => props.toggleDisabled(e, props.id)}>Edit</button>
         </>
     );
