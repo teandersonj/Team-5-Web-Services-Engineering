@@ -1,6 +1,6 @@
 * {
   box-sizing: border-box;
-  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-family: "Noto Sans", sans-serif;
 }
 body {
     margin: 0;
@@ -224,11 +224,13 @@ form {
   color: var(--color-light-blue);
 } */
 
-
 /* Utility classes */
 .pageHeading {
   margin: 0.67em 0;
   font-size: 2.5em;
+  font-family: "Inter", sans-serif;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--color-gold);
 }
 .centerContent {
   display: flex;
@@ -286,6 +288,9 @@ form {
 .flexWrap-True {
   flex-wrap: wrap;
 }
+.fontInter {
+  font-family: "Inter", sans-serif;
+}
 /* End of utility classes */
 
 /* For the <img> elements */
@@ -297,25 +302,33 @@ form {
   border: 1px solid var(--color-black);
   box-shadow: 0 0 10px 2px var(--color-dark-blue);
 }
-.avatar {
+
+
+.avatarContainer {
   width: 100px;
   height: 100px;
+  border-radius: 50%;
+}
+.avatarContainer img {
+  width: 100%;
+  height: 100%;
+  /* border-radius: 50%; */
+  border: 2px solid var(--color-light-blue);
+}
+.avatar {
+  /* width: 100px; */
+  max-height: 100px;
+  border-radius: 50%;
+  border: 2px solid var(--color-light-blue);
+}
+
+.leftSection .avatar {
+  /* width: 250px; */
+  max-height: 125px;
 }
 /* End of <img> elements */
 
-/* For avatar selection / Continue Registration page */
-.avatarContainer label {
-  display: inline-block;
-  border-radius: 20px;
-  overflow: hidden;
-  width: 100px;
-  height: 100px;
-}
-.avatarContainer label img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
+
 /* End of avatar selection page */
 
 /* For GameCard */

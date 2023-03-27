@@ -4,6 +4,7 @@ import { UserContext } from "../providers/UserProvider";
 
 import PlayerCard from "../components/PlayerCard";
 import LabeledInput from "../components/LabeledInput";
+import Avatar from "../components/Avatar";
 
 export default function UserProfile(props) {
     const navigate = useNavigate();
@@ -34,10 +35,8 @@ export default function UserProfile(props) {
             <div className="sectionContainer">
                 <div className="leftSection flexDirectionColumn centerText">
                     {/* This'll be the user's avatar in a circle, and we need to have a button on the bottom right corner for Edit */}
-                    <div>
-                        <img style={{ display: "block", margin: "5px auto" }} src={"/img/avatars/" + user.avatar + ".jpg" || "https://via.placeholder.com/150"} alt="User Avatar" className="avatar imageShadow" />
-                        <button>Edit</button>
-                    </div>
+                    <Avatar avatar={user.avatar} containerStyle={{ margin: "0 auto" }} imageStyle={{ display: "block", margin: "5px auto" }} />
+                    <div><button>Edit</button></div>
                     <LabeledInput type="text" id="username" label="Username" defaultValue={user.username || "Unset"} orientation="vertical" disabled />
                     <LabeledInput type="text" id="status" label="Current Game / Status" defaultValue={user.currentGameStatus || "Unset"} orientation="vertical" disabled />
                     <LabeledInput type="text" id="playstyle" label="Playstyle" defaultValue={user.playstyle || "Unset"} orientation="vertical" disabled />
