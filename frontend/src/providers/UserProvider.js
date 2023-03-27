@@ -17,6 +17,7 @@ const UserProvider = ({ children }) => {
         email: "",
         avatar: "avatar1",
         playstyle: "",
+        bio: "",
         accessToken: "",
         refreshToken: "",
         memberSince: "",

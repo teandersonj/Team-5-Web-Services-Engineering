@@ -4,6 +4,7 @@ import { UserContext } from "../providers/UserProvider";
 
 import LabeledInput from "../components/LabeledInput";
 import PlayerCard from "../components/PlayerCard";
+import Avatar from "../components/Avatar";
 
 export default function UserSettings(props) {
     const { user, updateUser } = useContext(UserContext);
@@ -12,27 +13,23 @@ export default function UserSettings(props) {
 
     return (
         <>
-            <h1 className="pageHeading centerText">Account Settings</h1>
-            <p>Use this page to change settings related to your account, <br />and to access General App Settings and Blocked Users.</p>
-            <hr className="width-100" />
             <div className="sectionContainer">
-                <div className="leftSection flexDirectionColumn centerText justifyContentSpaceBetween">
-                    <div>
-                        <img style={{ display: "block", margin: "5px auto" }} src={"/img/avatars/" + user.avatar + ".jpg" || "https://via.placeholder.com/150"} alt="User Avatar" className="avatar imageShadow" />
+                <div className="leftSection flexDirectionColumn centerText justifyContentFlexStart">
+                    <Avatar avatar={user.avatar} containerStyle={{ margin: "0 auto" }} imageStyle={{ display: "block", margin: "5px auto" }} size="large" />
+                    <div className="width-100 flexDirectionRow justifyContentFlexEnd">
+                        <button style={{ backgroundColor: "var(--color-gold)", color: "var(--color-black)" }}>Edit</button>
+                    </div>
                         {/* If we're on the account settings screen, show the edit button */}
-                        {/* {pageState === "accountSettings" && ()} */}
-                        <LabeledInput type="text" id="memberSince" label="Member Since" defaultValue={user.memberSince || "Unset"} orientation="vertical" disabled />
-                        <button onClick={() => navigate("/profile")}>View Public Profile</button>
-                        <button onClick={() => navigate("/general-settings")}>General Setttings</button>
-                        {pageState === "accountSettings" ? <button onClick={() => setPageState("blockedUsers")}>Blocked Users</button> : <button onClick={() => setPageState("accountSettings")}>Account Settings</button>}
-                    </div>
-                    <div>
-                        <button>Deactivate Account</button>
-                    </div>
+                    {/* {pageState === "accountSettings" && ()} */}
+                    <LabeledInput type="text" id="memberSince" label="Member Since" defaultValue={user.memberSince || "Unset"} orientation="vertical" disabled />
+                    <button className="width-100" onClick={() => navigate("/profile")}>View Public Profile</button>
+                    {/* <button className="width-100" onClick={() => navigate("/general-settings")}>General Setttings</button> */}
+                    {pageState === "accountSettings" ? <button className="width-100" onClick={() => setPageState("blockedUsers")}>Blocked Users</button> : <button className="width-100" onClick={() => setPageState("accountSettings")}>Account Settings</button>}
+                    <button className="width-100" style={{ backgroundColor: "var(--color-red)" }}>Deactivate Account</button>
                 </div>
                 <div className="rightSection flexDirectionColumn justifyContentStretch">
                     {/* If the Blocked Users btn was clicked we'll show that screen in place of Acct Settings */}
-                    {pageState !== "accountSettings" ? <BlockedUsers user={user} updateUser={updateUser} /> : <AccountSettings user={user} />}
+                    {pageState !== "accountSettings" ? <BlockedUsers user={user} updateUser={updateUser} /> : <AccountSettings user={user} updateUser={updateUser} />}
                 </div>
             </div>
         </>
@@ -40,7 +37,7 @@ export default function UserSettings(props) {
 }
 
 const AccountSettings = (props) => {
-    const { user } = props;
+    const { user, updateUser } = props;
     const initialState = () => ({
         username: user.username,
         password: "********",
@@ -49,70 +46,108 @@ const AccountSettings = (props) => {
         email: user.email,
         avatar: user.avatar,
         playstyle: user.playstyle,
-        disabled: true,
+        bio: user.bio,
+        disabled: { username: true, password: true, first_name: true, last_name: true, email: true, avatar: true, playstyle: true, bio: true },
     });
 
     const [formState, setFormState] = useState(initialState());
+
+    // Test it by loading up user state with the dummyJSON
+    useEffect(() => {
+        fetch("/dummyData.json",
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                }
+            },
+        ).then((res) => res.json()).then((data) => {
+            // Update the user's blocked users
+            const newData = {
+                ...user,
+                blockedUsers: data.users
+            }
+            updateUser(newData);
+            return;
+        });
+    }, []);
 
     const handleInputChange = (e) => {
         const { id, value } = e.target;
         setFormState((prev) => ({ ...prev, [id]: value }));
     };
 
-    const toggleDisabled = (e) => {
+    const toggleDisabled = (e, fieldName) => {
         e.preventDefault();
-        if (formState.disabled === false) {
-            if (window.confirm("Are you sure you want to cancel editing?") === true) {
-                // If we're disabling the form, reset the state to the initial state
-                
-                setFormState(initialState());
-            } else return;
+        alert("Testop " + formState[fieldName] + " " + user[fieldName] + " " + formState.disabled[fieldName] + " " + (formState[fieldName] === user[fieldName]));
+
+        // Assuming this will enable changes or cancel any changes so need to determine if the field was changed and if we cancel then we need to revert the changes
+        // TODO: But if we're using this button as a sort of submit button, then we need to submit the form
+        if (!formState.disabled[fieldName] && formState[fieldName] !== user[fieldName]) {
+            setFormState((prev) => ({
+                ...prev,
+                [fieldName]: user[fieldName],
+                disabled: {
+                    ...prev.disabled,
+                    [fieldName]: !formState.disabled[fieldName],
+                }
+            }));
         } else {
-            setFormState((prev) => ({ ...prev, disabled: false }));
+            setFormState((prev) => ({
+                ...prev,
+                disabled: {
+                    ...prev.disabled,
+                    [fieldName]: !formState.disabled[fieldName],
+                }
+            }));
         }
     };
 
     const submitForm = (e) => {
         e.preventDefault();
-        setFormState({
-            ...formState,
-            username: "Testing",
-
-        })
+        alert("Form Submitted");
     };
 
     return (
         <>
+            <h1 className="pageHeading centerText">Account Settings</h1>
+            <p>On this page, you can see the different settings used by your profile. All of these settings are able to be edited at your discretion. Your profile picture can be changed by clicking the orange icon on your profile picture to the left.</p>
             <form onSubmit={submitForm}>
-                <div className="centerText"><button onClick={toggleDisabled}>{!!formState.disabled ? "Edit Account Info" : "Cancel Editing"}</button></div>
-                <fieldset style={{ border: 0 }} disabled={formState.disabled}>
-                    <div className="flexDirectionRow justifyContentSpaceEvenly">
-                        <LabeledInput type="text" id="username" label="Username" value={formState.username} orientation="vertical" onChange={handleInputChange} required />
-                        <LabeledInput type="password" id="password" label="Password" defaultValue="********" orientation="vertical" disabled required />
-                    </div>
-                    <div className="flexDirectionRow justifyContentSpaceEvenly">
-                        <LabeledInput type="text" id="first_name" label="First Name" value={formState.first_name} orientation="vertical" onChange={handleInputChange} required />
-                        <LabeledInput type="text" id="last_name" label="Last Name" value={formState.last_name} orientation="vertical" onChange={handleInputChange} required />
-                    </div>
-                    <div className="flexDirectionRow justifyContentSpaceEvenly">
-                        <LabeledInput type="email" id="email" label="Email" value={formState.email} orientation="vertical" onChange={handleInputChange} required />
-                        <div className="flexDirectionColumn">
+                <div className="flexDirectionRow justifyContentSpaceBetween">
+                    <LabeledInput type="text" id="username" labelClassName="width-100 flexDirectionRow justifyContentSpaceBetween" label={<EditLabel id="username" label="Username" toggleDisabled={toggleDisabled} />} value={formState.username} orientation="vertical" onChange={handleInputChange} required disabled={formState.disabled.username} />
+                    <LabeledInput type="password" id="password" labelClassName="width-100 flexDirectionRow justifyContentSpaceBetween" label={<EditLabel id="password" label="Password" toggleDisabled={toggleDisabled} />} defaultValue="********" orientation="vertical" required disabled={formState.disabled.password} />
+                </div>
+                <div className="flexDirectionRow justifyContentSpaceBetween">
+                    <LabeledInput type="text" id="first_name" labelClassName="width-100 flexDirectionRow justifyContentSpaceBetween" label={<EditLabel id="first_name" label="First Name" toggleDisabled={toggleDisabled} />} value={formState.first_name} orientation="vertical" onChange={handleInputChange} required disabled={formState.disabled.first_name} />
+                    <LabeledInput type="text" id="last_name" labelClassName="width-100 flexDirectionRow justifyContentSpaceBetween" label={<EditLabel id="last_name" label="Last Name" toggleDisabled={toggleDisabled} />} value={formState.last_name} orientation="vertical" onChange={handleInputChange} required disabled={formState.disabled.last_name} />
+                </div>
+                <div className="flexDirectionRow justifyContentSpaceBetween">
+                    <LabeledInput type="email" id="email" labelClassName="width-100 flexDirectionRow justifyContentSpaceBetween" label={<EditLabel id="email" label="Email" toggleDisabled={toggleDisabled} />} value={formState.email} orientation="vertical" onChange={handleInputChange} required disabled={formState.disabled.email} />
+                    <div className="flexDirectionColumn">
+                        <div className="width-100 flexDirectionRow justifyContentSpaceBetween">
                             <label htmlFor='playstyle'>Playstyle Preference</label>
-                            <select id="playstyle" style={{ width: "225px" }} name="playstyle" value={formState.playstyle} onChange={handleInputChange} required>
-                                <option value="">Select a playstyle</option>
-                                <option value="Casual">Casual</option>
-                                <option value="Semi">Semi-Competitive</option>
-                                <option value="Competitive">Competitive</option>
-                            </select>
+                            <button style={{ display: "block", background: "none", padding: 0, margin: 0, color: "var(--color-light-blue)" }} onClick={(e) => toggleDisabled(e, "playstyle")}>Edit</button>
                         </div>
+                        <select id="playstyle" style={{ minWidth: "230px" }} name="playstyle" value={formState.playstyle} onChange={handleInputChange} required disabled={formState.disabled.playstyle}>
+                            <option value="">Select a playstyle</option>
+                            <option value="Casual">Casual</option>
+                            <option value="Semi">Semi-Competitive</option>
+                            <option value="Competitive">Competitive</option>
+                        </select>
                     </div>
-                    <p className="centerText">
-                        {!formState.disabled && <button type="submit" onClick={(e) => submitForm(e)}>Submit Changes</button>}
-                    </p>
-                </fieldset>
+                </div>
+                <LabeledInput type="textarea" id="bio" labelClassName="width-100 flexDirectionRow justifyContentSpaceBetween" label={<EditLabel id="bio" label="Bio" toggleDisabled={toggleDisabled} />} value={formState.bio} orientation="vertical" onChange={handleInputChange} required disabled={formState.disabled.bio} />
             </form>
-            {/* TODO: Output the form state here for debugging */}
-            {/* <p style={{ display: "block", margin: "5px auto", width: "300px", height: "125px", wordWrap: "break-word", overflow: "scroll" }}>{JSON.stringify(formState)}</p> */}
+        </>
+    );
+};
+
+
+const EditLabel = (props) => {
+    return (
+        <>
+            <div style={{ display: "block" }} htmlFor={props.id}>{props.label}</div>
+            <button style={{ display: "block", background: "none", padding: 0, margin: 0, color: "var(--color-light-blue)" }} onClick={(e) => props.toggleDisabled(e, props.id)}>Edit</button>
         </>
     );
 };
@@ -161,21 +196,21 @@ const BlockedUsers = (props) => {
 
     return (
         <>
-            <h2 className="centerText">Blocked Users</h2>
+            <h2 className="pageHeading centerText">Blocked Users</h2>
+            <p>On this page, you can see the different users you have blocked on this account. These users cannot see your account, directly interact with you, or send you messages. You will also be unable to send them messages until they are unblocked.</p>
             <div className="flexDirectionRow justifyContentSpaceEvenly flexWrap-True">
                 {user.blockedUsers?.map((blockedUser, index) => (
-                    <div key={index} style={blockedUserCardStyle}>
+                    <div key={blockedUser.username} style={blockedUserCardStyle}>
                         <div className="justifyContentCenter">
-                            <img style={{ display: "block" }} src={"/img/avatars/" + blockedUser.avatar + ".jpg" || "/img/Logo.png"} width="75px" height="75px" />
+                            <Avatar avatar={blockedUser.avatar} size="small" />
                         </div>
-                        <LabeledInput inputStyle={inputStyle} type="text" id="username" label="Username" defaultValue={blockedUser.username || "Unset"} orientation="vertical" disabled />
-                        <LabeledInput inputStyle={inputStyle} type="text" id="first_name" label="First Name" defaultValue={blockedUser.first_name || "Unset"} orientation="vertical" disabled />
-                        <LabeledInput inputStyle={inputStyle} type="text" id="last_name" label="Last Name" defaultValue={blockedUser.last_name || "Unset"} orientation="vertical" disabled />
-                        <button>Unblock User</button>
+                        <div className="justifyContentCenter">
+                            <span style={{ fontSize: 20, fontStyle: "semi-bold" }}>{blockedUser.username}</span>
+                        </div>
+                        <button style={{ backgroundColor: "var(--color-red)", color: "white", borderRadius: "5px" }}>Unblock User</button>
                     </div>
                 )) || <span className="centerText">You haven't blocked any users yet.</span>}
             </div>
         </>
-
     );
 }

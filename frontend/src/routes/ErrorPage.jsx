@@ -6,13 +6,11 @@ export default function ErrorPage() {
         textAlign: "center",
     }
     return (
-        <div style={style}>
+        <div className="flexDirectionColumn alignItemsCenter centerText">
             {/* The error may not be 404, however IDK if we can get the status code unless using data router */}
-            <h1 className="pageHeading centerText">Error 404: Page Not Found</h1>
-            <br />
-            The page you were looking for doesn't exist. Check your URL for proper spelling or go back and try again.
-            <br />
-            Or click here to go <Link className="Link" to="/">Home</Link>.
+            <h1 className="pageHeading">Error 404: Page Not Found</h1>
+            <p>The page you were looking for doesn't exist.<br /> Check your URL for proper spelling or go back and try again.</p>
+            <span>Or return to <Link className="Link" to="/">Home</Link></span>
         </div>
     );
 }

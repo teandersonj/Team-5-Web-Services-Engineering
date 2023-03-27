@@ -35,12 +35,12 @@ export default function UserProfile(props) {
             <div className="sectionContainer">
                 <div className="leftSection flexDirectionColumn centerText">
                     {/* This'll be the user's avatar in a circle, and we need to have a button on the bottom right corner for Edit */}
-                    <Avatar avatar={user.avatar} containerStyle={{ margin: "0 auto" }} imageStyle={{ display: "block", margin: "5px auto" }} />
+                    <Avatar avatar={user.avatar} containerStyle={{ margin: "0 auto" }} imageStyle={{ display: "block", margin: "5px auto" }} size="large" />
                     <div><button>Edit</button></div>
                     <LabeledInput type="text" id="username" label="Username" defaultValue={user.username || "Unset"} orientation="vertical" disabled />
                     <LabeledInput type="text" id="status" label="Current Game / Status" defaultValue={user.currentGameStatus || "Unset"} orientation="vertical" disabled />
                     <LabeledInput type="text" id="playstyle" label="Playstyle" defaultValue={user.playstyle || "Unset"} orientation="vertical" disabled />
-                    <LabeledInput type="textarea" id="bio" label="Bio" defaultValue={user.bio || "Unset"} orientation="vertical" disabled />
+                    <LabeledInput type="textarea" id="bio" label="Bio" defaultValue={user.bio || "Unset"} orientation="vertical" inputStyle={{ resize: "none" }} disabled />
                 </div>
                 <div className="rightSection flexDirectionColumn">
                     <div>
