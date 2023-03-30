@@ -21,7 +21,7 @@ const UserProvider = ({ children }) => {
         accessToken: "",
         refreshToken: "",
         memberSince: "",
-        currentGameStatus: "",
+        currentStatus: "Online",
         currentParty: "",
         friendsList: "",
         blockedPlayers: "",

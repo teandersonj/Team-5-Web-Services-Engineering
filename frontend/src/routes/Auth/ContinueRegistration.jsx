@@ -98,7 +98,7 @@ export default function ContinueRegistration(props) {
             return;
         }
         
-        const newData = ({ ...user, playstyle: formState.playstyle, avatar: formState.avatar, loggedIn: true });
+        const newData = ({ ...user, playstyle: formState.playstyle, avatar: formState.avatar, memberSince: new Date(), loggedIn: true });
 
         updateUser(newData);
 

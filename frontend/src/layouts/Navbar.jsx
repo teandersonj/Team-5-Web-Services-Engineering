@@ -14,8 +14,8 @@ export default function Navbar(props) {
         <nav className="UserNav">
             <Avatar avatar={user.avatar} size="medium" />
             <div className="flexDirectionColumn justifyContentCenter">
-                <div className="alignSelfCenter"><strong style={{ fontSize: "20px"  }}>{user.username}</strong></div>
-                <div className="alignSelfCenter centerText" style={{ backgroundColor: "var(--color-light-blue", padding: "5px 40px", borderRadius: "10px", boxShadow: "2px 5px 2px var(--color-black)", margin: "5px 0" }}>{user.currentGameStatus || "Unset"}</div>
+                <div className="alignSelfCenter"><strong style={{ fontSize: "20px" }}>{user.username}</strong></div>
+                <div className="alignSelfCenter centerText" style={{ backgroundColor: "var(--color-light-blue", padding: "5px 40px", borderRadius: "10px", boxShadow: "2px 5px 2px var(--color-black)", margin: "5px 0" }}>{user.currentStatus}</div>
                 <div className="alignSelfCenter" style={{ margin: "10px 0" }}><button className="roundedBlue" onClick={() => logout()}>Log Out</button></div>
             </div>
             <hr className="width-100" />
