@@ -10,7 +10,6 @@ import DeactivateAccountModal from "../views/DeactivateAccountModal";
 import EditPasswordModal from "../views/EditPasswordModal";
 
 import LabeledInput from "../components/LabeledInput";
-import PlayerCard from "../components/PlayerCard";
 import Avatar from "../components/Avatar";
 
 export default function UserSettings(props) {
