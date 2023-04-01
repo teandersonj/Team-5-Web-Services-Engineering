@@ -210,7 +210,7 @@ export default function Login(props) {
 
     return (
         <>
-            <h1 className="pageHeading"><span style={{ color: "var(--color-gold)" }}>Fireside</span> Gaming</h1>
+            <h1 className="centerText"><span style={{ color: "var(--color-gold)" }}>Fireside</span> Gaming</h1>
             <img className="Logo imageShadow" src="/img/logo.png" alt="Fireside Gaming Logo" />
             <h2 className="pageHeading">Login</h2>
             <form id="loginForm" aria-labelledby="Login Form" action="#" method="post" onSubmit={handleSubmit}>
@@ -237,14 +237,6 @@ export default function Login(props) {
                     <button disabled>Login with Steam</button>
                 </div>
             </form>
-
-            {/* TODO: This is for debugging only */}
-            {/* <div style={{ maxWidth: "300px", wordWrap: 'break-word' }}>
-                <h3>Form State: </h3>
-                <code>
-                    {JSON.stringify(formState)}
-                </code>
-            </div> */}
         </>
     )
 };

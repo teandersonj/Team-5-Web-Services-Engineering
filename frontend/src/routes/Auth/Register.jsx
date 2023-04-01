@@ -244,16 +244,6 @@ export default function Register(props) {
                     <LabeledInput id="password" label="Password" type="password" defaultValue={formState.password} placeholder="Enter your password here" onChange={handleInputChange} containerClassName="width-100 formRow" required />
                     {formState.errors.confirmPassword && <ValidationErrorList errors={formState.errors.confirmPassword} />}
                     <LabeledInput id="confirmPassword" label="Confirm Password" type="password" defaultValue={formState.passwordConfirm} placeholder="Enter your password again here" onChange={handleInputChange} containerClassName="width-100 formRow" required />
-                    {/* TODO: Extract this since it'll be used elsewhere */}
-                    {/* {<div className="formRow flexDirectionColumn">
-                    <label htmlFor='playstyle'>Playstyle Preference</label>
-                    <select id="playstyle" name="playstyle" defaultValue={formState.playstyle} onChange={handleInputChange} required>
-                        <option value="">Select a playstyle</option>
-                        <option value="Casual">Casual</option>
-                        <option value="Semi">Semi-Competitive</option>
-                        <option value="Competitive">Competitive</option>
-                    </select>
-                </div> */}
                     <p className="flexDirectionRow justifyContentSpaceBetween">
                         {/* TODO: This could either move to Continue Registration then from there send all collected data to server at once
                     or send what we have here to server for validation, get a response and then go there 
@@ -264,14 +254,6 @@ export default function Register(props) {
                     </p>
                 </fieldset>
             </form>
-
-            {/* TODO: This is for debugging only */}
-            {/* <div style={{ maxWidth: "300px", wordWrap: 'break-word' }}>
-                <h3>Current State: </h3>
-                <code>
-                    {JSON.stringify(formState)}
-                </code>
-            </div> */}
         </>
     );
 };

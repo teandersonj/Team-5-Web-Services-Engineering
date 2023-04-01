@@ -6,6 +6,7 @@ import { UserContext } from '../../providers/UserProvider';
 import validateElement from '../../services/Validation';
 import ValidationErrorList from '../../components/ValidationErrorList';
 import LabeledInput from '../../components/LabeledInput';
+import Avatar from '../../components/Avatar';
 
 /**
  * This component is used to continue the registration process for a new user,
@@ -45,13 +46,27 @@ export default function ContinueRegistration(props) {
 
     // When an avatar is clicked, indicate that it's selected
     const labelStyles = {
+        default: {
+            display: "inline-block",
+            overflow: "hidden",
+            width: "100px",
+            height: "100px",
+        },
         unchecked: {
             border: "none",
         },
         checked: {
-            border: "5px solid var(--color-dark-blue)",
+            border: "5px solid var(--color-light-blue)",
+            borderRadius: "50%"
         }
     };
+
+    // Style the avatar images
+    // const imageStyle = {
+    //     display: "block",
+    //     width: "100%",
+    //     height: "100%"
+    // };
 
     const handlePlaystyleChange = (event) => {
         setFormState((prev) => ({ ...prev, playstyle: event.target.value }));
@@ -83,7 +98,7 @@ export default function ContinueRegistration(props) {
             return;
         }
         
-        const newData = ({ ...user, playstyle: formState.playstyle, avatar: formState.avatar, loggedIn: true });
+        const newData = ({ ...user, playstyle: formState.playstyle, avatar: formState.avatar, memberSince: new Date(), loggedIn: true });
 
         updateUser(newData);
 
@@ -157,23 +172,23 @@ export default function ContinueRegistration(props) {
                     <label id="avatarLabel" htmlFor="avatar">Select a Profile Picture</label>
                     <fieldset className="flexDirectionColumn justifyContentStretch" style={{ margin: 0, border: 0, padding: 0 }} role="radiogroup" id="avatar" name="avatar" aria-required="true" aria-labelledby="avatarLabel" onChange={handleRadioChange}>
                         <div className="flexDirectionRow justifyContentSpaceEvenly flexGrow-1">
-                            <div className="avatarContainer">
+                            <div>
                                 <input style={inputStyle} tabIndex={0} type="radio" id="avatar1" name="avatar" value="avatar1" />
-                                <label htmlFor="avatar1"><img src="/img/avatars/avatar1.jpg" className="avatar" width="100" height="100" alt="Avatar 1" /></label>
+                                <label style={labelStyles.default} htmlFor="avatar1"><Avatar avatar="avatar1" size="fill" alt="Avatar 1" /></label>
                             </div>
-                            <div className="avatarContainer">
+                            <div>
                                 <input style={inputStyle} tabIndex={1} type="radio" id="avatar2" name="avatar" value="avatar2" />
-                                <label htmlFor="avatar2"><img src="/img/avatars/avatar2.jpg" className="avatar" width="100" height="100" alt="Avatar 2" /></label>
+                                <label style={labelStyles.default} htmlFor="avatar2"><Avatar avatar="avatar2" size="fill" alt="Avatar 2" /></label>
                             </div>
                         </div>
                         <div className="flexDirectionRow justifyContentSpaceEvenly flexGrow-1">
-                            <div className="avatarContainer">
+                            <div>
                                 <input style={inputStyle} tabIndex={2} type="radio" id="avatar3" name="avatar" value="avatar3" />
-                                <label htmlFor="avatar3"><img src="/img/avatars/avatar3.jpg" className="avatar" width="100" height="100" alt="Avatar 3" /></label>
+                                <label style={labelStyles.default} htmlFor="avatar3"><Avatar avatar="avatar3" size="fill" alt="Avatar 3" /></label>
                             </div>
-                            <div className="avatarContainer">
+                            <div>
                                 <input style={inputStyle} tabIndex={3} type="radio" id="avatar4" name="avatar" value="avatar4" />
-                                <label htmlFor="avatar4"><img src="/img/avatars/avatar4.jpg" className="avatar" width="100" height="100" alt="Avatar 4" /></label>
+                                <label style={labelStyles.default} htmlFor="avatar4"><Avatar avatar="avatar4" size="fill" alt="Avatar 4" /></label>
                             </div>
                         </div>
                     </fieldset>

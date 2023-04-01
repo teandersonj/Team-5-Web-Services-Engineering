@@ -1,4 +1,7 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+import Avatar from '../components/Avatar';
+
+// TODO Extract inline styles, update font and styling
 
 /**
  * Navbar component that will be displayed on the left side of the screen when user is logged in
@@ -8,23 +11,22 @@ import { Link, useNavigate } from 'react-router-dom';
  */
 export default function Navbar(props) {
     const { user, logout } = props.userContext;
-    const navigate = useNavigate();
 
     return (
         <nav className="UserNav">
-            <img src={"/img/avatars/" + user.avatar + ".jpg"} alt="User Avatar" className="avatar imageShadow" />
+            <Avatar avatar={user.avatar} size="medium" />
             <div className="flexDirectionColumn justifyContentCenter">
-                <div className="alignSelfCenter"><strong>Username: {user.username}</strong></div>
-                <div className="alignSelfCenter">Current Game / Status: {user.currentGameStatus || "Unset"}</div>
-                <div className="alignSelfCenter"><button onClick={() => logout()}>Log Out</button></div>
+                <div className="alignSelfCenter"><strong style={{ fontSize: "20px", margin: "10px 0" }}>{user.username}</strong></div>
+                <div className="alignSelfCenter centerText" style={{ backgroundColor: "var(--color-light-blue", padding: "5px 40px", borderRadius: "10px", boxShadow: "2px 5px 2px var(--color-black)" }}>{user.currentStatus}</div>
+                <div className="alignSelfCenter" style={{ margin: "10px 0" }}><button className="roundedBlue" onClick={() => logout()}>Log Out</button></div>
             </div>
             <hr className="width-100" />
-            <div className="flexDirectionColumn justifyContentSpaceBetween">
-                <button>My Friends /<br />Party</button>
-                <button onClick={() => navigate("/profile")}>My Profile</button>
-                <button onClick={() => navigate("/find-games")}>Find Games</button>
-                <button onClick={() => navigate("/find-players")}>Find Players</button>
-                <button onClick={() => navigate("/account-settings")}>User /<br />Account Settings</button>
+            <div className="navLinks flexDirectionColumn justifyContentSpaceEvenly flexGrow-1">
+                <NavLink to={"/profile"}>My Profile</NavLink>
+                <NavLink to={"/friends"}>Friends</NavLink>
+                <NavLink to={"/find-games"}>Find Games</NavLink>
+                <NavLink to={"/find-players"}>Find Players</NavLink>
+                <NavLink to={"/account-settings"}>Settings</NavLink>
             </div>
         </nav>
     );

@@ -112,11 +112,37 @@
             "username": "User 4",
             "first_name": "Test",
             "last_name": "User",
-            "avatar": "avatar4",
+            "avatar": "avatar1",
             "blocked": false,
             "status": "offline",
             "lastSeen": "2016-03-01T12:00:00Z",
             "bio": "User 4 bio",
+            "totalGames": 2,
+            "totalFriends": 2
+        },
+        {
+            "id": 5,
+            "username": "User 5",
+            "first_name": "Test",
+            "last_name": "User",
+            "avatar": "avatar3",
+            "blocked": false,
+            "status": "offline",
+            "lastSeen": "2016-03-01T12:00:00Z",
+            "bio": "User 5 bio",
+            "totalGames": 2,
+            "totalFriends": 2
+        },
+        {
+            "id": 6,
+            "username": "User 6",
+            "first_name": "Test",
+            "last_name": "User",
+            "avatar": "avatar2",
+            "blocked": false,
+            "status": "offline",
+            "lastSeen": "2016-03-01T12:00:00Z",
+            "bio": "User 5 bio",
             "totalGames": 2,
             "totalFriends": 2
         }
