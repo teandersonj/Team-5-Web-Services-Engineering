@@ -16,14 +16,14 @@ describe('Registration Page', () => {
         cy.get('#email').type('test@test.com').should('have.value', 'test@test.com');
         cy.get('#password').type('p@ssw0rd!').should('have.value', 'p@ssw0rd!');
         cy.get('#confirmPassword').type('p@ssw0rd!').should('have.value', 'p@ssw0rd!');
-        // cy.get('#playstyle').select('Semi');
+        // cy.get('#playstyle').select('Semi-Competitive');
         cy.get('#submit').click(); // Click the submit button
 
         // --------- CONTINUE REGISTRATION PAGE ---------
         // Check if user is on Registration Confirmation page (string value)
         cy.contains('Continue Registration');
         // Test User Interactions on the Page
-        cy.get('#playstyle').select('Semi').should('have.value', 'Semi');
+        cy.get('#playstyle').select('Semi-Competitive').should('have.value', 'Semi-Competitive');
         cy.get('[for="avatar3"] > img').click();
         // cy.get('radio')
         cy.get('.roundedBlue').click() // Click to button continue
