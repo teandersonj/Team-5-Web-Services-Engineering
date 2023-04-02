@@ -72,7 +72,7 @@ const AccountSettings = (props) => {
                 <CustomLabeledInput type="select" id="playstyle" label="Playstyle" toggleDisabled={toggleDisabled} value={formState.playstyle} modified={formState.modified.playstyle} onChange={handleInputChange} submitField={submitField} required disabled={formState.disabled.playstyle} options={
                     [
                         { value: "Casual", label: "Casual" },
-                        { value: "Semi-Competitive", label: "Semi-Competitive-Competitive" },
+                        { value: "Semi-Competitive", label: "Semi-Competitive" },
                         { value: "Competitive", label: "Competitive" },
                     ]
                 } />

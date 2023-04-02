@@ -91,6 +91,10 @@ select {
   color: var(--color-light-blue);
 }
 
+.UserNav .navLinks a:hover {
+  color: var(--color-dark-blue);
+}
+
 /* For buttons */
 button {
   border: none;
@@ -217,9 +221,12 @@ main {
   grid-template-columns: 1fr;
   grid-template-rows: 1fr;
   grid-template-areas: "leftSection" "rightSection";
-  grid-gap: 1em;
   width: 100%;
   height: 100%;
+}
+
+.rightSection {
+  overflow: auto;
 }
 
 /* On large enough screens show the sections side by side */
@@ -378,7 +385,6 @@ form {
   border: 1px solid var(--color-black);
   box-shadow: 0 0 10px 2px var(--color-dark-blue);
 }
-
 /* End of <img> elements */
 
 /* For GameCard */
@@ -403,21 +409,26 @@ form {
   display: flex;
   flex-direction: column;
   max-width: 125px;
+  justify-content: center;
   align-items: center;
   flex-wrap: wrap;
   color: var(--color-white);
-  background-color: var(--color-gray);
-  margin: 10px;
-  border: 1px solid var(--color-white);
+  /* margin: 10px; */
+  text-align: center;
 }
 
 .PlayerCard-small .LabeledInput {
   /* Ensure the inpt field is not wider than the card */
-  max-width: 100px;
   flex-wrap: wrap;
   padding: 0;
   margin: 0;
   overflow: hidden;
+}
+
+.PlayerCard-small .LabeledInput input {
+  padding: 0;
+  max-width: 100px;
+  text-align: center;
 }
 
 /* For the large size player card we can show the first and last name in horizontal spread */

@@ -163,7 +163,7 @@ export default function ContinueRegistration(props) {
                     <select id="playstyle" name="playstyle" defaultValue={formState.playstyle} onChange={handlePlaystyleChange} required>
                         <option value="">Select a playstyle</option>
                         <option value="Casual">Casual</option>
-                        <option value="Semi-Competitive">Semi-Competitive-Competitive</option>
+                        <option value="Semi-Competitive">Semi-Competitive</option>
                         <option value="Competitive">Competitive</option>
                     </select>
                 </div>

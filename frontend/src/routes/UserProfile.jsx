@@ -10,6 +10,9 @@ export default function UserProfile(props) {
     const navigate = useNavigate();
     const { user, updateUser } = useContext(UserContext);
 
+    // TODO: We can reuse this page for other users' profiles, so we need to be able to pass in a user object
+    // from the parent component, and if it's not passed in, we'll use the user object from the UserContext
+    // assuming it's the current user's profile
     const [formState, setFormState] = useState({
         username: "",
         currentStatus: "",
@@ -20,11 +23,13 @@ export default function UserProfile(props) {
         disabled: false,
         errors: {}
     });
-    // TODO: We can reuse this page for other users' profiles, so we need to be able to pass in a user object
-    // from the parent component, and if it's not passed in, we'll use the user object from the UserContext
-    // assuming it's the current user's profile
 
-    // TODO: Need an edit button, and to keep track of form state, as well as Submit buttons
+    const fieldStyle = {
+        fontSize: "1.25em",
+        margin: "5px 0",
+        padding: "5px",
+        borderRadius: "5px"
+    };
 
     return (
         <>
@@ -32,25 +37,23 @@ export default function UserProfile(props) {
                 <div className="leftSection flexDirectionColumn centerText">
                     {/* This'll be the user's avatar in a circle, and we need to have a button on the bottom right corner for Edit */}
                     <Avatar avatar={user.avatar} containerStyle={{ margin: "0 auto" }} size="large" />
-                    <div>{user.username}</div>
-                    <div>{user.currentStatus}</div>
-                    <div>{user.playstyle} Player</div>
-                    <div>
-                        <button className="width-100" onClick={() => navigate("/user-settings")}>Edit Profile</button>
-                    </div>
-                    <LabeledInput type="textarea" id="bio" label="User Bio" defaultValue={user.bio} orientation="vertical" inputStyle={{ resize: "none" }} disabled />
+                    <div className="width-100 centerText" style={{ ...fieldStyle }}>{user.username}</div>
+                    <div className="width-100 centerText" style={{ ...fieldStyle, backgroundColor: "var(--color-light-blue)" }}>{user.currentStatus}</div>
+                    <div className="width-100 centerText" style={{ ...fieldStyle, backgroundColor: "var(--color-green)" }}>{user.playstyle} Player</div>
+                    <button className="width-100" style={{ ...fieldStyle, backgroundColor: "var(--color-dark-blue)" }} onClick={() => navigate("/account-settings")}>Edit Profile</button>
+                    <LabeledInput type="textarea" id="bio" label="User Bio" value={user.bio} orientation="vertical" containerStyle={{ marginTop: "5px" }} labelStyle={{ fontWeight: "bold" }} inputStyle={{ resize: "none", background: "none" }} disabled />
                 </div>
                 <div className="rightSection flexDirectionColumn alignContentCenter">
-                    <div className="width-100">
+                    <div className="flexGrow-1">
                         <h3 className="pageHeading" style={{ fontSize: "1.5em" }}>Favorite Games</h3>
-                        <SampleGames />
+                        <SampleGames size="large" />
                     </div>
-                    <div className="width-100">
-                        <h3 className="pageHeading" style={{ fontSize: "1.5em" }}>Recent Games</h3>
-                        <SampleGames style={{ flexGrow: 1, justifyContent: "center" }} />
+                    <div className="flexGrow-1">
+                        <h3 className="pageHeading" style={{ fontSize: "1.5em" }}>Recently Played</h3>
+                        <SampleGames size="medium" className="justifyContentSpaceEvenly" />
                     </div>
-                    <div className="width-100">
-                        <h3 className="pageHeading" style={{ fontSize: "1.5em" }}>Friends List</h3>
+                    <div>
+                        <h3 className="pageHeading" style={{ fontSize: "1.5em" }}>Friends</h3>
                         <FriendsList user={user} updateUser={updateUser} />
                     </div>
                 </div>
@@ -61,28 +64,44 @@ export default function UserProfile(props) {
 
 const SampleGames = (props) => {
     const { rest } = props;
+
+    const rowStyle = {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "center",
+        flexWrap: "wrap",
+        overflowX: "auto",
+        margin: 0,
+        padding: 0,
+    };
+
+    const sizes = {
+        large: {
+            width: "180",
+            height: "270"
+        },
+        medium: {
+            width: "90",
+            height: "135"
+        }
+    };
+
+    const imgProps = {
+        width: sizes[props.size]?.width,
+        height: sizes[props.size]?.height,
+        style: {
+            margin: "5px",
+        }
+    };
+
     return (
-        <div className="flexDirectionRow justifyContentSpaceEvenly" {...rest}>
-            <div className="flexDirectionColumn justifyContentStretch">
-                <img width="50" height="50" src="https://via.placeholder.com/50" />
-                <div>Game 1</div>
-            </div>
-            <div className="flexDirectionColumn">
-                <img width="50" height="50" src="https://via.placeholder.com/50" />
-                <div>Game 2</div>
-            </div>
-            <div className="flexDirectionColumn">
-                <img width="50" height="50" src="https://via.placeholder.com/50" />
-                <div>Game 3</div>
-            </div>
-            <div className="flexDirectionColumn">
-                <img width="50" height="50" src="https://via.placeholder.com/50" />
-                <div>Game 4</div>
-            </div>
-            <div className="flexDirectionColumn">
-                <img width="50" height="50" src="https://via.placeholder.com/50" />
-                <div>Game 5</div>
-            </div>
+        <div style={rowStyle} className={`flexDirectionRow ${props.className}`} {...rest}>
+            <img {...imgProps} src="/img/games/DarkSouls3_Cover.jpg" />
+            <img {...imgProps} src="/img/games/LeagueOfLegends_Cover.jpg" />
+            <img {...imgProps} src="/img/games/Ark_Cover.jpg" />
+            <img {...imgProps} src="/img/games/Valorant_Cover.jpg" />
+            <img {...imgProps} src="/img/games/MW2_Cover.jpg" />
+            <img {...imgProps} src="/img/games/StardewValley_Cover.jpg" />
         </div>
     );
 };
@@ -111,8 +130,8 @@ const FriendsList = (props) => {
 
     return (
         <div className="flexDirectionRow justifyContentSpaceEvenly">
-            {props.user?.friendsList && props.user.friendsList?.map((friend, index) => (
-                <PlayerCard key={index} player={friend} size={"small"} />
+            {props.user?.friendsList && props.user?.friendsList?.map((friend, index) => (
+                <PlayerCard key={friend.username} player={friend} size={"small"} noLabels={true} />
             ))}
         </div>
     );
