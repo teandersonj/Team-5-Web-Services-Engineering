@@ -1,5 +1,5 @@
 import LabeledInput from "./LabeledInput";
-
+import Avatar from "./Avatar";
 const styles = {
     small: {
         width: "100px",
@@ -34,7 +34,7 @@ export default function PlayerCard(props) {
     return (
         <div className={`PlayerCard PlayerCard-${size}`}>
             <div className="justifyContentCenter">
-                <img style={{ display: "block" }} src={"/img/avatars/" + player.avatar + ".jpg" || "/img/Logo.png"} width="75px" height="75px" />
+                <Avatar avatar={player.avatar} size={size} />
             </div>
             <LabeledInput type="text" id="username" label="Username" defaultValue={player.username || "Unset"} orientation="vertical" disabled />
             {size !== "small" && (

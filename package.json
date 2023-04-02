@@ -2,11 +2,11 @@
   "name": "fireside-gaming",
   "version": "1.0.0",
   "description": "This projects represents a full-stack web app that enables users to connect with friends new and existing to play games together. They can also search and discover new games to play.",
-  "main": "index.js",
+  "main": "",
   "scripts": {
     "install-backend-dependencies": "cd backend && python -m venv venv && python inVenv.py run -m pip install --upgrade pip && python inVenv.py run -m pip install -r requirements.txt",
     "install-frontend-dependencies": "cd frontend && npm install",
-    "prepare-database": "cd backend && python inVenv.py run manage.py makemigrations && python inVenv.py run manage.py migrate",
+    "prepare-backend-database": "cd backend && python inVenv.py run manage.py makemigrations && python inVenv.py run manage.py migrate",
     "flush-database": "cd backend && python inVenv.py run manage.py sqlflush",
     "create-backend-superuser": "cd backend && python inVenv.py run manage.py createsuperuser",
     "start-backend": "cd backend && python inVenv.py run manage.py runserver",
