@@ -71,7 +71,6 @@ function App() {
             <Route path="/find-games" element={<GameSearch />} />
             <Route path="/find-players" element={<PlayerSearch />} />
             <Route path="/account-settings" element={<UserSettings />} />
-            <Route path="/general-settings" element={<GeneralSettings />} />
           </Route>
           {/* Catch-all route that'll display an error page for routes not explicitly matched */}
           <Route path="*" element={<ErrorPage />} />

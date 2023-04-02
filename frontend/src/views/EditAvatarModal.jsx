@@ -148,8 +148,8 @@ export default function EditAvatarModal(props) {
                             </fieldset>
                         </div>
                         <div className="formRow flexItemsSpaceBetween">
-                            <button className="alignSelfCenter roundedBlue" type="submit" onClick={(e) => handleSubmit(e)}>Continue</button>
-                            <button className="alignSelfCenter roundedGray" onClick={(e) => handleAvatarEditCancel(e)}>Cancel</button>
+                            <button className="alignSelfCenter roundedBlueBtn" type="submit" onClick={(e) => handleSubmit(e)}>Continue</button>
+                            <button className="alignSelfCenter roundedGrayBtn" onClick={(e) => handleAvatarEditCancel(e)}>Cancel</button>
                         </div>
                     </form>
                 </div>

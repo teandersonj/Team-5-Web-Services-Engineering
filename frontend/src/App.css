@@ -110,7 +110,7 @@ button {
 }
 
 /* For rounded blue and gray buttons */
-.roundedBlue {
+.roundedBlueBtn {
   background-color: var(--color-dark-blue);
   color: var(--color-white);
   border: none;
@@ -123,11 +123,11 @@ button {
   box-shadow: 0 0 5px var(--color-black);
 }
 
-.roundedBlue:hover {
+.roundedBlueBtn:hover {
   background-color: var(--color-light-blue);
 }
 
-.roundedGray {
+.roundedGrayBtn {
   background-color: var(--color-gray);
   color: var(--color-white);
   border: none;
@@ -139,7 +139,7 @@ button {
   cursor: pointer;
 }
 
-.roundedGray:hover {
+.roundedGrayBtn:hover {
   background-color: var(--color-black);
 }
 

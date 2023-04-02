@@ -98,7 +98,13 @@ export default function ContinueRegistration(props) {
             return;
         }
         
-        const newData = ({ ...user, playstyle: formState.playstyle, avatar: formState.avatar, memberSince: new Date(), loggedIn: true });
+        const newData = ({
+            ...user,
+            playstyle: formState.playstyle,
+            avatar: formState.avatar,
+            memberSince: new Date(),
+            loggedIn: true
+        });
 
         updateUser(newData);
 
@@ -194,25 +200,10 @@ export default function ContinueRegistration(props) {
                     </fieldset>
                 </div>
                 <div className="formRow flexItemsSpaceBetween">
-                    <button className="alignSelfCenter roundedBlue" type="submit" onClick={handleSubmit}>Continue</button>
-                    <button className="alignSelfCenter roundedGray" onClick={handleCancel}>Cancel</button>
+                    <button className="alignSelfCenter roundedBlueBtn" type="submit" onClick={handleSubmit}>Continue</button>
+                    <button className="alignSelfCenter roundedGrayBtn" onClick={handleCancel}>Cancel</button>
                 </div>
             </form>
-
-            {/* TODO: This is for debugging only */}
-{/*             <div style={{ maxWidth: "300px", wordWrap: 'break-word' }}>
-                <h3>Form State: </h3>
-                <code>
-                    {JSON.stringify(formState)}
-                </code>
-            </div> */}
-            {/* TODO: Hide this for the presentation */}
-            {/* <div style={{ maxWidth: "300px", wordWrap: 'break-word' }}>
-                <h3>user State: </h3>
-                <code>
-                    {JSON.stringify(user)}
-                </code>
-            </div> */}
         </>
     );
 };

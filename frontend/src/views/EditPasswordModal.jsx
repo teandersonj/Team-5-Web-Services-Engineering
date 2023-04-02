@@ -75,8 +75,8 @@ export default function DeactivateAccountModal(props) {
                             <LabeledInput label="Confirm New Password:" type="password" id="newPassword2" name="newPassword2" value={state.newPassword2} onChange={(e) => handleChange(e)} />
                         </div>
                         <div className="formRow flexItemsSpaceBetween">
-                            <button className="alignSelfCenter roundedBlue" type="submit" onClick={(e) => handleSubmit(e)}>Continue</button>
-                            <button className="alignSelfCenter roundedGray" onClick={(e) => closeModal(e)}>Cancel</button>
+                            <button className="alignSelfCenter roundedBlueBtn" type="submit" onClick={(e) => handleSubmit(e)}>Continue</button>
+                            <button className="alignSelfCenter roundedGrayBtn" onClick={(e) => closeModal(e)}>Cancel</button>
                         </div>
                     </form>
                 </div>

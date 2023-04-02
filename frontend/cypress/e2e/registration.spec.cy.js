@@ -26,7 +26,7 @@ describe('Registration Page', () => {
         cy.get('#playstyle').select('Semi-Competitive').should('have.value', 'Semi-Competitive');
         cy.get('[for="avatar3"] > img').click();
         // cy.get('radio')
-        cy.get('.roundedBlue').click() // Click to button continue
+        cy.get('.roundedBlueBtn').click() // Click to button continue
 
 /*         // --------- REGISTRATION COMPLETE PAGE ---------
         cy.contains('Registration Complete');
