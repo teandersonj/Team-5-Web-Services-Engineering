@@ -17,7 +17,6 @@ import UserProfile from "./routes/UserProfile";
 import GameSearch from "./routes/GameSearch";
 import PlayerSearch from "./routes/PlayerSearch";
 import UserSettings from "./routes/UserSettings";
-import GeneralSettings from "./routes/GeneralSettings";
 
 import './App.css';
 
