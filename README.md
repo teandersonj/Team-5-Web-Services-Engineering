@@ -9,6 +9,25 @@ Team 5's Git Repository for Web Services Engineering
 
 **Backend Languages:** Django & Python
 
+## Sprint 2 (03/17/2023 - 04/05/2023)
+
+### Goals & Objectives
+- [x] Finish Constructing UI Prototypes
+- [ ] Finishing Construct React UI for Pages
+- [ ] Finish Leftover Login Items from the Previous Sprint
+- [ ] Create Basic User-to-User Interaction in the Backend
+- [ ] Implement CI/CD Service
+- [ ] Create Foundation and Outline for Research Paper
+- [ ] Create at least 1 BDD Test Scenario that passes
+- [ ] Create at least 10 unit tests that pass
+
+### Sprint Forecast
+**Forecasted Point Completion:** 36 Points
+
+>The point schema will follow a 1:1 ratio such that 1 point is equivalent to 1 day of development effort and so forth. Any stories above 5 total points would be broken down into smaller more subsequent stories. Based off of our work on the previous sprint, we believe that 36 points are all that are necessary to complete our goals for this sprint. While this represents a large effort, much of the groundwork for this sprint's tickets is already present and we expect that the tickets can be completed much quicker than they are pointed. However, we chose to keep our evaluation of each story's effort objective which is why the estimation remains at a higher value.
+
+**Points Completed:** --- Points
+
 ## Sprint 1 (02/02/2023 - 03/16/2023)
 
 ![Sprint 1 Burndown Diagram](/Documentation/Diagrams/Team5_Sprint1_BurndownGraph.JPG)
