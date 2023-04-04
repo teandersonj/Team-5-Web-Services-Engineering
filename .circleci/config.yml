@@ -1,0 +1,74 @@
+version: 2.1
+jobs:
+  build-frontend:
+    docker:
+      - image: circleci/node:14.16
+    working_directory: ./frontend
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package-lock.json" }}
+            - v1-dependencies-
+      - run: |
+          npm ci
+          npm test
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package-lock.json" }}
+      - run: npm run build
+      - deploy:
+          name: Deploy Frontend
+          command: |
+            git init .
+            git config user.email "deploy@circleci.com"
+            git config user.name "CircleCI Deploy"
+            git add .
+            git commit -m "Deploy frontend to Heroku"
+            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_BACKEND_APP_NAME.git main
+  build-backend:
+    docker:
+      - image: circleci/python:3.9
+    working_directory: ./backend
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "requirements.txt" }}
+            - v1-dependencies-
+      - run: |
+          pip install -r requirements.txt
+          pytest 
+      - save_cache:
+          paths:
+            - venv
+          key: v1-dependencies-{{ checksum "requirements.txt" }}
+      - run: |
+          python manage.py makemigrations
+          python manage.py migrate
+          python manage.py collectstatic --noinput
+      - deploy:
+          name: Deploy Backend
+          command: |
+            git init .
+            git config user.email "deploy@circleci.com"
+            git config user.name "CircleCI Deploy"
+            git add .
+            git commit -m "Deploy backend to Heroku"
+            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git main
+workflows:
+  build-and-deploy:
+    jobs:
+      - build-frontend:
+          filters:
+            branches:
+              only:
+                - CICDTest
+      - build-backend:
+          requires:
+            - build-frontend
+          filters:
+            branches:
+              only:
+                - CICDTest
