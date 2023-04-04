@@ -60,7 +60,7 @@ const AccountSettings = (props) => {
             <p>On this page, you can see the different settings used by your profile. All of these settings are able to be edited at your discretion. Your profile picture can be changed by clicking the orange icon on your profile picture to the left.</p>
             <ValidationErrorList errors={formState.errors} />
             <div className="flexDirectionRow justifyContentSpaceBetween">
-                <CustomLabeledInput type="text" id="username" label="Username" toggleDisabled={toggleDisabled} value={formState.username} modified={formState.modified.username} onChange={handleInputChange} submitField={submitField} required disabled={formState.disabled.username} />
+                <CustomLabeledInput key="tlUsername" type="text" id="username" label="Username" toggleDisabled={toggleDisabled} value={formState.username} modified={formState.modified.username} onChange={handleInputChange} submitField={submitField} required disabled={formState.disabled.username} />
                 <CustomLabeledInput type="password" id="password" label="Password" toggleDisabled={(e) => { e.preventDefault(); props.setModalState({ isOpen: true, mode: "updatePassword" }) }} value={formState.password} disabled={true} />
             </div>
             <div className="flexDirectionRow justifyContentSpaceBetween">
@@ -125,7 +125,7 @@ const CustomLabeledInput = (props) => {
         <div key={"labeledInputContainer" + id} style={containerStyle} className="flexDirectionColumn">
             <div className="width-100 flexDirectionRow justifyContentSpaceBetween">
                 <label htmlFor={id}>{label}</label>
-                <button style={editButtonStyle} onClick={(e) => toggleDisabled(e, id)}>
+                <button style={editButtonStyle} data-testid={"edit-" + id} onClick={(e) => toggleDisabled(e, id)}>
                     {disabled ? `Edit` : `Cancel`}
                 </button>
             </div>

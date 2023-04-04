@@ -21,7 +21,54 @@ export default function UserSettings(props) {
         mode: "",
     });
 
-    Modal.setAppElement('#root');
+    // We need the Edit button to appear over top the bottom-right corner of the avatar
+    const editButtonStyle = {
+        // backgroundColor: "var(--color-gold)",
+        color: "var(--color-black)",
+        position: "relative",
+        top: "-2em",
+        right: "-4em",
+        cursor: "pointer",
+        width: "64px",
+        height: "64px",
+    };
+
+    const handleAvatarEditClicked = (e) => {
+        e.preventDefault();
+        setModalState({ isOpen: true, mode: "edit" });
+    };
+
+    const handleDeactivateClicked = (e) => {
+        e.preventDefault();
+        setModalState({ isOpen: true, mode: "deactivate" });
+    };
+
+    return (
+        <div className="sectionContainer">
+            <div className="leftSection flexDirectionColumn centerText justifyContentFlexStart">
+                <div className="centerContent">
+                    <Avatar avatar={user.avatar} size="large" />
+                    <label htmlFor="edit-avatar" style={editButtonStyle} onClick={(e) => handleAvatarEditClicked(e)}>
+                        <img id="edit-avatar" src="/img/icons/editIconButton.png" alt="Edit Avatar" width="64px" height="64px" />
+                    </label>
+                </div>
+                <LabeledInput type="text" id="memberSince" label="Member Since" defaultValue={new Date(user.memberSince)?.toDateString()} orientation="vertical" disabled />
+                <button className="width-100" onClick={() => navigate("/profile")}>View Public Profile</button>
+                {/* <button className="width-100" onClick={() => navigate("/general-settings")}>General Setttings</button> */}
+                {pageState === "accountSettings" ? <button className="width-100" onClick={() => setPageState("blockedUsers")} name="blockedUsersBtn">Blocked Users</button> : <button className="width-100" onClick={() => setPageState("accountSettings")} data-testid="accountSettingsBtn">Account Settings</button>}
+                <button className="width-100" data-testid="deactivateAccountBtn" style={{ backgroundColor: "var(--color-red)" }} onClick={(e) => handleDeactivateClicked(e)}>Deactivate Account</button>
+            </div>
+            <div className="rightSection flexDirectionColumn justifyContentStretch">
+                {/* If the Blocked Users btn was clicked we'll show that screen in place of Acct Settings */}
+                {pageState !== "accountSettings" ? <BlockedUsers user={user} updateUser={updateUser} /> : <AccountSettings user={user} updateUser={updateUser} modalState={modalState} setModalState={setModalState} />}
+            </div>
+            <Modals modalState={modalState} setModalState={setModalState} user={user} updateUser={updateUser} />
+        </div>
+    );
+};
+
+const Modals = (props) => {
+    const { modalState, setModalState, user, updateUser } = props;
 
     const modalStyles = {
         container: {
@@ -43,59 +90,11 @@ export default function UserSettings(props) {
         },
     };
 
-    // We need the Edit button to appear over top the bottom-right corner of the avatar
-    const editButtonStyle = {
-        // backgroundColor: "var(--color-gold)",
-        color: "var(--color-black)",
-        position: "relative",
-        top: "-2em",
-        right: "-4em",
-        cursor: "pointer",
-        width: "64px",
-        height: "64px",
-    };
-
-    const handleAvatarEditClicked = (e) => {
-        e.preventDefault();
-        setModalState({ isOpen: true, mode: "edit" });
-    };
-
-    const handleAvatarEditCancel = (e) => {
-        e.preventDefault();
-        setModalState({ isOpen: false });
-    };
-
-    const handleDeactivateClicked = (e) => {
-        e.preventDefault();
-        setModalState({ isOpen: true, mode: "deactivate" });
-    };
-
     return (
-        <>
-            <div className="sectionContainer">
-                <div className="leftSection flexDirectionColumn centerText justifyContentFlexStart">
-                    <div className="centerContent">
-                        <Avatar avatar={user.avatar} size="large" />
-                        <label htmlFor="edit-avatar" style={editButtonStyle} onClick={(e) => handleAvatarEditClicked(e)}>
-                            <img id="edit-avatar" src="/img/icons/editIconButton.png" alt="Edit Avatar" width="64px" height="64px" />
-                        </label>
-                    </div>
-                    <LabeledInput type="text" id="memberSince" label="Member Since" defaultValue={new Date(user.memberSince)?.toDateString()} orientation="vertical" disabled />
-                    <button className="width-100" onClick={() => navigate("/profile")}>View Public Profile</button>
-                    {/* <button className="width-100" onClick={() => navigate("/general-settings")}>General Setttings</button> */}
-                    {pageState === "accountSettings" ? <button className="width-100" onClick={() => setPageState("blockedUsers")} name="blockedUsersBtn">Blocked Users</button> : <button className="width-100" onClick={() => setPageState("accountSettings")} name="accountSettingsBtn">Account Settings</button>}
-                    <button className="width-100" style={{ backgroundColor: "var(--color-red)" }} onClick={(e) => handleDeactivateClicked(e)}>Deactivate Account</button>
-                </div>
-                <div className="rightSection flexDirectionColumn justifyContentStretch">
-                    {/* If the Blocked Users btn was clicked we'll show that screen in place of Acct Settings */}
-                    {pageState !== "accountSettings" ? <BlockedUsers user={user} updateUser={updateUser} /> : <AccountSettings user={user} updateUser={updateUser} modalState={modalState} setModalState={setModalState} />}
-                </div>
-            </div>
-            <Modal isOpen={modalState.isOpen} onRequestClose={(e) => handleAvatarEditCancel(e)} style={modalStyles.container} shouldCloseOnEsc={true} shouldCloseOnOverlayClick={true}>
-                {modalState.mode === "edit" && <EditAvatarModal user={user} updateUser={updateUser} modalState={modalState} setModalState={setModalState} />}
-                {modalState.mode === "updatePassword" && <EditPasswordModal user={user} updateUser={updateUser} modalState={modalState} setModalState={setModalState} />}
-                {modalState.mode === "deactivate" && <DeactivateAccountModal user={user} updateUser={updateUser} modalState={modalState} setModalState={setModalState} />}
-            </Modal>
-        </>
+        <Modal setAppElement={"#root"} onRequestClose={() => setModalState({ isOpen: false, mode: "" })} isOpen={modalState.isOpen} style={modalStyles}>
+            {modalState.mode === "edit" && <EditAvatarModal user={user} updateUser={updateUser} modalState={modalState} setModalState={setModalState} />}
+            {modalState.mode === "updatePassword" && <EditPasswordModal user={user} updateUser={updateUser} modalState={modalState} setModalState={setModalState} />}
+            {modalState.mode === "deactivate" && <DeactivateAccountModal user={user} updateUser={updateUser} modalState={modalState} setModalState={setModalState} />}
+        </Modal>
     );
-}
+};
