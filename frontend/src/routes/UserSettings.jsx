@@ -35,7 +35,7 @@ export default function UserSettings(props) {
 
     const handleAvatarEditClicked = (e) => {
         e.preventDefault();
-        setModalState({ isOpen: true, mode: "edit" });
+        setModalState({ isOpen: true, mode: "editAvatar" });
     };
 
     const handleDeactivateClicked = (e) => {
@@ -92,7 +92,7 @@ const Modals = (props) => {
 
     return (
         <Modal setAppElement={"#root"} onRequestClose={() => setModalState({ isOpen: false, mode: "" })} isOpen={modalState.isOpen} style={modalStyles}>
-            {modalState.mode === "edit" && <EditAvatarModal user={user} updateUser={updateUser} modalState={modalState} setModalState={setModalState} />}
+            {modalState.mode === "editAvatar" && <EditAvatarModal user={user} updateUser={updateUser} modalState={modalState} setModalState={setModalState} />}
             {modalState.mode === "updatePassword" && <EditPasswordModal user={user} updateUser={updateUser} modalState={modalState} setModalState={setModalState} />}
             {modalState.mode === "deactivate" && <DeactivateAccountModal user={user} updateUser={updateUser} modalState={modalState} setModalState={setModalState} />}
         </Modal>
