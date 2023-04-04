@@ -5,7 +5,7 @@ describe('Login Page', () => {
     cy.visit('localhost:3000'); 
       cy.get('#username').type('TestUsername23').should('have.value', 'TestUsername23');
     cy.get('#password').type('p@ssw0rd!').should('have.value', 'p@ssw0rd!');
-    cy.get('.roundedBlue').click();
+    cy.get('.roundedBlueBtn').click();
     cy.contains('User Profile');
    });
 });

@@ -2,68 +2,58 @@
     "games": [
         {
             "GameId": 1,
-            "name": "Game 1",
+            "name": "Ark: Survival Evolved",
             "description": "Game 1 description",
-            "image": "http: //placehold.it/100",
-            "genre": "Action",
+            "image": "/img/games/Ark_Cover.jpg",
+            "genre": "Action-Adventure",
             "totalPlayerCount": 15,
             "activePlayerCount": 5,
             "activePlayers": [
-                {
-                    "id": 1,
-                    "username": "User 1",
-                    "avatar": "http://placehold.it/100",
-                    "blocked": true,
-                    "status": "offline",
-                    "lastSeen": "2016-03-01T12:00:00Z",
-                    "bio": "User 1 bio",
-                    "totalGames": 2,
-                    "totalFriends": 2
-                },
-                {
-                    "id": 2,
-                    "username": "User 2",
-                    "avatar": "http://placehold.it/100",
-                    "blocked": true,
-                    "status": "offline",
-                    "lastSeen": "2016-03-01T12:00:00Z",
-                    "bio": "User 2 bio",
-                    "totalGames": 2,
-                    "totalFriends": 2
-                }
+                1,
+                2,
+                3
             ]
         },
         {
             "GameId": 2,
-            "name": "Game 2",
+            "name": "Dark Souls 3",
             "description": "Game 2 description",
-            "image": "http://placehold.it/100",
-            "genre": "Strategy",
+            "image": "/img/games/DarkSouls3_Cover.jpg",
+            "genre": "Action-Adventure",
             "totalPlayerCount": 256,
             "activePlayerCount": 1,
             "recommendedPlayers": [
-                {
-                    "id": 1,
-                    "username": "User 1",
-                    "avatar": "http://placehold.it/100",
-                    "blocked": true,
-                    "status": "offline",
-                    "lastSeen": "2016-03-01T12:00:00Z",
-                    "bio": "User 1 bio",
-                    "totalGames": 2,
-                    "totalFriends": 2
-                },
-                {
-                    "id": 2,
-                    "username": "User 2",
-                    "avatar": "http://placehold.it/100",
-                    "blocked": true,
-                    "status": "offline",
-                    "lastSeen": "2016-03-01T12:00:00Z",
-                    "bio": "User 2 bio",
-                    "totalGames": 2,
-                    "totalFriends": 2
-                }
+                4,
+                5,
+                6
+            ]
+        },
+        {
+            "GameId": 3,
+            "name": "Modern Warfare 2",
+            "description": "Game 1 description",
+            "image": "/img/games/MW2_Cover.jpg",
+            "genre": "Action",
+            "totalPlayerCount": 15,
+            "activePlayerCount": 5,
+            "activePlayers": [
+                1,
+                2,
+                3
+            ]
+        },
+        {
+            "GameId": 4,
+            "name": "Stardew Valley",
+            "description": "Game 2 description",
+            "image": "/img/games/StardewValley_Cover.jpg",
+            "genre": "Action-Adventure",
+            "totalPlayerCount": 256,
+            "activePlayerCount": 1,
+            "recommendedPlayers": [
+                4,
+                5,
+                6
             ]
         }
     ],
@@ -75,11 +65,42 @@
             "last_name": "User",
             "avatar": "avatar3",
             "blocked": true,
-            "status": "offline",
+            "currentStatus": "In-Game",
+            "playstyle": "Casual",
             "lastSeen": "2016-03-01T12:00:00Z",
             "bio": "User 1 bio",
             "totalGames": 2,
-            "totalFriends": 2
+            "totalFriends": 2,
+            "favoriteGames": [
+                {
+                    "GameId": 1,
+                    "name": "Ark: Survival Evolved",
+                    "description": "Game 1 description",
+                    "image": "/img/games/Ark_Cover.jpg",
+                    "genre": "Action-Adventure",
+                    "totalPlayerCount": 15,
+                    "activePlayerCount": 5,
+                    "activePlayers": [
+                        1,
+                        2,
+                        3
+                    ]
+                },
+                {
+                    "GameId": 2,
+                    "name": "Dark Souls 3",
+                    "description": "Game 2 description",
+                    "image": "/img/games/DarkSouls3_Cover.jpg",
+                    "genre": "Action-Adventure",
+                    "totalPlayerCount": 256,
+                    "activePlayerCount": 1,
+                    "recommendedPlayers": [
+                        4,
+                        5,
+                        6
+                    ]
+                }
+            ]
         },
         {
             "id": 2,
@@ -88,11 +109,42 @@
             "last_name": "User",
             "avatar": "avatar2",
             "blocked": true,
-            "status": "offline",
+            "currentStatus": "Offline",
+            "playstyle": "Casual",
             "lastSeen": "2016-03-01T12:00:00Z",
             "bio": "User 2 bio",
             "totalGames": 2,
-            "totalFriends": 2
+            "totalFriends": 2,
+            "favoriteGames": [
+                {
+                    "GameId": 1,
+                    "name": "Ark: Survival Evolved",
+                    "description": "Game 1 description",
+                    "image": "/img/games/Ark_Cover.jpg",
+                    "genre": "Action-Adventure",
+                    "totalPlayerCount": 15,
+                    "activePlayerCount": 5,
+                    "activePlayers": [
+                        1,
+                        2,
+                        3
+                    ]
+                },
+                {
+                    "GameId": 2,
+                    "name": "Dark Souls 3",
+                    "description": "Game 2 description",
+                    "image": "/img/games/DarkSouls3_Cover.jpg",
+                    "genre": "Action-Adventure",
+                    "totalPlayerCount": 256,
+                    "activePlayerCount": 1,
+                    "recommendedPlayers": [
+                        4,
+                        5,
+                        6
+                    ]
+                }
+            ]
         },
         {
             "id": 3,
@@ -101,11 +153,72 @@
             "last_name": "User",
             "avatar": "avatar1",
             "blocked": false,
-            "status": "offline",
+            "currentStatus": "In-Game",
+            "playstyle": "Casual",
             "lastSeen": "2016-03-01T12:00:00Z",
             "bio": "User 3 bio",
             "totalGames": 2,
-            "totalFriends": 2
+            "totalFriends": 2,
+            "favoriteGames": [
+                {
+                    "GameId": 1,
+                    "name": "Ark: Survival Evolved",
+                    "description": "Game 1 description",
+                    "image": "/img/games/Ark_Cover.jpg",
+                    "genre": "Action-Adventure",
+                    "totalPlayerCount": 15,
+                    "activePlayerCount": 5,
+                    "activePlayers": [
+                        1,
+                        2,
+                        3
+                    ]
+                },
+                {
+                    "GameId": 2,
+                    "name": "Dark Souls 3",
+                    "description": "Game 2 description",
+                    "image": "/img/games/DarkSouls3_Cover.jpg",
+                    "genre": "Action-Adventure",
+                    "totalPlayerCount": 256,
+                    "activePlayerCount": 1,
+                    "recommendedPlayers": [
+                        4,
+                        5,
+                        6
+                    ]
+                }
+            ],
+            "recentGames": [
+                {
+                    "GameId": 1,
+                    "name": "Ark: Survival Evolved",
+                    "description": "Game 1 description",
+                    "image": "/img/games/Ark_Cover.jpg",
+                    "genre": "Action-Adventure",
+                    "totalPlayerCount": 15,
+                    "activePlayerCount": 5,
+                    "activePlayers": [
+                        1,
+                        2,
+                        3
+                    ]
+                },
+                {
+                    "GameId": 2,
+                    "name": "Dark Souls 3",
+                    "description": "Game 2 description",
+                    "image": "/img/games/DarkSouls3_Cover.jpg",
+                    "genre": "Action-Adventure",
+                    "totalPlayerCount": 256,
+                    "activePlayerCount": 1,
+                    "recommendedPlayers": [
+                        4,
+                        5,
+                        6
+                    ]
+                }
+            ]
         },
         {
             "id": 4,
@@ -114,7 +227,8 @@
             "last_name": "User",
             "avatar": "avatar1",
             "blocked": false,
-            "status": "offline",
+            "currentStatus": "Offline",
+            "playstyle": "Casual",
             "lastSeen": "2016-03-01T12:00:00Z",
             "bio": "User 4 bio",
             "totalGames": 2,
@@ -127,7 +241,8 @@
             "last_name": "User",
             "avatar": "avatar3",
             "blocked": false,
-            "status": "offline",
+            "currentStatus": "Offline",
+            "playstyle": "Casual",
             "lastSeen": "2016-03-01T12:00:00Z",
             "bio": "User 5 bio",
             "totalGames": 2,
@@ -140,7 +255,8 @@
             "last_name": "User",
             "avatar": "avatar2",
             "blocked": false,
-            "status": "offline",
+            "currentStatus": "Offline",
+            "playstyle": "Casual",
             "lastSeen": "2016-03-01T12:00:00Z",
             "bio": "User 5 bio",
             "totalGames": 2,

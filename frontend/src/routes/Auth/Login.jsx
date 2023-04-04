@@ -230,7 +230,7 @@ export default function Login(props) {
                 <p>Forgot your password? Click <Link className="Link" to="/forgot-password">here</Link> to reset your password.</p>
                 <p>Don't have an account? <Link className="Link" to="/register">Register Now</Link></p>
                 <div className="formRow centerContent">
-                    <input type="submit" className="roundedBlue" value="Login" disabled={formState.disabled} />
+                    <input type="submit" className="roundedBlueBtn" value="Login" disabled={formState.disabled} />
                 </div>
                 <div className="flexDirectionRow justifyContentSpaceBetween">
                     <button disabled>Login with Discord</button>

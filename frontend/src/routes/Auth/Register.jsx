@@ -249,8 +249,8 @@ export default function Register(props) {
                     or send what we have here to server for validation, get a response and then go there 
                     I think we'll have to send this all to server first to check for existing accts, then if its validated we come back to Step 2.
                     If the user quits and re-logs before doing Step 2 we can bring that up again */}
-                        <button id="submit" form="registerForm" type="submit" className="roundedBlue" disabled={formState.disabled}>Continue</button>
-                        <button className="roundedGray"><Link className="Link" style={{ color: "white" }} to="/">Cancel</Link></button>
+                        <button id="submit" form="registerForm" type="submit" className="roundedBlueBtn" disabled={formState.disabled}>Continue</button>
+                        <button className="roundedGrayBtn"><Link className="Link" style={{ color: "white" }} to="/">Cancel</Link></button>
                     </p>
                 </fieldset>
             </form>

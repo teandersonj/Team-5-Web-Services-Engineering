@@ -30,17 +30,17 @@ const styles = {
 };
 
 export default function PlayerCard(props) {
-    const { player, orientation, size } = props;
+    const { player, orientation, noLabels=false, size } = props;
     return (
         <div className={`PlayerCard PlayerCard-${size}`}>
             <div className="justifyContentCenter">
                 <Avatar avatar={player.avatar} size={size} />
             </div>
-            <LabeledInput type="text" id="username" label="Username" defaultValue={player.username || "Unset"} orientation="vertical" disabled />
+            <LabeledInput type="text" id="username" label={!noLabels && "Username"} defaultValue={player.username || "Unset"} orientation="vertical" inputStyle={{ background: "none" }} disabled />
             {size !== "small" && (
                 <>
-                    <LabeledInput type="text" id="first_name" label="First Name" defaultValue={player.first_name || "Unset"} orientation="vertical" disabled />
-                    <LabeledInput type="text" id="last_name" label="Last Name" defaultValue={player.last_name || "Unset"} orientation="vertical" disabled />
+                    <LabeledInput type="text" id="first_name" label={!noLabels && "First Name"} defaultValue={player.first_name || "Unset"} orientation="vertical" disabled />
+                    <LabeledInput type="text" id="last_name" label={!noLabels && "Last Name"} defaultValue={player.last_name || "Unset"} orientation="vertical" disabled />
                 </>
             )}
         </div>

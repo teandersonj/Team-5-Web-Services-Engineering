@@ -32,7 +32,7 @@ export default function FinishRegistration(props) {
                 <h1 className="pageHeading centerText">Registration Complete</h1>
                 <p>Account Created.<br /> Click the button below to continue to log in.
                 </p>
-                <button className="alignSelfCenter roundedBlue" onClick={(e) => handleClick(e)}>Continue</button>
+                <button className="alignSelfCenter roundedBlueBtn" onClick={(e) => handleClick(e)}>Continue</button>
             </div>
         </>
     )

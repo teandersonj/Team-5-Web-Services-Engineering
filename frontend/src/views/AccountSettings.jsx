@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import LabeledInput from "../components/LabeledInput";
 import ValidationErrorList from "../components/ValidationErrorList";
@@ -24,15 +24,37 @@ const AccountSettings = (props) => {
 
     const [formState, setFormState] = useState(initialState());
 
+    const currentlyFocusedInput = useRef(null);
+
     // Whenever the user changes, reset the form state to the newest values
     useEffect(() => {
         setFormState(initialState());
     }, [user]);
 
+    // Whenever the form state changes, focus on the input that was modified
+    useEffect(() => {
+        if (currentlyFocusedInput.current) {
+            document.getElementById(currentlyFocusedInput.current).focus();
+            // Remove the reference so that when we move to a different input, we don't focus on the previous one
+            currentlyFocusedInput.current = null;
+        }
+    }, [formState]);
+
     const handleInputChange = (e) => {
         const { id, value } = e.target;
-        // Determine if the value's the same as the user's value and remove modified if it is
-        setFormState((prev) => ({ ...prev, [id]: value, modified: { ...prev.modified, [id]: value !== user[id] } }));
+        // Determine if the value's the same as the user's value and set the modified state accordingly
+        setFormState((prev) => ({
+            ...prev,
+            [id]: value,
+            modified: {
+                ...prev.modified,
+                [id]: value !== user[id]
+            }
+        }));
+
+        // When an input is modified, store a reference to it so that when the component re-renders with the Submit button,
+        // focus is retained in that input field
+        currentlyFocusedInput.current = id;
     };
 
     const toggleDisabled = (e, fieldName) => {
@@ -42,7 +64,7 @@ const AccountSettings = (props) => {
             newState[fieldName] = user[fieldName];
             newState.modified[fieldName] = false;
         }
-        newState.disabled[fieldName] = !newState.disabled[fieldName]; 
+        newState.disabled[fieldName] = !newState.disabled[fieldName];
         setFormState(newState);
     };
 
@@ -60,7 +82,7 @@ const AccountSettings = (props) => {
             <p>On this page, you can see the different settings used by your profile. All of these settings are able to be edited at your discretion. Your profile picture can be changed by clicking the orange icon on your profile picture to the left.</p>
             <ValidationErrorList errors={formState.errors} />
             <div className="flexDirectionRow justifyContentSpaceBetween">
-                <CustomLabeledInput type="text" id="username" label="Username" toggleDisabled={toggleDisabled} value={formState.username} modified={formState.modified.username} onChange={handleInputChange} submitField={submitField} required disabled={formState.disabled.username} />
+                <CustomLabeledInput key="tlUsername" type="text" id="username" label="Username" toggleDisabled={toggleDisabled} value={formState.username} modified={formState.modified.username} onChange={handleInputChange} submitField={submitField} required disabled={formState.disabled.username} />
                 <CustomLabeledInput type="password" id="password" label="Password" toggleDisabled={(e) => { e.preventDefault(); props.setModalState({ isOpen: true, mode: "updatePassword" }) }} value={formState.password} disabled={true} />
             </div>
             <div className="flexDirectionRow justifyContentSpaceBetween">
@@ -72,7 +94,7 @@ const AccountSettings = (props) => {
                 <CustomLabeledInput type="select" id="playstyle" label="Playstyle" toggleDisabled={toggleDisabled} value={formState.playstyle} modified={formState.modified.playstyle} onChange={handleInputChange} submitField={submitField} required disabled={formState.disabled.playstyle} options={
                     [
                         { value: "Casual", label: "Casual" },
-                        { value: "Semi", label: "Semi-Competitive" },
+                        { value: "Semi-Competitive", label: "Semi-Competitive" },
                         { value: "Competitive", label: "Competitive" },
                     ]
                 } />
@@ -115,21 +137,23 @@ const CustomLabeledInput = (props) => {
 
     // Depending if they've modified the field, we need to add the submit button
     // and alter styles accordingly, these'll be passed to LabeledInput
-    const labeledInputProps = {
-        innerContainer: modified && true,
-        innerContainerClassName: "flexDirectionRow justifyContentSpaceBetween width-100",
-        innerContainerChildren: modified && button
-    };
+    const labeledInputProps = (modified && true) ?
+        {
+            innerContainer: true,
+            innerContainerClassName: "flexDirectionRow justifyContentSpaceBetween width-100",
+            innerContainerChildren: button
+        } : {}
+
 
     return (
         <div key={"labeledInputContainer" + id} style={containerStyle} className="flexDirectionColumn">
             <div className="width-100 flexDirectionRow justifyContentSpaceBetween">
                 <label htmlFor={id}>{label}</label>
-                <button style={editButtonStyle} onClick={(e) => toggleDisabled(e, id)}>
+                <button style={editButtonStyle} data-testid={"edit-" + id} onClick={(e) => toggleDisabled(e, id)}>
                     {disabled ? `Edit` : `Cancel`}
                 </button>
             </div>
-            <LabeledInput key={"labeledInput" + id} id={id} disabled={disabled} {...labeledInputProps} {...rest} />
+            <LabeledInput key={"labeledInputContainer" + id} id={id} disabled={disabled} {...labeledInputProps} {...rest} />
         </div>
     );
 };
