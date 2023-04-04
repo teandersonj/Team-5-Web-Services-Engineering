@@ -43,7 +43,7 @@ const BlockedUsers = (props) => {
         <>
             <h2 className="pageHeading centerText">Blocked Users</h2>
             <p>On this page, you can see the different users you have blocked on this account. These users cannot see your account, directly interact with you, or send you messages. You will also be unable to send them messages until they are unblocked.</p>
-            <div className="flexDirectionRow justifyContentSpaceEvenly flexWrap-True">
+            <div className="flexDirectionRow flexWrap-True">
                 {user.blockedUsers?.map((blockedUser, index) => (
                     <div key={blockedUser.username} style={blockedUserCardStyle}>
                         <div className="justifyContentCenter">
