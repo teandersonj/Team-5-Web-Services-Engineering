@@ -4,85 +4,34 @@ orbs:
   heroku: circleci/heroku@2.0.0
 
 jobs:
-  test-env:
-    docker:
-      - image: cimg/node:18.12.1
-    steps:
-      - checkout
-      - run:
-          name: "Set environment variables"
-          command: |
-            echo "export HEROKU_API_KEY=$HEROKU_API_KEY" >> $BASH_ENV
-            echo "export HEROKU_APP_NAME=$HEROKU_APP_NAME" >> $BASH_ENV
-            echo "export HEROKU_FRONTEND_APP_NAME=$HEROKU_FRONTEND_APP_NAME" >> $BASH_ENV
-            source $BASH_ENV
-      - run:
-          name: "Print environment variables"
-          command: |
-            echo $HEROKU_API_KEY
-            echo $HEROKU_APP_NAME
-            echo $HEROKU_FRONTEND_APP_NAME
-            echo $(git remote -v)
   deploy-backend:
     executor: heroku/default
     resource_class: small
     steps:
         - checkout
         - run:
-            name: "Set environment variables"
+            name: "Prepare backend for deployment"
             command: |
-              echo "export HEROKU_API_KEY=$HEROKU_API_KEY" >> $BASH_ENV
-              echo "export HEROKU_APP_NAME=$HEROKU_APP_NAME" >> $BASH_ENV
-              source $BASH_ENV
+              cd backend
+              ls -la
         - heroku/deploy-via-git:
             app-name: $HEROKU_APP_NAME
             api-key: HEROKU_API_KEY
             force: true
-            # post-steps:
-            #   - run: |
-            #       echo "Running post-deployment steps on Heroku"
-            #       python manage.py makemigrations
-            #       python manage.py migrate
-            # pre-steps:
-            #   - run: |
-            #       echo "Running pre-deployment steps on Heroku"
-            #       # python manage.py collectstatic --noinput
-            # requires:
-            #   - build-backend
-            # filters:
-            #   branches:
-            #     only:
-            #       - CICDTest
   deploy-frontend:
-      executor: heroku/default
-      resource_class: small
-      steps:
-        - checkout
-        - run:
-            name: "Set environment variables"
-            command: |
-              echo "export HEROKU_API_KEY=$HEROKU_API_KEY" >> $BASH_ENV
-              echo "export HEROKU_FRONTEND_APP_NAME=$HEROKU_FRONTEND_APP_NAME" >> $BASH_ENV
-              echo $HEROKU_FRONTEND_APP_NAME
-              source $BASH_ENV
-        - heroku/deploy-via-git:
-            app-name: $HEROKU_FRONTEND_APP_NAME
-            api-key: HEROKU_API_KEY
-            force: true
-            # post-steps:
-            #   - run: |
-            #       echo "Running post-deployment steps on Heroku"
-            # pre-steps:
-            #   - run: |
-            #       echo "Running pre-deployment steps on Heroku"
-            #       # May need to run npm build here
-            #       # and then copy the build folder to the root of the project
-            # requires:
-            #   - build-frontend
-            # filters:
-            #   branches:
-            #     only:
-            #       - CICDTest
+    executor: heroku/default
+    resource_class: small
+    steps:
+      - checkout
+      - run:
+          name: "Prepare frontend for deployment"
+          command: |
+            cd frontend
+            ls -la
+      - heroku/deploy-via-git:
+          app-name: $HEROKU_FRONTEND_APP_NAME
+          api-key: HEROKU_API_KEY
+          force: true
   build-frontend:
     docker:
       - image: cimg/node:18.12.1
@@ -120,8 +69,8 @@ jobs:
           cd backend
           echo "Creating virtual environment"
           python -m venv venv
-          python -m pip install --upgrade pip
           source venv/bin/activate
+          python -m pip install --upgrade pip
           echo "Installing Python dependencies"
           pip install -r requirements.txt
           # echo "Running Python tests"
@@ -135,9 +84,6 @@ jobs:
     # parallelism: 2
 
 workflows:
-  test-env:
-    jobs:
-      - test-env
   build-test-deploy-frontend:
     jobs:
       - build-frontend
