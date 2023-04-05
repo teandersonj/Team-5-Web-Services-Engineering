@@ -79,7 +79,7 @@ workflows:
                 echo "Running pre-deployment steps on Heroku"
                 # python manage.py collectstatic --noinput
           app-name: $HEROKU_APP_NAME
-          api-key: $HEROKU_API_KEY
+          api-key: HEROKU_API_KEY
           filters:
             branches:
               only:
@@ -96,7 +96,7 @@ workflows:
                 # May need to run npm build here
                 # and then copy the build folder to the root of the project
           app-name: $HEROKU_FRONTEND_APP_NAME
-          api-key: $HEROKU_API_KEY
+          api-key: HEROKU_API_KEY
           filters:
             branches:
               only:
