@@ -84,6 +84,9 @@ workflows:
             branches:
               only:
                 - CICDTest
+          requires:
+            - build-backend
+            - build-frontend
   heroku_deploy_frontend:
     jobs:
       - heroku/deploy-via-git:
@@ -101,3 +104,7 @@ workflows:
             branches:
               only:
                 - CICDTest
+          requires:
+            - build-backend
+            - build-frontend
+  
