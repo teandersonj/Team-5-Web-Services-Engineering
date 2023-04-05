@@ -21,6 +21,8 @@ jobs:
           cd frontend
           npm install
           npm test
+      - save_test_results:
+          path: frontend/test-results
       - save_cache:
           paths:
             - node_modules
@@ -49,7 +51,9 @@ jobs:
           python -m venv venv
           source venv/bin/activate
           pip install -r requirements.txt
-          pytest 
+          pytest
+      - save_test_results:
+          path: backend/test-results
       - save_cache:
           paths:
             - venv
