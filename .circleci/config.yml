@@ -25,6 +25,7 @@ jobs:
             echo $(git remote -v)
   deploy-backend:
     executor: heroku/default
+    resource_class: small
     steps:
         - checkout
         - run:
@@ -36,6 +37,7 @@ jobs:
         - heroku/deploy-via-git:
             app-name: $HEROKU_APP_NAME
             api-key: HEROKU_API_KEY
+            force: true
             # post-steps:
             #   - run: |
             #       echo "Running post-deployment steps on Heroku"
@@ -53,6 +55,7 @@ jobs:
             #       - CICDTest
   deploy-frontend:
       executor: heroku/default
+      resource_class: small
       steps:
         - checkout
         - run:
