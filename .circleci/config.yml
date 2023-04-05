@@ -5,7 +5,8 @@ orbs:
 
 jobs:
   deploy-backend:
-    executor: cimg/base:stable-20.04
+    docker:
+      - image: cimg/base:stable-20.04
     resource_class: small
     steps:
       - checkout
