@@ -7,7 +7,7 @@ jobs:
   deploy-backend:
     docker:
       - image: cimg/base:stable-20.04
-    resource_class: large
+    resource_class: small
     steps:
       - checkout
       - run:
@@ -39,7 +39,7 @@ jobs:
   build-frontend:
     docker:
       - image: cimg/node:18.12.1
-    resource_class: small
+    resource_class: large
     working_directory: ~/project/frontend
     steps:
       - checkout
@@ -97,7 +97,7 @@ workflows:
           filters:
             branches:
               only:
-                - CICDTest
+                - main
   build-test-deploy-backend:
     jobs:
       - build-backend
@@ -107,4 +107,4 @@ workflows:
           filters:
             branches:
               only:
-                - CICDTest
+                - main
