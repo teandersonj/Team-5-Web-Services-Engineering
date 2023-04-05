@@ -4,6 +4,25 @@ orbs:
   heroku: circleci/heroku@2.0.0
 
 jobs:
+  test-env:
+    docker:
+      - image: cimg/node:18.12.1
+    steps:
+      - checkout
+      - run:
+          name: "Set environment variables"
+          command: |
+            echo "export HEROKU_API_KEY=$HEROKU_API_KEY" >> $BASH_ENV
+            echo "export HEROKU_APP_NAME=$HEROKU_APP_NAME" >> $BASH_ENV
+            echo "export HEROKU_FRONTEND_APP_NAME=$HEROKU_FRONTEND_APP_NAME" >> $BASH_ENV
+            source $BASH_ENV
+      - run:
+          name: "Print environment variables"
+          command: |
+            echo $HEROKU_API_KEY
+            echo $HEROKU_APP_NAME
+            echo $HEROKU_FRONTEND_APP_NAME
+            echo $(git remote -v)
   deploy-backend:
     executor: heroku/default
     steps:
@@ -41,10 +60,12 @@ jobs:
             command: |
               echo "export HEROKU_API_KEY=$HEROKU_API_KEY" >> $BASH_ENV
               echo "export HEROKU_FRONTEND_APP_NAME=$HEROKU_FRONTEND_APP_NAME" >> $BASH_ENV
+              echo $HEROKU_FRONTEND_APP_NAME
               source $BASH_ENV
         - heroku/deploy-via-git:
             app-name: $HEROKU_FRONTEND_APP_NAME
             api-key: HEROKU_API_KEY
+            force: true
             # post-steps:
             #   - run: |
             #       echo "Running post-deployment steps on Heroku"
@@ -81,7 +102,7 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package-lock.json" }}
-    parallelism: 2
+    # parallelism: 2
   build-backend:
     docker:
       - image: circleci/python:3.9
@@ -108,9 +129,12 @@ jobs:
           paths:
             - venv
           key: v1-dependencies-{{ checksum "requirements.txt" }}
-    parallelism: 2
+    # parallelism: 2
 
 workflows:
+  test-env:
+    jobs:
+      - test-env
   build-test-deploy-frontend:
     jobs:
       - build-frontend
