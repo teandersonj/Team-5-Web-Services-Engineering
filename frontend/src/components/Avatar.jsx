@@ -7,11 +7,10 @@
  * @param {String props.imageClassName} [ImageClassName] - Any CSS classes to apply to the image
  * @param {Object props.containerStyle} [ContainerStyle] - Any CSS rules to apply to the container
  * @param {Object props.imageStyle} [ImageStyle] - Any CSS rules to apply to the image
- * @param {Object props.rest} [Rest] - Any other props to apply to the image
  * @returns {JSX.Element} - The Avatar component
  */
 export default function Avatar(props) {
-    const { avatar, alt, size="small", containerClassName, imageClassName, containerStyle, imageStyle, ...rest } = props;
+    const { avatar, alt, size="small", containerClassName, imageClassName, containerStyle, imageStyle } = props;
 
     const containerStyles = {
         small: {
@@ -41,7 +40,7 @@ export default function Avatar(props) {
     
     return (
         <div className={containerClassName} style={{ ...containerStyles[size], ...containerStyle }}>
-            <img className={imageClassName} src={"/img/avatars/" + props.avatar + ".jpg"} alt={alt || "User Avatar"} style={{ ...imageStyles, ...imageStyle }} {...props.rest} />
+            <img className={imageClassName} src={"/img/avatars/" + avatar + ".jpg"} alt={alt || "User Avatar"} style={{ ...imageStyles, ...imageStyle }} {...props.rest} />
         </div>
     );
 };

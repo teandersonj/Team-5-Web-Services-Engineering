@@ -1,3 +1,7 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable jsx-a11y/alt-text */
+/* Only disabling these for now we're awaiting changes */
+
 import { useContext, useEffect, useState } from 'react';
 
 import Avatar from '../components/Avatar';

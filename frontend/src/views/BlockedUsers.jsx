@@ -1,29 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Avatar from '../components/Avatar';
 
 const BlockedUsers = (props) => {
+    // eslint-disable-next-line no-unused-vars
     const { user, updateUser } = props;
-
-    // Test it by loading up user state with the dummyJSON
-    useEffect(() => {
-        fetch("/dummyData.json",
-            {
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json"
-                }
-            },
-        ).then((res) => res.json()).then((data) => {
-            // Update the user's blocked users
-            const newData = {
-                ...user,
-                blockedUsers: data.users
-            }
-            updateUser(newData);
-            return;
-        });
-    }, [])
-
 
     const blockedUserCardStyle = {
         width: "175px",
@@ -34,10 +14,6 @@ const BlockedUsers = (props) => {
         justifyContent: "space-evenly",
         alignItems: "center",
     }
-
-    const inputStyle = {
-        backgroundColor: "var(--color-dark-blue)",
-    };
 
     return (
         <>

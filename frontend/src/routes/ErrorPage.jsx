@@ -1,10 +1,6 @@
 import { Link } from "react-router-dom";
 
 export default function ErrorPage() {
-    const style = {
-        margin: "0 auto",
-        textAlign: "center",
-    }
     return (
         <div className="flexDirectionColumn alignItemsCenter centerText">
             {/* The error may not be 404, however IDK if we can get the status code unless using data router */}

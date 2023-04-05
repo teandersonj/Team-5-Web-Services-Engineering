@@ -1,11 +1,11 @@
 import { useContext, useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 
 import { UserContext } from '../../providers/UserProvider';
-import validateElement from '../../services/Validation';
+/* import validateElement from '../../services/Validation';
 import ValidationErrorList from '../../components/ValidationErrorList';
-import LabeledInput from '../../components/LabeledInput';
+import LabeledInput from '../../components/LabeledInput'; */
 import Avatar from '../../components/Avatar';
 
 /**

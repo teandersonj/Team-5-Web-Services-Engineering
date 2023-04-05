@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { UserContext } from '../../providers/UserProvider';
 import validateElement from '../../services/Validation';
@@ -16,7 +16,7 @@ export default function Register(props) {
     const navigate = useNavigate();
     // We can get the location state passed in from the "previous page"; here it should be the Continue Registration page
     // We can use this to pre-populate the form with the user's first name and email
-    const oldData = useLocation();
+    // const oldData = useLocation();
     const { user, updateUser } = useContext(UserContext);
 
     // On page refresh or initial load, check if the user's already logged in
@@ -72,7 +72,7 @@ export default function Register(props) {
             val += 1;
         }
         // Check special characters
-        if (formState.password.match(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/i)) {
+        if (formState.password.match(/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/i)) {
             val += 1;
         }
         // Check length
