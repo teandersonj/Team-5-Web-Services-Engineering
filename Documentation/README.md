@@ -9,7 +9,7 @@ Team 5's Git Repository for Web Services Engineering
 
 >This folder contains evidence of the collaboration between Team 5 members. In this folder, you can observe Team 5 members working on similiar files and efforts as realized through the utilization of similiar keywords.
 >
->![Code Collaboration Evidence](/Documentation/Collaboration%20Evidence/Team5_CodeCollaboration_Sprint2.png)
+>![Code Collaboration Evidence](/Documentation/Collaboration%20Evidence/Team5_CodeCollaboaration_Sprint2.png)
 
 ### Daily Scrum Documents
 
