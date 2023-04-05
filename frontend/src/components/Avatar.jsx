@@ -11,7 +11,7 @@
  * @returns {JSX.Element} - The Avatar component
  */
 export default function Avatar(props) {
-    const { avatar, alt, size="small", containerClassName, imageClassName, containerStyle, imageStyle, ...rest } = props;
+    const { avatar, playerStatus, alt, size="small", containerClassName, imageClassName, containerStyle, imageStyle, ...rest } = props;
 
     const containerStyles = {
         small: {
@@ -38,10 +38,33 @@ export default function Avatar(props) {
         height: "100%",
         objectFit: "cover",
     };
+
+    const profileGreenRing = {
+        border: "1px solid var(--color-green)",
+        boxShadow: "0 0 16px var(--color-green)",
+      }
+      
+    const profileBlueRing = {
+        border: "1px solid var(--color-light-blue)",
+        boxShadow: "0 0 16px var(--color-light-blue)",
+      }
+
+    const getStatusClassName = (status) => {
+        switch (status) {
+          case 'Online':
+            return {...profileBlueRing};
+          case 'In-Game':
+            return {...profileGreenRing};
+          case 'Offline':
+            return '';
+          default:
+            return '';
+        }
+      };
     
     return (
         <div className={containerClassName} style={{ ...containerStyles[size], ...containerStyle }}>
-            <img className={imageClassName} src={"/img/avatars/" + props.avatar + ".jpg"} alt={alt || "User Avatar"} style={{ ...imageStyles, ...imageStyle }} {...props.rest} />
+            <img className={imageClassName} src={"/img/avatars/" + props.avatar + ".jpg"} alt={alt || "User Avatar"} style={{ ...imageStyles, ...imageStyle, ...getStatusClassName(playerStatus)}} {...props.rest} />
         </div>
     );
 };

@@ -93,7 +93,7 @@ export default function PlayerSearch(props) {
                 <LabeledInput containerClassName="flexGrow-1" type="text" id="search" name="search" placeholder="Type username here..." onChange={handleSearchChange} />
                 <div>
                     <button className="roundedBlueBtn" onClick={(e) => getSearchResults(e)}>Search</button>
-                    <button className="roundedBlueBtn">Filter</button>
+                    <button className="roundedBlueBtn">Filter<img className="btnIcon" src="/img/icons/filterIcon.png"/></button>
                 </div>
             </div>
             <div className="flexDirectionColumn width-100">
@@ -103,7 +103,7 @@ export default function PlayerSearch(props) {
                         <div>{searchState.results.length || 0} users found.</div>
                         {searchState.results.map((player) => (
                             <div className="flexDirectionRow" style={{ ...rowStyle }}>
-                                <Avatar avatar={player.avatar} size="large" />
+                                <Avatar avatar={player.avatar} playerStatus={player.currentStatus} size="large" />
                                 <div className="flexDirectionColumn" style={{...playerColumn}}>
                                     <div style={{...playerDisplayName}}>{player.username}</div>
                                     <PlayerStatusDisplay status={player.currentStatus} />
