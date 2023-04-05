@@ -109,7 +109,7 @@ button {
   cursor: pointer;
 }
 
-/* For rounded blue and gray buttons */
+/* For rounded Buttons */
 .roundedBlueBtn {
   background-color: var(--color-dark-blue);
   color: var(--color-white);
@@ -124,6 +124,25 @@ button {
 }
 
 .roundedBlueBtn:hover {
+  background-color: var(--color-light-blue);
+}
+
+.longRoundedBlueBtn {
+  background-color: var(--color-dark-blue);
+  color: var(--color-white);
+  border: none;
+  border-radius: 20px;
+  width: 10em;
+  height: 33px;
+  padding: 0.5em;
+  margin: 0.3em;
+  font-size: 1em;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.25) 3px 3px 5px;
+}
+
+.longRoundedBlueBtn:hover {
   background-color: var(--color-light-blue);
 }
 
@@ -143,6 +162,24 @@ button {
   background-color: var(--color-black);
 }
 
+.longRoundedRedBtn {
+  background-color: #b02c20;
+  color: var(--color-white);
+  border: none;
+  border-radius: 20px;
+  width: 10em;
+  height: 33px;
+  padding: 0.5em;
+  margin: 0.3em;
+  font-size: 1em;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.25) 3px 3px 5px;
+}
+
+.longRoundedRedBtn:hover {
+  background-color: #e13e2e;
+}
 /* End Buttons */
 
 /* For text-like <input> elements */
@@ -287,6 +324,7 @@ form {
   text-transform: uppercase;
   border-bottom: 1px solid var(--color-gold);
   align-self: center;
+  letter-spacing: 5px;
 }
 
 .centerContent {
@@ -448,4 +486,54 @@ form {
   padding: 2%;
   margin: 10px auto;
   border: 1px solid var(--color-white);
+}
+
+/* Player Status Displays */
+/* Button like displays that show the player's status */
+.blueStatusWide {
+  background-color: var(--color-light-blue);
+  color: var(--color-white);
+  border: none;
+  border-radius: 20px;
+  width: 10em;
+  height: 33px;
+  padding: 0.5em;
+  margin: 0.3em;
+  font-size: 1em;
+  font-weight: bold;
+  text-align: center;
+  cursor: default;
+  box-shadow: rgba(0, 0, 0, 0.25) 3px 3px 5px;
+}
+
+.greenStatusWide {
+  background-color: var(--color-green);
+  color: var(--color-white);
+  border: none;
+  border-radius: 20px;
+  width: 10em;
+  height: 33px;
+  padding: 0.5em;
+  margin: 0.3em;
+  font-size: 1em;
+  font-weight: bold;
+  text-align: center;
+  cursor: default;
+  box-shadow: rgba(0, 0, 0, 0.25) 3px 3px 5px;
+}
+
+.greyStatusWide {
+  background-color: #535353;
+  color: var(--color-white);
+  border: none;
+  border-radius: 20px;
+  width: 10em;
+  height: 33px;
+  padding: 0.5em;
+  margin: 0.3em;
+  font-size: 1em;
+  font-weight: bold;
+  text-align: center;
+  cursor: default;
+  box-shadow: rgba(0, 0, 0, 0.25) 3px 3px 5px;
 }
