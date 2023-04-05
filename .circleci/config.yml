@@ -5,19 +5,18 @@ orbs:
 
 jobs:
   deploy-backend:
-    executor: heroku/default
+    executor: cimg/base:stable-20.04
     resource_class: small
     steps:
-        - checkout
-        - run:
-            name: "Prepare backend for deployment"
-            command: |
-              cd backend
-              ls -la
-        - heroku/deploy-via-git:
-            app-name: $HEROKU_APP_NAME
-            api-key: HEROKU_API_KEY
-            force: true
+      - checkout
+      - run:
+          name: "Prepare backend for deployment"
+          command: |
+            cd backend
+            ls -la
+            git init . && git add . && git commit -m "Committing backend"
+            git remote add heroku https://git.heroku.com/$HEROKU_APP_NAME.git
+            git push heroku master --force
   deploy-frontend:
     executor: heroku/default
     resource_class: small
