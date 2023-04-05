@@ -27,10 +27,15 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package-lock.json" }}
-      - run: npm run build
+      - run: |
+          echo "Displaying available scripts in ${PWD}"
+          ls -l
+          npm run build
       - deploy:
           name: Deploy Frontend
           command: |
+            echo "Deploying frontend to Heroku"
+            echo "We're in ${PWD}"
             git init .
             git config user.email "deploy@circleci.com"
             git config user.name "CircleCI Deploy"
