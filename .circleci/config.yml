@@ -2,16 +2,15 @@ version: 2.1
 jobs:
   Hello-World-Linux:
     docker:
-      - image: circleci/python:3.9
+      - image: cimg/base:2020.01
     steps:
-      - checkout
       - run: |
           echo "Hello World"
           echo "Running as user $(whoami)"
+      - checkout
   build-frontend:
     docker:
-      - image: circleci/node:14.16
-    working_directory: ./frontend
+      - image: cimg/node:12.16
     steps:
       - checkout
       - restore_cache:
@@ -19,6 +18,7 @@ jobs:
             - v1-dependencies-{{ checksum "package-lock.json" }}
             - v1-dependencies-
       - run: |
+          cd frontend
           npm ci
           npm test
       - save_cache:
@@ -38,7 +38,6 @@ jobs:
   build-backend:
     docker:
       - image: circleci/python:3.9
-    working_directory: ./backend
     steps:
       - checkout
       - restore_cache:
@@ -46,6 +45,9 @@ jobs:
             - v1-dependencies-{{ checksum "requirements.txt" }}
             - v1-dependencies-
       - run: |
+          cd backend
+          python -m venv venv
+          source venv/bin/activate
           pip install -r requirements.txt
           pytest 
       - save_cache:
