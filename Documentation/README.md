@@ -9,7 +9,7 @@ Team 5's Git Repository for Web Services Engineering
 
 >This folder contains evidence of the collaboration between Team 5 members. In this folder, you can observe Team 5 members working on similiar files and efforts as realized through the utilization of similiar keywords.
 >
->![Code Collaboration Evidence](/Documentation/Collaboration%20Evidence/Team5_CodeCollaboration_Sprint2.JPG)
+>![Code Collaboration Evidence](/Documentation/Collaboration%20Evidence/Team5_CodeCollaboration_Sprint2.png)
 
 ### Daily Scrum Documents
 
@@ -33,9 +33,9 @@ Team 5's Git Repository for Web Services Engineering
 >
 > **Sprint 1 Total Unit Tests:** 16
 >
-> **Sprint 2 Total Unit Tests:** 28 (12 New Tests)
->
 > **Sprint 1 Total BDD Tests:** 2
+>
+> **Sprint 2 Total Unit Tests:** 28 (12 New Tests)
 >
 > **Sprint 2 Total BDD Tests:** 3 (1 New Test)
 >
