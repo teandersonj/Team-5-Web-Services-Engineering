@@ -50,25 +50,44 @@ jobs:
           paths:
             - venv
           key: v1-dependencies-{{ checksum "requirements.txt" }}
+    parallelism: 2
       
 workflows:
-  build-and-test:
+  build-test-deploy-frontend:
     jobs:
       - build-frontend:
           filters:
             branches:
               only:
                 - CICDTest
-      - build-backend:
+      - heroku/deploy-via-git:
+          post-steps:
+            - run: |
+                echo "Running post-deployment steps on Heroku"
+          pre-steps:
+            - run: |
+                echo "Running pre-deployment steps on Heroku"
+                # May need to run npm build here
+                # and then copy the build folder to the root of the project
+          app-name: $HEROKU_FRONTEND_APP_NAME
+          api-key: HEROKU_API_KEY
           requires:
             - build-frontend
           filters:
             branches:
               only:
                 - CICDTest
-  heroku_deploy_backend:
+      
+  build-test-deploy-backend:
     jobs:
+      - build-backend:
+          filters:
+            branches:
+              only:
+                - CICDTest
       - heroku/deploy-via-git:
+          requires:
+            - build-backend
           post-steps:
             - run: |
                 echo "Running post-deployment steps on Heroku"
@@ -84,27 +103,3 @@ workflows:
             branches:
               only:
                 - CICDTest
-          requires:
-            - build-backend
-            - build-frontend
-  heroku_deploy_frontend:
-    jobs:
-      - heroku/deploy-via-git:
-          post-steps:
-            - run: |
-                echo "Running post-deployment steps on Heroku"
-          pre-steps:
-            - run: |
-                echo "Running pre-deployment steps on Heroku"
-                # May need to run npm build here
-                # and then copy the build folder to the root of the project
-          app-name: $HEROKU_FRONTEND_APP_NAME
-          api-key: HEROKU_API_KEY
-          filters:
-            branches:
-              only:
-                - CICDTest
-          requires:
-            - build-backend
-            - build-frontend
-  
