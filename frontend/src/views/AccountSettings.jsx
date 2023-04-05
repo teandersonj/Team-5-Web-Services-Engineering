@@ -29,7 +29,7 @@ const AccountSettings = (props) => {
     // Whenever the user changes, reset the form state to the newest values
     useEffect(() => {
         setFormState(initialState());
-    }, [user]);
+    }, [user]); // eslint-disable-line react-hooks/exhaustive-deps
 
     // Whenever the form state changes, focus on the input that was modified
     useEffect(() => {

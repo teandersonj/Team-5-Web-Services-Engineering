@@ -24,16 +24,19 @@ export default function UserProfile(props) {
             const newData = {
                 ...user,
                 friendsList: data.users,
-                favoriteGames: data.games
+                favoriteGames: data.games,
+                blockedUsers: data.users
             }
             updateUser(newData);
             return;
         });
-    }, []);
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     // TODO: We can reuse this page for other users' profiles, so we need to be able to pass in a user object
     // from the parent component, and if it's not passed in, we'll use the user object from the UserContext
     // assuming it's the current user's profile
+    // We may end up using this if the page needs to be popoulated with a different player's info
+    // eslint-disable-next-line no-unused-vars
     const [formState, setFormState] = useState({
         username: "",
         currentStatus: "",

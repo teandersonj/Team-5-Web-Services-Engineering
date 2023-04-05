@@ -1,5 +1,7 @@
 import LabeledInput from "./LabeledInput";
 import Avatar from "./Avatar";
+
+// eslint-disable-next-line no-unused-vars
 const styles = {
     small: {
         width: "100px",
@@ -30,7 +32,7 @@ const styles = {
 };
 
 export default function PlayerCard(props) {
-    const { player, orientation, noLabels=false, size } = props;
+    const { player, noLabels=false, size } = props;
     return (
         <div className={`PlayerCard PlayerCard-${size}`}>
             <div className="justifyContentCenter">

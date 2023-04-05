@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useState } from 'react';
 import LabeledInput from '../components/LabeledInput';
 
 const modalStyles = {
@@ -34,7 +34,8 @@ const modalStyles = {
 };
 
 export default function DeactivateAccountModal(props) {
-    const { user, updateUser, modalState, setModalState } = props;
+    // eslint-disable-next-line no-unused-vars
+    const { user, updateUser, setModalState } = props;
 
     const [state, setState] = useState({
         currentPassword: "",

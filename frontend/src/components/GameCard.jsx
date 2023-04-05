@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from "react";
 import PlayerCard from "./PlayerCard";
 
 export default function GameCard(props) {
@@ -12,7 +11,7 @@ export default function GameCard(props) {
                 {/* Game Image, Name,etc. */}
                 <div className="flexDirectionRow">
                     <div className="flexDirectionColumn justifyContentCenter centerText" style={{ flexGrow: 0.5 }}>
-                        <img style={{ display: "block", flexGrow: 0.5, maxHeight: "125px" }} src={"/img/Logo.png"} />
+                        <img style={{ display: "block", flexGrow: 0.5, maxHeight: "125px" }} alt={`Game ${game.name}`} src={"/img/Logo.png"} />
                         <div style={{ display: "flex", flexDirection: "column", flexGrow: 0.5, justifyContent: "center" }}>
                             <div>{game.name}</div>
                             <div>{game.genre}</div>
