@@ -7,10 +7,10 @@ jobs:
       - run: |
           echo "Hello World"
           echo "Running as user $(whoami)"
-      - checkout
   build-frontend:
     docker:
-      - image: cimg/node:12.16
+      - image: cimg/node:18.12.1
+    resource_class: small
     steps:
       - checkout
       - restore_cache:
@@ -21,7 +21,7 @@ jobs:
           cd frontend
           npm install
           npm test
-      - save_test_results:
+      - store_test_results:
           path: frontend/test-results
       - save_cache:
           paths:
@@ -37,9 +37,11 @@ jobs:
             git add .
             git commit -m "Deploy frontend to Heroku"
             git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_BACKEND_APP_NAME.git main
+    parallelism: 2
   build-backend:
     docker:
       - image: circleci/python:3.9
+    resource_class: small
     steps:
       - checkout
       - restore_cache:
@@ -52,7 +54,7 @@ jobs:
           source venv/bin/activate
           pip install -r requirements.txt
           pytest
-      - save_test_results:
+      - store_test_results:
           path: backend/test-results
       - save_cache:
           paths:
@@ -74,6 +76,11 @@ jobs:
 workflows:
   build-and-deploy:
     jobs:
+      - Hello-World-Linux:
+          filters:
+            branches:
+              only:
+                - CICDTest
       - build-frontend:
           filters:
             branches:
