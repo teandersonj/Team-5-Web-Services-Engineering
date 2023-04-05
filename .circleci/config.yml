@@ -53,7 +53,7 @@ jobs:
           echo "Running React tests"
           npm test
       - store_test_results:
-          path: frontend/test-results
+          path: ../test-results
       - save_cache:
           paths:
             - node_modules
@@ -80,7 +80,7 @@ jobs:
           # echo "Running Python tests"
           # pytest
       - store_test_results:
-          path: backend/test-results
+          path: ../test-results
       - save_cache:
           paths:
             - venv
