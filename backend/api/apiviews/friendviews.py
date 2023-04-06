@@ -10,7 +10,7 @@ class FriendAPI(generics.CreateAPIView, generics.UpdateAPIView, generics.Retriev
     model = Friend
     queryset = Friend.objects.all()
     serializer_class = FriendSerializer
-    permission_classes = (AllowAny, )
+    permission_classes = (IsAuthenticated, )
     filter_backends = [filters.SearchFilter, DjangoFilterBackend]
     filterset_fields = ['Primary', 'FriendPlayer', 'ActiveStatus']
     search_fields = ['Primary', 'FriendPlayer', 'ActiveStatus']
