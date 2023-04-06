@@ -10,7 +10,7 @@ class BlockedPlayerAPI(generics.CreateAPIView, generics.UpdateAPIView, generics.
     model = BlockedPlayer
     queryset = BlockedPlayer.objects.all()
     serializer_class = BlockedPlayerSerializer
-    permission_classes = (AllowAny, )
+    permission_classes = (IsAuthenticated, )
     filter_backends = [filters.SearchFilter, DjangoFilterBackend]
     filterset_fields = ['Player1', 'BlockedPlayer', 'Blocked']
     search_fields = ['Player1', 'BlockedPlayer', 'Blocked']

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import Avatar from '../components/Avatar';
 
@@ -61,7 +61,7 @@ const modalStyles = {
 
 
 export default function EditAvatarModal(props) {
-    const { user, updateUser, modalState, setModalState } = props;
+    const { user, updateUser, setModalState } = props;
 
     const [state, setState] = useState({
         avatar: user.avatar,
