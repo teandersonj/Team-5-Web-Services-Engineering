@@ -35,7 +35,7 @@ class PlayerSerializer(serializers.ModelSerializer):
         # instance.AvatarName = validated_data.get('AvatarName', instance.AvatarName)
         # instance.save()
         instance.AvatarName = validated_data.get('AvatarName')
-        instance.PlayStyle = validated_data.get('PlayStyle')
+        instance.Playstyle = validated_data.get('Playstyle')
         instance.CompositeSkillLevel = validated_data.get('CompositeSkillLevel')
         instance.Attitude = validated_data.get('Attitude')
         instance.save()

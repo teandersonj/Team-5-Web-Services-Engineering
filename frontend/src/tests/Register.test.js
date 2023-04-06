@@ -12,6 +12,10 @@ import { BrowserRouter } from 'react-router-dom';
 import Register from '../routes/Auth/Register';
 import UserProvider from '../providers/UserProvider';
 
+// We need to mock Axios because the Register component uses it to send a POST request to the server
+jest.mock('axios');
+
+
 const RegisterComponent = () => {
     return (
         <BrowserRouter>

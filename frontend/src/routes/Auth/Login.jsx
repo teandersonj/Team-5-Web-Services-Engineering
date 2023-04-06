@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import axios from 'axios';
 
 import { UserContext } from '../../providers/UserProvider';
 import validateElement from '../../services/Validation';
@@ -70,7 +71,6 @@ export default function Login(props) {
         return;
     };
 
-    // TODO: Disable the submit button if there are any errors in the formState.errors object
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -83,125 +83,103 @@ export default function Login(props) {
             return false;
         }
 
-        // Need to detect if the user entered an email or username
-        // If it's an email we'll pass it as an email, otherwise we'll pass it as a username
-        // const newUser = formState.username.includes("@") ?
-        //     {
-        //         // TODO: Will we be able to login with an email?
-        //         // email: formState.username,
-        //         username: formState.username,
-        //         password: formState.password
-        //     } :
-        // {
-        //     username: formState.username,
-        //     password: formState.password
-        // };
-
         const newUserData = {};
 
         // Send the login info to the server to validate and login, retrieving the rest of the user's details
         // If successful, update the user state and navigate to the profile page
-        await fetch("/api/token/", {
+        await axios("/api/token/", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({
+            data: {
                 username: formState.username,
                 password: formState.password
-            })
+            }
         }).then((res) => {
-            if (res.ok) {
-                return res.json();
-            } else if (res.status === 401) {
-                // TODO: We could extract this message or make it so the very last catch
-                // will handle it, but for now we'll just handle it here
-                toast.error("Invalid username or password. Please try again.");
-                // Re-enable the submit button
-                setFormState((prev) => ({ ...prev, disabled: false }));
-                return false;
-            } else throw new Error({
-                status: res.status,
-                error: res
-            });
-        }).then((res) => {
-            console.log("Login response: ", res);
-            // Update the user state
-            newUserData.accessToken = res.access;
-            newUserData.refreshToken = res.refresh;
+            if (res.status === 200) {
+                const { data } = res;
+                if (process.env.NODE_ENV === "development")
+                    console.log("Login response: ", res);   
+                // Update the user state
+                newUserData.accessToken = data.access;
+                newUserData.refreshToken = data.refresh;
+            } else {
+                throw new Error({
+                    status: res.status,
+                    error: res || "There was an error logging in. Please try again."
+                });
+            }
             return res;
-        }).then((res) => {
-            console.log("Login response: ", res)
+        }).then(async (res) => {
             // We have the tokens, now we need to get the user's data
             // Get the user's data from the userInfo endpoint
-            fetch("/api/user/", {
+            await axios("/api/user/", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${res.access}`
+                    "Authorization": `Bearer ${newUserData.accessToken}`
                 }
             }).then((res) => {
-                if (res.ok) {
-                    return res.json();
-                } else throw new Error({
-                    status: res.status,
-                    error: res
+                if (process.env.NODE_ENV === "development")
+                    console.log("User fetch response: ", res);
+
+                if (res.status !== 200 || !res.data.data) 
+                    throw new Error({ status: res.status, error: res.data.error || res.data || res });
+            
+                const { data } = res.data;
+                // This gives us the user's info, but not their player data
+                newUserData.id = data.id;
+                newUserData.username = data.username;
+                newUserData.email = data.email;
+                newUserData.first_name = data.first_name;
+                newUserData.last_name = data.last_name;
+
+                // Now get the user's player data
+                return axios(`/api/player/${newUserData.id}`, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json",
+                        // "Authorization": `Bearer ${newUserData.accessToken}`
+                    }
+                }).then((res) => {
+                    if (res.status !== 200) 
+                        throw new Error({ status: res.status, error: res.data.error || res.data || res  });
+                    const { data } = res;
+                    if (process.env.NODE_ENV === "development")
+                        console.log("Player fetch response: ", res);
+                    // Update the user state
+                    newUserData.avatar = data.AvatarName;
+                    newUserData.playstyle = data.Playstyle;
+                    newUserData.playerId = data.pk;
+                    newUserData.loggedIn = true;
+                    updateUser(newUserData);
+                    toast.success("Login successful!");
+                    // Navigate to the profile page
+                    return navigate("/profile");
+                }).catch((err) => {
+                    if (process.env.NODE_ENV === "development")
+                        console.log("Player fetch error: ", err.status, err.response.data.error);
+                    throw new Error({
+                        status: err.status,
+                        error: err.response.data.error || "There was an error getting your player data. Please try again."
+                    });
                 });
-            }).then((res) => {
-                toast.success("Login successful!");
-                // Update the user state
-                newUserData.username = res.data.username;
-                newUserData.email = res.data.email;
-                newUserData.first_name = res.data.first_name;
-                newUserData.last_name = res.data.last_name;
-                newUserData.loggedIn = true;
-                // TODO: For now store what we have in the user state
-                updateUser(newUserData);
             }).catch((err) => {
-                console.log("User fetch error: ", err.status, err.error);
-                toast.error("There was an error logging in. Please try again.");
-                // Re-enable the submit button
-                setFormState((prev) => ({ ...prev, disabled: false }));
+                if (process.env.NODE_ENV === "development")
+                    console.log("User fetch error: ", err.status, err.response.data.error);
+                throw new Error({
+                    status: err.status,
+                    error: err.response.data.error || "There was an error getting your user data. Please try again."
+                });
             });
-
-            // TODO: We need to fetch the Player data associated with this user
-            /*                 fetch(`/api/player/${res.id}`, {
-                                method: "GET",
-                                headers: {
-                                    "Content-Type": "application/json",
-                                    "Authorization": `Bearer ${res.access}`
-                                }
-                            }).then((res) => {
-                                console.log("Player response: ", res);
-                                if (res.status === 200) {
-                                    // Update the user state
-                                    userData.playstyle = res.Playstyle;
-                                    userData.avatar = res.Avatar;
-                                    userData.playerId = res.id;
-                                    userData.attitude = res.Attitude;
-                                    userData.compositeSkill = res.CompositeSkill;
-                                    updateUser(userData);
-                                    // Navigate to the profile page
-                                    return navigate("/profile");
-                                } else if (res.status === 401) {
-                                    toast.error("Invalid username or password. Please try again.");
-                                    // Re-enable the submit button
-                                    setFormState((prev) => ({ ...prev, disabled: false }));
-                                }
-                            }).catch((err) => {
-                                toast.error("Login failed, please try again");
-                                console.log("Error logging in: ", JSON.stringify(err.body) || err);
-                                // Re-enable the submit button
-                                // TODO: Show server-side errors to the user
-                                setFormState((prev) => ({ ...prev, disabled: false }));
-                                return false;
-                            }); */
-
         }).catch((err) => {
-            // TODO: Ideally handle errors here, perhaps by passing an error object with status and message
-            // from each fetch call
+            if (process.env.NODE_ENV === "development")
+                console.log("Login error: ", err.status, err.response?.data?.error || err.response?.data || err);
+
             toast.error("Login failed, please try again");
-            console.log("Error logging in with status ", err.status, " and ", JSON.stringify(err.error) || err);
+
             // Re-enable the submit button
             setFormState((prev) => ({ ...prev, disabled: false }));
             return false;

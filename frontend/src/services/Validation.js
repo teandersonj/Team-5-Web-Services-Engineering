@@ -88,7 +88,7 @@ export const InputValidationRules = {
     },
     playstyle: {
         // required: true
-        // One of the following values: Casual, Semi-Competitive, Competitive
+        // One of the following values: Casual, Semi-Casual, Competitive
     },
 };
 

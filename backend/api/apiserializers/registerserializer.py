@@ -43,15 +43,20 @@ class RegisterSerializer(serializers.ModelSerializer):
         _lUser.set_password(validated_data['password'])
         _lUser.save()
 
-        _lPlayer = Player.objects.create(
-            user=_lUser,
-            AvatarName=validated_data['player']['AvatarName'],
-            Playstyle=validated_data['player']['Playstyle'],
-            CompositeSkillLevel=validated_data['player']['CompositeSkillLevel'],
-            Attitude=validated_data['player']['Attitude']
-        )
-        _lPlayer.save()
+        print("User created: " + _lUser.username)
+        try:
+            _lPlayer = Player.objects.create(
+                user=_lUser,
+                AvatarName=validated_data['player']['AvatarName'],
+                Playstyle=validated_data['player']['Playstyle'],
+                CompositeSkillLevel=validated_data['player']['CompositeSkillLevel'] or 0,
+                Attitude=validated_data['player']['Attitude']
+            )
+            _lPlayer.save()
+        except Exception as e:
+            print("Error creating player due to error: " + str(e))
+            _lUser.delete()
+            raise serializers.ValidationError({"player": "Error creating player."})
+        print("Player created for user: " + _lUser.username)
 
         return _lUser
-
-

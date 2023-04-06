@@ -1,8 +1,9 @@
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
-
+import axios from 'axios';
 import { UserContext } from '../../providers/UserProvider';
+
 /* import validateElement from '../../services/Validation';
 import ValidationErrorList from '../../components/ValidationErrorList';
 import LabeledInput from '../../components/LabeledInput'; */
@@ -16,12 +17,12 @@ import Avatar from '../../components/Avatar';
  */
 
 export default function ContinueRegistration(props) {
+    // TODO: If we're not coming here from the first Registration page, redirect them there
     const navigate = useNavigate();
 
-    // TODO: If we're not coming here from the first Registration page, redirect them there
-    
     // Check if the user's logged in and redirect them if they are
     const { user, updateUser } = useContext(UserContext);
+
     useEffect(() => {
         if (user.loggedIn) {
             navigate('/');
@@ -29,7 +30,7 @@ export default function ContinueRegistration(props) {
         // We need to check if the user has username, email, etc. populated in the state
         // If they don't, redirect them to the first registration page
     });
-    
+
     // Give us access to the location state passed in from the Register component
     // const { state: location } = useLocation();
 
@@ -90,7 +91,7 @@ export default function ContinueRegistration(props) {
         setFormState(newState);
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         if (formState.playstyle === "" || formState.avatar === "") {
             // TODO: Ensure username is unique and a valid avatar is selected
@@ -98,44 +99,52 @@ export default function ContinueRegistration(props) {
             return;
         }
         
-        const newData = ({
-            ...user,
-            playstyle: formState.playstyle,
-            avatar: formState.avatar,
-            memberSince: new Date(),
-            loggedIn: true
-        });
-
-        updateUser(newData);
-
-        // TODO: Create the "Player" 
-        /* fetch(`/api/player/${user.id}/`, {
+        // Update the user's player-specific information
+        await axios(`/api/player/${user.id}`, {
             method: 'PUT',
             headers: {
-                'Content-Type': 'application/json',
-                "Authorization": `Bearer ${user.accessToken}`
+                "Content-Type": "application/json",
+                
+                // TODO: Make PUT /api/player/:id guarded with token?
+                // "Authorization": `Bearer ${user.accessToken}`
             },
-            body: JSON.stringify({
-                PlayerId: user.id,
-                Username: user.username,
-                Email: user.email,
-                Playstyle: formState.playstyle,
-                Avatar: formState.avatar,
-                CompositeSkillLevel: 0,
-                Attitude: "Unknown"
-            })
+            data: {
+                "pk": user.id,
+                "user": {
+                    "id": user.id,
+                    "username": user.username,
+                    "first_name": user.first_name,
+                    "last_name": user.last_name,
+                    "email": user.email,
+                    "password": user.password,
+                },
+                "AvatarName": formState.avatar,
+                "Playstyle": formState.playstyle,
+                "CompositeSkillLevel": 0.0,
+                "Attitude": "Unset"
+            }
         }).then(async (response) => {
-            if (response.ok) {
-                const data = await response.json();
-                console.log(data);;
+            if (process.env.NODE_ENV === "development")
+                console.log("Player PUT response: " + JSON.stringify(response));
+
+            if (response.status === 200) {
+                // Update the user's context
+                updateUser({
+                    ...user,
+                    playstyle: response.data.Playstyle,
+                    avatar: response.data.AvatarName,
+                    loggedIn: true,
+                });
                 navigate('/register/finish');
             } else {
-                throw new Error("Unable to create player.");
+                throw new Error({ status: response.status, error: response });
             }
         }).catch((error) => {
-            toast.error(error.message);
+            if (process.env.NODE_ENV === "development")
+                console.log(error && error.response ? error.response : error);
+
+            toast.error("Unable to alter player information, please try again.");
         });
- */
     };
 
     // TODO: What happens when they cancel at this point??
@@ -161,7 +170,7 @@ export default function ContinueRegistration(props) {
     return (
         <>
             <h1 className="pageHeading">Continue Registration</h1>
-            <p>You're almost done registering{user.first_name ? ", " + user.first_name : "" }! <br />Finish by choosing your playstyle and avatar.</p>
+            <p>You're almost done registering{user.first_name ? ", " + user.first_name : ""}! <br />Finish by choosing your playstyle and avatar.</p>
             <form id="continueRegistrationForm" onSubmit={handleSubmit}>
                 <div className="formRow flexDirectionColumn">
                     {/* TODO: Extract this since it'll be used elsewhere */}
@@ -169,7 +178,7 @@ export default function ContinueRegistration(props) {
                     <select id="playstyle" name="playstyle" defaultValue={formState.playstyle} onChange={handlePlaystyleChange} required>
                         <option value="">Select a playstyle</option>
                         <option value="Casual">Casual</option>
-                        <option value="Semi-Competitive">Semi-Competitive</option>
+                        <option value="Semi-Casual">Semi-Casual</option>
                         <option value="Competitive">Competitive</option>
                     </select>
                 </div>

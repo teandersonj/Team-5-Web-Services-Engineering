@@ -19,6 +19,9 @@ import Login from "../routes/Auth/Login";
  * "The login form should prevent duplicate submissions while the user is waiting for a response from the server."
  */
 
+// We need to mock Axios
+jest.mock("axios");
+
 const LoginComponent = () => {
     return (
         <>

@@ -11,5 +11,5 @@ class GamePlayer(models.Model):
     GameId = models.ForeignKey(Game)
     PlayerId = models.ForeignKey(Player)
     Attitude = models.CharField(max_length=300)
-    PlayStyle = models.CharField(max_length=300)
+    Playstyle = models.CharField(max_length=300)
     SkillLevel = models.IntegerField()
