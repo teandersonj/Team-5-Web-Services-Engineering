@@ -1,5 +1,5 @@
 // Checks to see if the application can be visited
-describe('Login Page', () => {
+describe('Login Page e2e', () => {
   it('logs the user into the application', () => {
     // Visit the React Local Server that is running
     cy.visit('localhost:3000');
@@ -8,6 +8,6 @@ describe('Login Page', () => {
     cy.get('#password').type('p@ssw0rd!');
     cy.get("#password").should('have.value', 'p@ssw0rd!');
     cy.get('.roundedBlueBtn').click();
-    cy.contains('User Profile');
+    cy.contains('User Bio');
   });
 });
