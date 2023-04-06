@@ -5,6 +5,7 @@ from api.apiviews.blockedplayerviews import BlockedPlayerAPI, BlockedPlayersAPI
 from api.apiviews.friendviews import FriendAPI, FriendsAPI
 from api.apiviews.gameviews import GameAPI, GamesAPI
 from api.apiviews.registration import RegisterView
+from api.apiviews.loginviews import LoginView
 from api.apiviews.passwordchange import PasswordChangeView
 from api.apiviews.tokenviews import TokenObtainPairView, MyTokenObtainPairView
 from rest_framework_simplejwt.views import (
@@ -16,6 +17,7 @@ from rest_framework_simplejwt.views import (
 
 urlpatterns = [
     path('user/', views.userInfo, name='user_info'),
+    path('login/', LoginView.as_view(), name='auth_login'),
     path('token/', MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('token/blacklist/', TokenBlacklistView.as_view(), name='token_blacklist'),

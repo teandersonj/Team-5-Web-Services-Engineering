@@ -9,12 +9,12 @@ class UserSerializer(serializers.ModelSerializer):
     # Query the User model and return the following fields
     class Meta:
         model = get_user_model()
-        fields = ('id', 'username', 'first_name', 'last_name', 'email', 'password')
+        fields = ('id', 'username', 'first_name', 'last_name', 'email') #, 'password')
         extra_kwargs = {
-                            'username': {
-                            'validators': [UnicodeUsernameValidator()],
-                            }
-                        }
+            'username': {
+                'validators': [UnicodeUsernameValidator()],
+            }
+        }
 
 
 class PlayerSerializer(serializers.ModelSerializer):
