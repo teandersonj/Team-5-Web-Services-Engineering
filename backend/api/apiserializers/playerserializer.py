@@ -22,7 +22,7 @@ class PlayerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Player
-        fields = ('pk', 'user', 'AvatarName', 'Playstyle', 'CompositeSkillLevel', 'Attitude')
+        fields = ('pk', 'user', 'AvatarName', 'Playstyle', 'CompositeSkillLevel', 'Attitude', 'Bio')
 
     def create(self, validated_data):
         _user = User.objects.create(data=validated_data.pop('user'))
@@ -38,5 +38,6 @@ class PlayerSerializer(serializers.ModelSerializer):
         instance.Playstyle = validated_data.get('Playstyle')
         instance.CompositeSkillLevel = validated_data.get('CompositeSkillLevel')
         instance.Attitude = validated_data.get('Attitude')
+        instance.Bio = validated_data.get('Bio')
         instance.save()
         return instance

@@ -114,7 +114,8 @@ export default function ContinueRegistration(props) {
                 "AvatarName": formState.avatar,
                 "Playstyle": formState.playstyle,
                 "CompositeSkillLevel": 0.0,
-                "Attitude": "Unset"
+                "Attitude": "Unset",
+                "Bio": "Unset"
             }
         }).then(async (response) => {
             if (process.env.NODE_ENV === "development")

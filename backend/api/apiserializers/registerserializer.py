@@ -6,7 +6,7 @@ from ..apimodels.player import Player
 class RegisterPlayerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Player
-        fields = ('AvatarName', 'Playstyle', 'CompositeSkillLevel', 'Attitude')
+        fields = ('AvatarName', 'Playstyle', 'CompositeSkillLevel', 'Attitude', 'Bio')
 
 
 class RegisterUserSerializer(serializers.ModelSerializer):
@@ -56,6 +56,7 @@ class RegisterSerializer(serializers.ModelSerializer):
                 Playstyle="Unset", # validated_data['player']['Playstyle'],
                 CompositeSkillLevel=0.0, # validated_data['player']['CompositeSkillLevel'] or 0,
                 Attitude="Unset", # validated_data['player']['Attitude']
+                Bio="Unset" # validated_data['player']['Bio']
             )
             _lPlayer.save()
         except Exception as e:
