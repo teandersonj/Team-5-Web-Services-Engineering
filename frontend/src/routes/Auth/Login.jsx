@@ -103,6 +103,7 @@ export default function Login(props) {
             newUserData.avatar = player.AvatarName;
             newUserData.compositeSkillLevel = player.CompositeSkillLevel;
             newUserData.playstyle = player.Playstyle;
+            newUserData.bio = player.Bio;
             newUserData.playerId = player.pk;
             newUserData.username = user.username;
             newUserData.email = user.email;

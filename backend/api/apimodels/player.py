@@ -9,3 +9,4 @@ class Player(models.Model):
     Playstyle = models.CharField(max_length=100)
     CompositeSkillLevel = models.FloatField(default=0.0)
     Attitude = models.CharField(max_length=100)
+    Bio = models.CharField(max_length=1000, default="")

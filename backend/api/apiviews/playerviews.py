@@ -15,14 +15,15 @@ class PlayerAPI(generics.RetrieveUpdateAPIView):
     serializer_class = PlayerSerializer
     permission_classes = (AllowAny, )
     filter_backends = [filters.SearchFilter, DjangoFilterBackend]
-    search_fields = ['user__username', 'user__email', 'Playstyle', 'CompositeSkillLevel', 'Attitude']
+    search_fields = ['user__username', 'user__email', 'Playstyle', 'CompositeSkillLevel', 'Attitude', 'Bio']
 
     def get(self, request, *args, **kwargs):
-        _username = kwargs['userid']
-        _player = self.model.objects.get(user_id=_username)
+        _userID = kwargs['userid']
+        _player = self.model.objects.get(user_id=_userID)
         return Response(self.get_serializer(_player).data)
 
     def put(self, request, *args, **kwargs):
+        print("PUT request received for player: " + str(kwargs['userid']) + " with data: " + str(request.data))
         _player = Player.objects.get(user_id=kwargs['userid'])
         _user = _player.user
         _player_redux = PlayerSerializer(_player, data=request.data)
@@ -38,4 +39,4 @@ class PlayersAPI(generics.ListCreateAPIView):
     serializer_class = PlayerSerializer
     permission_classes = (AllowAny, )
     filter_backends = [filters.SearchFilter]
-    search_fields = ['user__username', 'user__email', 'Playstyle', 'CompositeSkillLevel', 'Attitude']
+    search_fields = ['user__username', 'user__email', 'Playstyle', 'CompositeSkillLevel', 'Attitude', 'Bio']

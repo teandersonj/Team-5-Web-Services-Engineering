@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import axios from 'axios';
+import toast from 'react-hot-toast';
 
 import Avatar from '../components/Avatar';
 
@@ -73,8 +75,7 @@ export default function EditAvatarModal(props) {
         const { id, value } = event.target;
 
         // Reset the previously selected avatar
-
-        if (newState["avatar"] && newState["avatar"] !== "") {
+        if (newState["avatar"] && newState["avatar"] !== "Unset") {
             if (newState["avatar"] === value) return;
             Object.assign(document.querySelector(`label[for='${newState["avatar"]}']`).style, labelStyles.unchecked);
             document.getElementById(newState["avatar"]).checked = false;
@@ -86,18 +87,49 @@ export default function EditAvatarModal(props) {
         newState.isModified = true;
         Object.assign(document.querySelector(`label[for='${newState["avatar"]}']`).style, labelStyles.checked);
         setState(newState);
+        return;
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
         // Make sure the avatar is different than the user's current so we don't waste a request
         if (state.isModified && state.avatar !== user.avatar) {
-            updateUser({ avatar: state.avatar });
-            // TODO: Send a request to the server to update the user's avatar
-        }
-        // Reset our state
-        setState({ avatar: "", isModified: false });
-        closeModal(e);
+            const requestBody = {
+                pk: user.playerId,
+                user: {
+                    username: user.username,
+                    first_name: user.first_name,
+                    last_name: user.last_name,
+                    email: user.email,
+                },
+                AvatarName: state.avatar,
+                Bio: user.bio,
+                Playstyle: user.playstyle,
+                CompositeSkillLevel: user.compositeSkillLevel,
+                Attitude: user.attitude,
+            };
+
+            // For now we only have PUT /player/:userId update endpoint so handle only those fields
+            axios.put(`/api/player/${user.playerId}`, requestBody).then((res) => {
+                if (process.env.NODE_ENV === "development")
+                    console.log("PUT via AccountSettings res: ", res);
+
+                if (res.status !== 200 || !res.data?.AvatarName) {
+                    throw new Error({ status: res.status, response: res.data });
+                }
+
+                updateUser({ avatar: res.data.AvatarName });
+                setState({ avatar: "", isModified: false });
+                closeModal(e);
+                toast.success("Avatar updated successfully!");
+            }).catch((err) => {
+                if (process.env.NODE_ENV === "development")
+                    console.log("PUT via EditAvatar err: ", err);
+
+                toast.error("There was an error updating your avatar. Please try again later.");
+                return false;
+            });
+        };
     };
 
     const handleAvatarEditCancel = (e) => {
