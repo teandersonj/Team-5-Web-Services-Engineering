@@ -27,7 +27,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-ute_jwy6!ktjqq(mnv@%w44jl%#adt(pcjgz5$4owajzmp@ec&'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+# Get from environment variable
+DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 DJANGO_LOG_LEVEL = "DEBUG" if DEBUG else "INFO"
 
 ALLOWED_HOSTS = ['127.0.0.1', '.herokuapp.com', 'localhost']
@@ -81,11 +82,25 @@ TEMPLATES = [
     },
 ]
 
+# On production, prevent the API browsing functionality
+DEFAULT_RENDERER_CLASSES = (
+    'rest_framework.renderers.JSONRenderer',
+)
+
+if DEBUG:
+    DEFAULT_RENDERER_CLASSES = DEFAULT_RENDERER_CLASSES + (
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    )
+    # DEFAULT_PERMISSION_CLASSES = (
+    #     'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    # ),
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
-    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    'DEFAULT_RENDERER_CLASSES': DEFAULT_RENDERER_CLASSES
 }
 
 SIMPLE_JWT = {
