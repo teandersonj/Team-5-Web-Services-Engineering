@@ -143,7 +143,7 @@ export default function Register(props) {
         }
 
         // Attempt to send the info to server
-        await axios.post("/api/users/", formState).then(async (res) => {
+        await axios.post("/api/register/", formState).then(async (res) => {
             const { data } = res;
             const newUser = {
                 id: data.id,
