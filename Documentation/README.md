@@ -39,6 +39,8 @@ Team 5's Git Repository for Web Services Engineering
 >
 > **Sprint 2 Total BDD Tests:** 3 (1 New Test)
 >
->![E2E Tests](/Documentation/Testing%20Evidence/Team5_Sprint1_E2ELive.gif)
+>![E2E Tests](/Documentation/Testing%20Evidence/Team5-Sprint2-E2ELive.gif)
+>
+>![E2E Tests](/Documentation/Testing%20Evidence/Team5-Sprint2-E2ETests.png)
 >
 >![Unit Tests](/Documentation/Testing%20Evidence/Team5_Sprint2_UnitTests.png)
