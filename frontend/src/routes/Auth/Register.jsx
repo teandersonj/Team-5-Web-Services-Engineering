@@ -144,6 +144,12 @@ export default function Register(props) {
 
         // Attempt to send the info to server
         await axios.post("/api/register/", formState).then(async (res) => {
+            if (process.env.NODE_ENV === "development") {
+                console.log("/register response: " + res);
+            }
+            if (res.status !== 201) {
+                throw new Error({ status: res.status, data: res.data || res });
+            }
             const { data } = res;
             const newUser = {
                 id: data.id,
@@ -152,59 +158,27 @@ export default function Register(props) {
                 first_name: data.first_name,
                 last_name: data.last_name,
             };
-            // If the registration was successful, request an access token
-            await axios("/api/token/", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                data: {
-                    username: data.username,
-                    password: formState.password,
-                },
-            }).then(async (response) => {
-                if (response.status === 200 || response.status === 201) {
-                    newUser.accessToken = response.data.access;
-                    newUser.refreshToken = response.data.refresh;
-                    // If the token was successfully retrieved, save the user info to the context
-                    updateUser(newUser);
-                    // And navigate to the profile page
-                    navigate("/profile");
+            return newUser;
+        }).then(async (newUser) => {
+            // With the account created on the backend, we need to get and store the JWT token
+            // so we can authenticate with the backend in Continue Registration
+            await axios.post("/api/token/", {
+                username: formState.username,
+                password: formState.password,
+            }).then((res) => {
+                if (process.env.NODE_ENV === "development") {
+                    console.log("/token response: " + res);
                 }
-            });
-        }).then(async (res) => {
-            const {data} = res;
-            const newUser = {
-                id: data.id,
-                username: data.username,
-                email: data.email,
-                password: data.password,
-                first_name: data.first_name,
-                last_name: data.last_name,
-            };
-            // If the registration was successful, request an access token
-            await axios("/api/token/", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                data: {
-                    username: data.username,
-                    password: formState.password
+                if (res.status !== 200) {
+                    throw new Error({ status: res.status, data: res.data || res });
                 }
-            }).then(async (response) => {
-                if (response.status === 200 || response.status === 201) {
-                    newUser.accessToken = response.data.access;
-                    newUser.refreshToken = response.data.refresh;
-                    // If the token was successfully retrieved, save the user info to the context
-                    updateUser(newUser);
-                    // And navigate to the next page (avatar selection and playstyle selection)
-                    navigate("/register/continue");
-                } else throw response;
+                const { data } = res;
+                newUser.accessToken = data.access;
+                newUser.refreshToken = data.refresh;
+                updateUser(newUser);
+                return navigate("/register/continue");
             }).catch((err) => {
-                // TODO: Need to retry or delete any previously saved info server-side
-                toast.error("Unable to proceed, please try again.");
-                throw err;
+                throw new Error({ status: err.status, data: err.data || err });
             });
         }).catch((err) => {
             if (process.env.NODE_ENV === "development") {
