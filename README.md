@@ -7,6 +7,10 @@ Team 5's Git Repository for Web Services Engineering
 
 **Backend Languages:** Django & Python
 
+*To view the results of the CI/CD integration and deployment, please click the green checkmark as seen below*
+
+![CI/CD Integration](/Documentation/Diagrams/Github-CI-CD.JPG)
+
 ## Sprint 2 (03/17/2023 - 04/05/2023)
 
 ![Sprint 2 Burndown Diagram](/Documentation/Diagrams/Team5_Sprint2_Burndown_Chart.png)
