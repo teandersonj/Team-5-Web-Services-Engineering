@@ -1,4 +1,12 @@
-describe('Registration Page', () => {
+function generateUniqueUsername(prefix) {
+    const timestamp = new Date().getTime();
+    const randomNum = Math.floor(Math.random() * 1000);
+    return `${prefix}${timestamp}${randomNum}`;
+}
+
+const testUsername = generateUniqueUsername('testUser');
+
+describe('Registration Page e2e', () => {
     it('registers new users', () => {
         // --------- LOGIN PAGE ---------
         // Visit the React Local Server that is running
@@ -10,8 +18,8 @@ describe('Registration Page', () => {
         // Check if user is on Registration page (string value)
         cy.contains('Registration')
         // Fill in the input fields and validate that they are filled correctly
-        cy.get("#username").type('TestUsername23');
-        cy.get("#username").should('have.value', 'TestUsername23');
+        cy.get("#username").type(testUsername);
+        cy.get("#username").should('have.value', testUsername);
         cy.get('#first_name').type('Some');
         cy.get('#first_name').should('have.value', 'Some');
         cy.get('#last_name').type('Tester');
@@ -31,7 +39,7 @@ describe('Registration Page', () => {
         // Test User Interactions on the Page
         cy.get('#playstyle').select('Semi-Casual');
         cy.get("#playstyle").should('have.value', 'Semi-Casual');
-        cy.get('[for="avatar3"] > img').click();
+        cy.get(':nth-child(1) > :nth-child(1) > label > div > img').click();
         // cy.get('radio')
         cy.get('.roundedBlueBtn').click() // Click to button continue
 
@@ -45,6 +53,6 @@ describe('Registration Page', () => {
 
         // --------- USER PROFILE PAGE ---------
         // Check to ensure user is on User Profile page
-        cy.contains('User Profile');
+        cy.contains('Edit Profile');
     });
 });
