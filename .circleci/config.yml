@@ -29,7 +29,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: "Prepare backend for deployment"
+          name: "Prepare frontend for deployment"
           command: |
             cd frontend
             ls -la
