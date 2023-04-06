@@ -11,6 +11,8 @@ Team 5's Git Repository for Web Services Engineering
 
 ## Sprint 2 (03/17/2023 - 04/05/2023)
 
+![Sprint 2 Burndown Diagram](/Documentation/Diagrams/Team5_Sprint2_BurndownGraph.JPG)
+
 ### Goals & Objectives
 - [x] Finish Constructing UI Prototypes
 - [ ] Finishing Construct React UI for Pages
