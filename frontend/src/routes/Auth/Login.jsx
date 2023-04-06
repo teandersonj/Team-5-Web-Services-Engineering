@@ -82,7 +82,7 @@ export default function Login(props) {
             toast.error("Check your inputs and try again");
             return false;
         }
-        
+
         const newUserData = {};
 
         // Send the login info to the server to validate and login, retrieving the rest of the user's details
@@ -121,21 +121,31 @@ export default function Login(props) {
                     "Authorization": `Bearer ${newUserData.accessToken}`
                 }
             }).then((res) => {
+                if (process.env.NODE_ENV === "development")
+                    console.log("User fetch response: ", res);
+
+                if (res.status !== 200 || !res.data.data) 
+                    throw new Error({ status: res.status, error: res.data.error || res.data || res });
+            
+                const { data } = res.data;
                 // This gives us the user's info, but not their player data
-                newUserData.id = res.data.id;
-                newUserData.username = res.data.username;
-                newUserData.email = res.data.email;
-                newUserData.first_name = res.data.first_name;
-                newUserData.last_name = res.data.last_name;
+                newUserData.id = data.id;
+                newUserData.username = data.username;
+                newUserData.email = data.email;
+                newUserData.first_name = data.first_name;
+                newUserData.last_name = data.last_name;
+
                 // Now get the user's player data
                 return axios(`/api/player/${newUserData.id}`, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
                         "Accept": "application/json",
-                        "Authorization": `Bearer ${newUserData.accessToken}`
+                        // "Authorization": `Bearer ${newUserData.accessToken}`
                     }
                 }).then((res) => {
+                    if (res.status !== 200) 
+                        throw new Error({ status: res.status, error: res.data.error || res.data || res  });
                     const { data } = res;
                     if (process.env.NODE_ENV === "development")
                         console.log("Player fetch response: ", res);
@@ -143,6 +153,7 @@ export default function Login(props) {
                     newUserData.avatar = data.AvatarName;
                     newUserData.playstyle = data.Playstyle;
                     newUserData.playerId = data.pk;
+                    newUserData.loggedIn = true;
                     updateUser(newUserData);
                     toast.success("Login successful!");
                     // Navigate to the profile page

@@ -98,7 +98,7 @@ export default function ContinueRegistration(props) {
             toast.error("Please select your playstyle and avatar.");
             return;
         }
-
+        
         // Update the user's player-specific information
         await axios(`/api/player/${user.id}`, {
             method: 'PUT',
@@ -124,12 +124,15 @@ export default function ContinueRegistration(props) {
                 "Attitude": "Unset"
             }
         }).then(async (response) => {
+            if (process.env.NODE_ENV === "development")
+                console.log("Player PUT response: " + JSON.stringify(response));
+
             if (response.status === 200) {
                 // Update the user's context
                 updateUser({
                     ...user,
-                    playstyle: formState.playstyle,
-                    avatar: formState.avatar,
+                    playstyle: response.data.Playstyle,
+                    avatar: response.data.AvatarName,
                     loggedIn: true,
                 });
                 navigate('/register/finish');
