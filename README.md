@@ -7,9 +7,19 @@ Team 5's Git Repository for Web Services Engineering
 
 **Backend Languages:** Django & Python
 
-*To view the results of the CI/CD integration and deployment, please click the green checkmark as seen below*
+# Viewing the application on Heroku
+* You may view our application in a production environment [here](https://fireside-gaming-frontend.herokuapp.com)
+
+# CI/CD Pipeline
+*To view the results of the CI via CircleCI integration, please click the green checkmark as seen below*
 
 ![CI/CD Integration](/Documentation/Diagrams/Github-CI-CD.JPG)
+
+*Or view results of our CI pipeline below:*
+![MicrosoftTeams-image](https://user-images.githubusercontent.com/45239282/230271008-4b381ca3-0eef-4688-b8ac-6deec54d3464.png)
+
+*Likewise for CD integration via Heroku, the image below demonstrates our successful build and deployments:*
+![CD-Heroku Integration](https://user-images.githubusercontent.com/45239282/230270394-df5bac2c-2814-4ac7-a24f-706b5d2bda1e.png)
 
 ## Sprint 2 (03/17/2023 - 04/05/2023)
 
@@ -58,9 +68,6 @@ Team 5's Git Repository for Web Services Engineering
 **Points Completed:** 23.5 Points
 
 >(03/15/2023) While our development did not reach the 35.5 point total, we have still achieved our goals of creating a basic frontend and backend service as well as login authentication. We have also established the groundwork for other functionalities and pages within the application. We believe that our point totals did not match our original estimate as some stories were removed from the sprint due to redundancy, being out-of-scope, or unnecessary for the final product. For example, during the sprint, a total of 15 points were removed for being out-of-scope or unnecessary. Of these 15 points, 5 points were introduced during the sprint causing scope unnecessary scope creep during the project. Furthermore, our burndown chart (found in the documentation folder) saw a significant decrease in the last day of the sprint as at least 5-7 tickets were in code review for a week or longer (until reviewed and finalized on the last day).
-
-# Viewing the application on Heroku
-* You may view our application in a production environment [here](https://fireside-gaming-frontend.herokuapp.com)
 
 # Building and running the project locally
 ## Prerequisites
