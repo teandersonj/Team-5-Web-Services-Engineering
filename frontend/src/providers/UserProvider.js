@@ -10,6 +10,7 @@ const UserProvider = ({ children }) => {
 
     const getInitialState = () => ({
         id: "",
+        playerId: "",
         loggedIn: false,
         username: null,
         first_name: "",
@@ -18,6 +19,8 @@ const UserProvider = ({ children }) => {
         avatar: "avatar1",
         playstyle: "",
         bio: "",
+        attitude: "",
+        compositeSkillLevel: 0,
         accessToken: "",
         refreshToken: "",
         memberSince: "",

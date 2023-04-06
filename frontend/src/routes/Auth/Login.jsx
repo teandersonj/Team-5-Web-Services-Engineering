@@ -9,7 +9,6 @@ import validateElement from '../../services/Validation';
 import LabeledInput from '../../components/LabeledInput';
 import ValidationErrorList from '../../components/ValidationErrorList';
 
-
 /** 
  * Login component, used to log in a user
  * @param {*} props
@@ -87,93 +86,34 @@ export default function Login(props) {
 
         // Send the login info to the server to validate and login, retrieving the rest of the user's details
         // If successful, update the user state and navigate to the profile page
-        await axios("/api/token/", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            data: {
-                username: formState.username,
-                password: formState.password
-            }
-        }).then((res) => {
-            if (res.status === 200) {
-                const { data } = res;
-                if (process.env.NODE_ENV === "development")
-                    console.log("Login response: ", res);   
-                // Update the user state
-                newUserData.accessToken = data.access;
-                newUserData.refreshToken = data.refresh;
-            } else {
-                throw new Error({
-                    status: res.status,
-                    error: res || "There was an error logging in. Please try again."
-                });
-            }
-            return res;
-        }).then(async (res) => {
-            // We have the tokens, now we need to get the user's data
-            // Get the user's data from the userInfo endpoint
-            await axios("/api/user/", {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${newUserData.accessToken}`
-                }
-            }).then((res) => {
-                if (process.env.NODE_ENV === "development")
-                    console.log("User fetch response: ", res);
+        await axios.post("/api/login/", formState).then((res) => {
+            if (process.env.NODE_ENV === "development")
+                console.log("Login response: ", res);
 
-                if (res.status !== 200 || !res.data.data) 
-                    throw new Error({ status: res.status, error: res.data.error || res.data || res });
+            if (res.status !== 200) 
+                throw new Error({ status: res.status, response: res.data });
             
-                const { data } = res.data;
-                // This gives us the user's info, but not their player data
-                newUserData.id = data.id;
-                newUserData.username = data.username;
-                newUserData.email = data.email;
-                newUserData.first_name = data.first_name;
-                newUserData.last_name = data.last_name;
+            const { data } = res;
+            const { player } = data;
+            const { user } = player;
 
-                // Now get the user's player data
-                return axios(`/api/player/${newUserData.id}`, {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Accept": "application/json",
-                        // "Authorization": `Bearer ${newUserData.accessToken}`
-                    }
-                }).then((res) => {
-                    if (res.status !== 200) 
-                        throw new Error({ status: res.status, error: res.data.error || res.data || res  });
-                    const { data } = res;
-                    if (process.env.NODE_ENV === "development")
-                        console.log("Player fetch response: ", res);
-                    // Update the user state
-                    newUserData.avatar = data.AvatarName;
-                    newUserData.playstyle = data.Playstyle;
-                    newUserData.playerId = data.pk;
-                    newUserData.loggedIn = true;
-                    updateUser(newUserData);
-                    toast.success("Login successful!");
-                    // Navigate to the profile page
-                    return navigate("/profile");
-                }).catch((err) => {
-                    if (process.env.NODE_ENV === "development")
-                        console.log("Player fetch error: ", err.status, err.response.data.error);
-                    throw new Error({
-                        status: err.status,
-                        error: err.response.data.error || "There was an error getting your player data. Please try again."
-                    });
-                });
-            }).catch((err) => {
-                if (process.env.NODE_ENV === "development")
-                    console.log("User fetch error: ", err.status, err.response.data.error);
-                throw new Error({
-                    status: err.status,
-                    error: err.response.data.error || "There was an error getting your user data. Please try again."
-                });
-            });
+            newUserData.accessToken = data.access;
+            newUserData.refreshToken = data.refresh;
+            newUserData.attitude = player.Attitude;
+            newUserData.avatar = player.AvatarName;
+            newUserData.compositeSkillLevel = player.CompositeSkillLevel;
+            newUserData.playstyle = player.Playstyle;
+            newUserData.playerId = player.pk;
+            newUserData.username = user.username;
+            newUserData.email = user.email;
+            newUserData.first_name = user.first_name;
+            newUserData.last_name = user.last_name;
+            newUserData.id = user.id;
+            newUserData.loggedIn = true;
+
+            updateUser(newUserData);
+            // Navigate to the profile page
+            // return navigate("/profile");
         }).catch((err) => {
             if (process.env.NODE_ENV === "development")
                 console.log("Login error: ", err.status, err.response?.data?.error || err.response?.data || err);

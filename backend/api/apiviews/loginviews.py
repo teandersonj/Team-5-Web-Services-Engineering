@@ -32,7 +32,7 @@ class LoginView(generics.GenericAPIView):
             #     'email': user.email,
             # },
             # The Player includes the user's information, so we can just return the player
-            "data": player_serializer.data,
+            "player": player_serializer.data,
             "access": serializer.validated_data["access"],
             "refresh": serializer.validated_data["refresh"]
         }, status=status.HTTP_200_OK)

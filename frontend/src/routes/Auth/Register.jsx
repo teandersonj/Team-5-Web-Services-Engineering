@@ -33,11 +33,17 @@ export default function Register(props) {
         last_name: "",
         email: "",
         password: "",
-        confirmPassword: "",
+        password2: "",
         passwordStrength: 0,
         playstyle: "",
         disabled: false,
         errors: {},
+        player: {
+            AvatarName: "Unset",
+            Playstyle: "Unset",
+            Attitude: "Unset",
+            CompositeSkillLevel: 0.0,
+        }
     });
 
     // Define initial state. Ideally we'd define this in a function and just call it here so we can
@@ -99,8 +105,8 @@ export default function Register(props) {
     };
 
     const validateOnChange = (element) => {
-        // Check if validating confirmPassword, if so we need to pass the password value as well to match it against
-        const validationResult = element.id === "confirmPassword" ? validateElement(element, null, { value: `^${formState.password}$`, message: "Password and Confirm Password must match" }) : validateElement(element);
+        // Check if validating password2, if so we need to pass the password value as well to match it against
+        const validationResult = element.id === "password2" ? validateElement(element, null, { value: `^${formState.password}$`, message: "Password and Confirm Password must match" }) : validateElement(element);
         // Check if there were new errors
         if (Object.keys(validationResult).length > 0) {
             // We can associate the result of the validation function with the input's id
@@ -123,7 +129,7 @@ export default function Register(props) {
     };
 
     // TODO: Disable the submit button if there are any errors in the formState.errors object
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
         // Disable the form while we're processing to prevent double submissions
@@ -137,26 +143,35 @@ export default function Register(props) {
         }
 
         // Attempt to send the info to server
-        axios("/api/register/", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            },
-            data: {
-                username: formState.username,
-                first_name: formState.first_name,
-                last_name: formState.last_name,
-                email: formState.email,
-                password: formState.password,
-                password2: formState.confirmPassword,
-                player: {
-                    AvatarName: "Unset",
-                    Playstyle: "Unset",
-                    Attitude: "Unset",
-                    CompositeSkillLevel: 0.0,
+        await axios.post("/api/users/", formState).then(async (res) => {
+            const { data } = res;
+            const newUser = {
+                id: data.id,
+                username: data.username,
+                email: data.email,
+                first_name: data.first_name,
+                last_name: data.last_name,
+            };
+            // If the registration was successful, request an access token
+            await axios("/api/token/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                data: {
+                    username: data.username,
+                    password: formState.password,
+                },
+            }).then(async (response) => {
+                if (response.status === 200 || response.status === 201) {
+                    newUser.accessToken = response.data.access;
+                    newUser.refreshToken = response.data.refresh;
+                    // If the token was successfully retrieved, save the user info to the context
+                    updateUser(newUser);
+                    // And navigate to the profile page
+                    navigate("/profile");
                 }
-            }
+            });
         }).then(async (res) => {
             const {data} = res;
             const newUser = {
@@ -242,8 +257,8 @@ export default function Register(props) {
                     </div>
                     {formState.errors.password && <ValidationErrorList errors={formState.errors.password} />}
                     <LabeledInput id="password" label="Password" type="password" defaultValue={formState.password} placeholder="Enter your password here" onChange={handleInputChange} containerClassName="width-100 formRow" required />
-                    {formState.errors.confirmPassword && <ValidationErrorList errors={formState.errors.confirmPassword} />}
-                    <LabeledInput id="confirmPassword" label="Confirm Password" type="password" defaultValue={formState.passwordConfirm} placeholder="Enter your password again here" onChange={handleInputChange} containerClassName="width-100 formRow" required />
+                    {formState.errors.password2 && <ValidationErrorList errors={formState.errors.password2} />}
+                    <LabeledInput id="password2" label="Confirm Password" type="password" defaultValue={formState.passwordConfirm} placeholder="Enter your password again here" onChange={handleInputChange} containerClassName="width-100 formRow" required />
                     <p className="flexDirectionRow justifyContentSpaceBetween">
                         <button id="submit" form="registerForm" type="submit" className="roundedBlueBtn" disabled={formState.disabled}>Continue</button>
                         <button className="roundedGrayBtn"><Link className="Link" style={{ color: "white" }} to="/">Cancel</Link></button>
