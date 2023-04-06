@@ -3,8 +3,6 @@ Team 5's Git Repository for Web Services Engineering
 
 [Jira Board](https://teamfivewebservices.atlassian.net/jira/software/projects/T5WSE/boards/1)
 
-[Link to Video of Working Prototype](https://kennesawedu-my.sharepoint.com/personal/jganulin_students_kennesaw_edu/_layouts/15/stream.aspx?id=%2Fpersonal%2Fjganulin%5Fstudents%5Fkennesaw%5Fedu%2FDocuments%2FTeam5ProjectDemo%2Emp4&referrer=Teams%2ETEAMS%2DELECTRON&referrerScenario=p2p%5Fns%2Dbim&ga=1)
-
 **Frontend Language:** HTML, CSS, JavaScript with React
 
 **Backend Languages:** Django & Python
@@ -26,7 +24,7 @@ Team 5's Git Repository for Web Services Engineering
 ### Sprint Forecast
 **Forecasted Point Completion:** 36 Points
 
->The point schema will follow a 1:1 ratio such that 1 point is equivalent to 1 day of development effort and so forth. Any stories above 5 total points would be broken down into smaller more subsequent stories. Based off of our work on the previous sprint, we believe that 36 points are all that are necessary to complete our goals for this sprint. While this represents a large effort, much of the groundwork for this sprint's tickets is already present and we expect that the tickets can be completed much quicker than they are pointed. However, we chose to keep our evaluation of each story's effort objective which is why the estimation remains at a higher value.
+>The point schema will follow a 1:1 ratio such that 1 point is equivalent to 1 day of development effort and so forth. Any stories above 5 total points would be broken down into smaller more subsequent stories. Based off of our work on the previous sprint, we believe that 36 points are all that are necessary to complete our goals for this sprint. While this represents a large effort, much of the groundwork for this sprint's tickets is already present and we expect that the tickets can be completed much quicker than they are pointed. However, we chose to keep our evaluation of each story's effort objective which is why the estimation remains at a higher value. Furthermore, based on Yesterday's Weather Forecast (Considering the availability of members, average points completed per sprint, and number of Sprints), we have determined that an aggressive forecast close to, but slightly higher than, the previous 23.5 points completed will, be more accurate.
 
 **Points Completed:** --- Points
 
