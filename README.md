@@ -11,17 +11,17 @@ Team 5's Git Repository for Web Services Engineering
 
 ## Sprint 2 (03/17/2023 - 04/05/2023)
 
-![Sprint 2 Burndown Diagram](/Documentation/Diagrams/Team5_Sprint2_BurndownGraph.JPG)
+![Sprint 2 Burndown Diagram](/Documentation/Diagrams/Team5_Sprint2_Burndown_Chart.png)
 
 ### Goals & Objectives
 - [x] Finish Constructing UI Prototypes
-- [ ] Finishing Construct React UI for Pages
-- [ ] Finish Leftover Login Items from the Previous Sprint
-- [ ] Create Basic User-to-User Interaction in the Backend
-- [ ] Implement CI/CD Service
-- [ ] Create Foundation and Outline for Research Paper
+- [x] Finishing Construct React UI for Pages
+- [x] Finish Leftover Login Items from the Previous Sprint
+- [x] Create Basic User-to-User Interaction in the Backend
+- [x] Implement CI/CD Service
+- [x] Create Foundation and Outline for Research Paper
 - [ ] Create at least 1 BDD Test Scenario that passes
-- [ ] Create at least 10 unit tests that pass
+- [x] Create at least 10 unit tests that pass
 
 ### Sprint Forecast
 **Forecasted Point Completion:** 36 Points
