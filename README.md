@@ -18,15 +18,19 @@ Team 5's Git Repository for Web Services Engineering
 - [x] Create Basic User-to-User Interaction in the Backend
 - [x] Implement CI/CD Service
 - [x] Create Foundation and Outline for Research Paper
-- [ ] Create at least 1 BDD Test Scenario that passes
+- [x] Create at least 1 BDD Test Scenario that passes
 - [x] Create at least 10 unit tests that pass
 
 ### Sprint Forecast
 **Forecasted Point Completion:** 36 Points
 
->The point schema will follow a 1:1 ratio such that 1 point is equivalent to 1 day of development effort and so forth. Any stories above 5 total points would be broken down into smaller more subsequent stories. Based off of our work on the previous sprint, we believe that 36 points are all that are necessary to complete our goals for this sprint. While this represents a large effort, much of the groundwork for this sprint's tickets is already present and we expect that the tickets can be completed much quicker than they are pointed. However, we chose to keep our evaluation of each story's effort objective which is why the estimation remains at a higher value. Furthermore, based on Yesterday's Weather Forecast (Considering the availability of members, average points completed per sprint, and number of Sprints), we have determined that an aggressive forecast close to, but slightly higher than, the previous 23.5 points completed will, be more accurate.
+>The point schema will follow a 1:1 ratio such that 1 point is equivalent to 1 day of development effort and so forth. Any stories above 5 total points would be broken down into smaller more subsequent stories. Based off of our work on the previous sprint, we believe that 36 points are all that are necessary to complete our goals for this sprint. While this represents a large effort, much of the groundwork for this sprint's tickets is already present and we expect that the tickets can be completed much quicker than they are pointed. However, we chose to keep our evaluation of each story's effort objective which is why the estimation remains at a higher value. 
+>
+>Furthermore, based on Yesterday's Weather Forecast (Considering the availability of members, average points completed per sprint, and number of Sprints), we have determined that an aggressive forecast, close to, but slightly higher than, the previous 23.5 points completed will be more accurate. For the purposes of our estimation, we believed that around 30 points would be accomplishable. We chose to more aggressive with 36 total since many of our tickets already have well-founded starting points. Therefore, the past knowledge provided by Yesterday's Weather and our own intuition that we can do better encouraged us to shoot for a higher goal.
 
-**Points Completed:** --- Points
+**Points Completed:** 36 Points
+
+>Thankfully, the work completed in previous sprints allowed for our team to complete our aggressive point goal forecast. However, once again, our burndown chart remained relatively high at the end due to 6-7 seperate issues sitting in code review and testing for an extended period of time. As such, the burndown chart is only an accurate depiction of work submitted to the done column rather than work completed (that remained untested until the end). Evidence of the collaboration on this project can be observed in the Github commit history as well as accepted code reviews and pull requests
 
 ## Sprint 1 (02/02/2023 - 03/16/2023)
 
