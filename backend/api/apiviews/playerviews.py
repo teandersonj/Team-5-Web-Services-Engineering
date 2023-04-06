@@ -29,7 +29,8 @@ class PlayerAPI(generics.RetrieveUpdateAPIView):
         if _player_redux.is_valid():
             _player_redux.save()
             return Response(_player_redux.data, status=status.HTTP_200_OK)
-        return Response(_player.errors, status=status.HTTP_400_BAD_REQUEST)
+        # Get the errors from the serializer
+        return Response(_player_redux.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class PlayersAPI(generics.ListCreateAPIView):
