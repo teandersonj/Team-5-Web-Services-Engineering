@@ -28,6 +28,7 @@ SECRET_KEY = 'django-insecure-ute_jwy6!ktjqq(mnv@%w44jl%#adt(pcjgz5$4owajzmp@ec&
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
+DJANGO_LOG_LEVEL = "DEBUG" if DEBUG else "INFO"
 
 ALLOWED_HOSTS = ['127.0.0.1', '.herokuapp.com', 'localhost']
 
@@ -127,13 +128,6 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
 if 'DATABASE_URL' in os.environ:
     DATABASES = {
         'default': {
@@ -156,6 +150,28 @@ else:
 """ db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env) """
 
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'level': 'DEBUG'
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'WARNING',
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+            'propagate': False,
+        },
+    },
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators

@@ -10,7 +10,7 @@
  * @returns {JSX.Element} - The Avatar component
  */
 export default function Avatar(props) {
-    const { avatar, playerStatus, alt, size="small", containerClassName, imageClassName, containerStyle, imageStyle, ...rest } = props;
+    const { avatar, playerStatus, alt, size="small", containerClassName, imageClassName, containerStyle, imageStyle } = props;
 
     const containerStyles = {
         small: {
@@ -63,7 +63,7 @@ export default function Avatar(props) {
     
     return (
         <div className={containerClassName} style={{ ...containerStyles[size], ...containerStyle }}>
-            <img className={imageClassName} src={"/img/avatars/" + props.avatar + ".jpg"} alt={alt || "User Avatar"} style={{ ...imageStyles, ...imageStyle, ...getStatusClassName(playerStatus)}} {...props.rest} />
+            <img className={imageClassName} src={"/img/avatars/" + avatar + ".jpg"} alt={alt || "User Avatar"} style={{ ...imageStyles, ...imageStyle, ...getStatusClassName(playerStatus)}} {...props.rest} />
         </div>
     );
 };

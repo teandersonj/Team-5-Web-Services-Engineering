@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { UserContext } from '../../providers/UserProvider';
+import axios from 'axios';
 import validateElement from '../../services/Validation';
 import LabeledInput from '../../components/LabeledInput';
 import ValidationErrorList from '../../components/ValidationErrorList';
@@ -136,81 +137,80 @@ export default function Register(props) {
         }
 
         // Attempt to send the info to server
-        fetch("/api/register/", {
+        axios("/api/register/", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 "Accept": "application/json"
             },
-            body: JSON.stringify({
+            data: {
                 username: formState.username,
                 first_name: formState.first_name,
                 last_name: formState.last_name,
                 email: formState.email,
                 password: formState.password,
                 password2: formState.confirmPassword,
-                // playstyle: formState.playstyle
-            }, null, 2)
-        }).then(async (response) => {
-            const data = await response.json();
-            if (!response.ok) {
-                console.log(data);
-                throw data || response;
+                player: {
+                    AvatarName: "Unset",
+                    Playstyle: "Unset",
+                    Attitude: "Unset",
+                    CompositeSkillLevel: 0.0,
+                }
             }
-            return data;
         }).then(async (res) => {
+            const {data} = res;
             const newUser = {
-                id: res.id,
-                username: res.username,
-                email: res.email,
-                first_name: res.first_name,
-                last_name: res.last_name
+                id: data.id,
+                username: data.username,
+                email: data.email,
+                password: data.password,
+                first_name: data.first_name,
+                last_name: data.last_name,
             };
-
             // If the registration was successful, request an access token
-            fetch('/api/token/', {
-                method: 'POST',
+            await axios("/api/token/", {
+                method: "POST",
                 headers: {
-                    'Content-Type': 'application/json'
+                    "Content-Type": "application/json"
                 },
-                body: JSON.stringify({
-                    username: res.username,
+                data: {
+                    username: data.username,
                     password: formState.password
-                })
+                }
             }).then(async (response) => {
-                if (response.ok) {
-                    const data = await response.json();
-                    console.log("Success :" + JSON.stringify(data));
-                    newUser.accessToken = data.access;
-                    newUser.refreshToken = data.refresh;
-                    // Successful registration
-                    toast.success("Registration successful!");
+                if (response.status === 200 || response.status === 201) {
+                    newUser.accessToken = response.data.access;
+                    newUser.refreshToken = response.data.refresh;
+                    // If the token was successfully retrieved, save the user info to the context
                     updateUser(newUser);
+                    // And navigate to the next page (avatar selection and playstyle selection)
                     navigate("/register/continue");
                 } else throw response;
             }).catch((err) => {
-                // TODO Need to retry or delete the previously saved info server-side
-                toast.error("Unable to get access token. Please try again.");
-                console.log(err);
+                // TODO: Need to retry or delete any previously saved info server-side
+                toast.error("Unable to proceed, please try again.");
                 throw err;
             });
         }).catch((err) => {
+            if (process.env.NODE_ENV === "development") {
+                console.log(err.status + " " + (err?.data || err));
+            }
             toast.error("Registration failed. Please try again.");
             // This'll contain any errors from the server as [fieldName]: "Error message"
-            // We can use the update our errors object with the new errors
-            // Re-enable the form
-            // Check if the response contains keys from the formState because these will represent the errors related to the fields with the same name
+            // We can update our errors object with the new errors
             const errs = {};
-            for (const [key, value] of Object.entries(err)) {
+            for (const [key, value] of Object.entries(err.response.data)) {
+                // Check if the response contains keys from the formState because these will represent the errors related to the fields with the same name
                 if (formState.hasOwnProperty(key)) {
                     // We can associate the result of the validation function with the input's id
                     // so we'll have an object like errors: { [inputId]: { [validationRule]: "Validation error message" } }
                     // Have to keep track of the previous errors so we don't overwrite them later
                     errs[key] = value;
-                    // Now we begin to update our state here with the new errors,
-                    // keeping hold of the previous state (including other inputs' errors)
                 }
             }
+            // Now we begin to update our state here with the new errors,
+            // keeping hold of the previous state (including other inputs' errors)
+            // Re-enable the form
             setFormState((prev) => ({ ...prev, errors: errs, disabled: false }));
             return;
         });
@@ -245,10 +245,6 @@ export default function Register(props) {
                     {formState.errors.confirmPassword && <ValidationErrorList errors={formState.errors.confirmPassword} />}
                     <LabeledInput id="confirmPassword" label="Confirm Password" type="password" defaultValue={formState.passwordConfirm} placeholder="Enter your password again here" onChange={handleInputChange} containerClassName="width-100 formRow" required />
                     <p className="flexDirectionRow justifyContentSpaceBetween">
-                        {/* TODO: This could either move to Continue Registration then from there send all collected data to server at once
-                    or send what we have here to server for validation, get a response and then go there 
-                    I think we'll have to send this all to server first to check for existing accts, then if its validated we come back to Step 2.
-                    If the user quits and re-logs before doing Step 2 we can bring that up again */}
                         <button id="submit" form="registerForm" type="submit" className="roundedBlueBtn" disabled={formState.disabled}>Continue</button>
                         <button className="roundedGrayBtn"><Link className="Link" style={{ color: "white" }} to="/">Cancel</Link></button>
                     </p>

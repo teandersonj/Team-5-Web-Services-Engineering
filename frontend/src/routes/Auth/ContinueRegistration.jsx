@@ -1,8 +1,9 @@
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
-
+import axios from 'axios';
 import { UserContext } from '../../providers/UserProvider';
+
 /* import validateElement from '../../services/Validation';
 import ValidationErrorList from '../../components/ValidationErrorList';
 import LabeledInput from '../../components/LabeledInput'; */
@@ -19,7 +20,7 @@ export default function ContinueRegistration(props) {
     const navigate = useNavigate();
 
     // TODO: If we're not coming here from the first Registration page, redirect them there
-    
+
     // Check if the user's logged in and redirect them if they are
     const { user, updateUser } = useContext(UserContext);
     useEffect(() => {
@@ -29,7 +30,7 @@ export default function ContinueRegistration(props) {
         // We need to check if the user has username, email, etc. populated in the state
         // If they don't, redirect them to the first registration page
     });
-    
+
     // Give us access to the location state passed in from the Register component
     // const { state: location } = useLocation();
 
@@ -90,14 +91,14 @@ export default function ContinueRegistration(props) {
         setFormState(newState);
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         if (formState.playstyle === "" || formState.avatar === "") {
             // TODO: Ensure username is unique and a valid avatar is selected
             toast.error("Please select your playstyle and avatar.");
             return;
         }
-        
+
         const newData = ({
             ...user,
             playstyle: formState.playstyle,
@@ -108,34 +109,34 @@ export default function ContinueRegistration(props) {
 
         updateUser(newData);
 
-        // TODO: Create the "Player" 
-        /* fetch(`/api/player/${user.id}/`, {
+        // Update the user's player-specific information
+        await axios(`/api/player/${user.id}/`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
                 "Authorization": `Bearer ${user.accessToken}`
             },
-            body: JSON.stringify({
-                PlayerId: user.id,
+            body: {
+                /* PlayerId: user.id,
                 Username: user.username,
-                Email: user.email,
-                Playstyle: formState.playstyle,
-                Avatar: formState.avatar,
+                Email: user.email, */
+/*                 Playstyle: formState.playstyle,
+                AvatarName: formState.avatar,
                 CompositeSkillLevel: 0,
-                Attitude: "Unknown"
-            })
+                Attitude: "Unknown" */
+            }
         }).then(async (response) => {
-            if (response.ok) {
-                const data = await response.json();
-                console.log(data);;
+            if (response.status === 200) {                
                 navigate('/register/finish');
             } else {
                 throw new Error("Unable to create player.");
             }
         }).catch((error) => {
-            toast.error(error.message);
+            if (process.env.NODE_ENV === "development")
+                console.log(error && error.response ? error.response : error);
+
+            toast.error("Unable to alter player information, please try again.");
         });
- */
     };
 
     // TODO: What happens when they cancel at this point??
@@ -161,7 +162,7 @@ export default function ContinueRegistration(props) {
     return (
         <>
             <h1 className="pageHeading">Continue Registration</h1>
-            <p>You're almost done registering{user.first_name ? ", " + user.first_name : "" }! <br />Finish by choosing your playstyle and avatar.</p>
+            <p>You're almost done registering{user.first_name ? ", " + user.first_name : ""}! <br />Finish by choosing your playstyle and avatar.</p>
             <form id="continueRegistrationForm" onSubmit={handleSubmit}>
                 <div className="formRow flexDirectionColumn">
                     {/* TODO: Extract this since it'll be used elsewhere */}
@@ -169,7 +170,7 @@ export default function ContinueRegistration(props) {
                     <select id="playstyle" name="playstyle" defaultValue={formState.playstyle} onChange={handlePlaystyleChange} required>
                         <option value="">Select a playstyle</option>
                         <option value="Casual">Casual</option>
-                        <option value="Semi-Competitive">Semi-Competitive</option>
+                        <option value="Semi-Casual">Semi-Casual</option>
                         <option value="Competitive">Competitive</option>
                     </select>
                 </div>

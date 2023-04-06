@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import axios from 'axios';
 
 import { UserContext } from '../../providers/UserProvider';
 import validateElement from '../../services/Validation';
@@ -101,52 +102,41 @@ export default function Login(props) {
 
         // Send the login info to the server to validate and login, retrieving the rest of the user's details
         // If successful, update the user state and navigate to the profile page
-        await fetch("/api/token/", {
+        await axios("/api/token/", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({
+            data: {
                 username: formState.username,
                 password: formState.password
-            })
+            }
         }).then((res) => {
-            if (res.ok) {
-                return res.json();
-            } else if (res.status === 401) {
-                // TODO: We could extract this message or make it so the very last catch
-                // will handle it, but for now we'll just handle it here
-                toast.error("Invalid username or password. Please try again.");
-                // Re-enable the submit button
-                setFormState((prev) => ({ ...prev, disabled: false }));
-                return false;
-            } else throw new Error({
-                status: res.status,
-                error: res
-            });
-        }).then((res) => {
-            console.log("Login response: ", res);
-            // Update the user state
-            newUserData.accessToken = res.access;
-            newUserData.refreshToken = res.refresh;
+            if (res.status === 200) {
+                const { data } = res;
+                if (process.env.NODE_ENV === "development")
+                    console.log("Login response: ", res);   
+                // Update the user state
+                newUserData.accessToken = data.access;
+                newUserData.refreshToken = data.refresh;
+            } else {
+                throw new Error({
+                    status: res.status,
+                    error: res || "There was an error logging in. Please try again."
+                });
+            }
             return res;
-        }).then((res) => {
-            console.log("Login response: ", res)
+        }).then(async (res) => {
+            if (process.env.NODE_ENV === "development")
+                console.log("Login response: ", res)
             // We have the tokens, now we need to get the user's data
             // Get the user's data from the userInfo endpoint
-            fetch("/api/user/", {
+            await axios("/api/user/", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${res.access}`
+                    "Authorization": `Bearer ${res.data.access}`
                 }
-            }).then((res) => {
-                if (res.ok) {
-                    return res.json();
-                } else throw new Error({
-                    status: res.status,
-                    error: res
-                });
             }).then((res) => {
                 toast.success("Login successful!");
                 // Update the user state
@@ -158,7 +148,8 @@ export default function Login(props) {
                 // TODO: For now store what we have in the user state
                 updateUser(newUserData);
             }).catch((err) => {
-                console.log("User fetch error: ", err.status, err.error);
+                if (process.env.NODE_ENV === "development")
+                    console.log("User fetch error: ", err.status, err.response.data.error);
                 toast.error("There was an error logging in. Please try again.");
                 // Re-enable the submit button
                 setFormState((prev) => ({ ...prev, disabled: false }));
