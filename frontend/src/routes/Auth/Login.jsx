@@ -71,7 +71,6 @@ export default function Login(props) {
         return;
     };
 
-    // TODO: Disable the submit button if there are any errors in the formState.errors object
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -83,21 +82,7 @@ export default function Login(props) {
             toast.error("Check your inputs and try again");
             return false;
         }
-
-        // Need to detect if the user entered an email or username
-        // If it's an email we'll pass it as an email, otherwise we'll pass it as a username
-        // const newUser = formState.username.includes("@") ?
-        //     {
-        //         // TODO: Will we be able to login with an email?
-        //         // email: formState.username,
-        //         username: formState.username,
-        //         password: formState.password
-        //     } :
-        // {
-        //     username: formState.username,
-        //     password: formState.password
-        // };
-
+        
         const newUserData = {};
 
         // Send the login info to the server to validate and login, retrieving the rest of the user's details
@@ -127,72 +112,63 @@ export default function Login(props) {
             }
             return res;
         }).then(async (res) => {
-            if (process.env.NODE_ENV === "development")
-                console.log("Login response: ", res)
             // We have the tokens, now we need to get the user's data
             // Get the user's data from the userInfo endpoint
             await axios("/api/user/", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${res.data.access}`
+                    "Authorization": `Bearer ${newUserData.accessToken}`
                 }
             }).then((res) => {
-                toast.success("Login successful!");
-                // Update the user state
+                // This gives us the user's info, but not their player data
+                newUserData.id = res.data.id;
                 newUserData.username = res.data.username;
                 newUserData.email = res.data.email;
                 newUserData.first_name = res.data.first_name;
                 newUserData.last_name = res.data.last_name;
-                newUserData.loggedIn = true;
-                // TODO: For now store what we have in the user state
-                updateUser(newUserData);
+                // Now get the user's player data
+                return axios(`/api/player/${newUserData.id}`, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json",
+                        "Authorization": `Bearer ${newUserData.accessToken}`
+                    }
+                }).then((res) => {
+                    const { data } = res;
+                    if (process.env.NODE_ENV === "development")
+                        console.log("Player fetch response: ", res);
+                    // Update the user state
+                    newUserData.avatar = data.AvatarName;
+                    newUserData.playstyle = data.Playstyle;
+                    newUserData.playerId = data.pk;
+                    updateUser(newUserData);
+                    toast.success("Login successful!");
+                    // Navigate to the profile page
+                    return navigate("/profile");
+                }).catch((err) => {
+                    if (process.env.NODE_ENV === "development")
+                        console.log("Player fetch error: ", err.status, err.response.data.error);
+                    throw new Error({
+                        status: err.status,
+                        error: err.response.data.error || "There was an error getting your player data. Please try again."
+                    });
+                });
             }).catch((err) => {
                 if (process.env.NODE_ENV === "development")
                     console.log("User fetch error: ", err.status, err.response.data.error);
-                toast.error("There was an error logging in. Please try again.");
-                // Re-enable the submit button
-                setFormState((prev) => ({ ...prev, disabled: false }));
+                throw new Error({
+                    status: err.status,
+                    error: err.response.data.error || "There was an error getting your user data. Please try again."
+                });
             });
-
-            // TODO: We need to fetch the Player data associated with this user
-            /*                 fetch(`/api/player/${res.id}`, {
-                                method: "GET",
-                                headers: {
-                                    "Content-Type": "application/json",
-                                    "Authorization": `Bearer ${res.access}`
-                                }
-                            }).then((res) => {
-                                console.log("Player response: ", res);
-                                if (res.status === 200) {
-                                    // Update the user state
-                                    userData.playstyle = res.Playstyle;
-                                    userData.avatar = res.Avatar;
-                                    userData.playerId = res.id;
-                                    userData.attitude = res.Attitude;
-                                    userData.compositeSkill = res.CompositeSkill;
-                                    updateUser(userData);
-                                    // Navigate to the profile page
-                                    return navigate("/profile");
-                                } else if (res.status === 401) {
-                                    toast.error("Invalid username or password. Please try again.");
-                                    // Re-enable the submit button
-                                    setFormState((prev) => ({ ...prev, disabled: false }));
-                                }
-                            }).catch((err) => {
-                                toast.error("Login failed, please try again");
-                                console.log("Error logging in: ", JSON.stringify(err.body) || err);
-                                // Re-enable the submit button
-                                // TODO: Show server-side errors to the user
-                                setFormState((prev) => ({ ...prev, disabled: false }));
-                                return false;
-                            }); */
-
         }).catch((err) => {
-            // TODO: Ideally handle errors here, perhaps by passing an error object with status and message
-            // from each fetch call
+            if (process.env.NODE_ENV === "development")
+                console.log("Login error: ", err.status, err.response?.data?.error || err.response?.data || err);
+
             toast.error("Login failed, please try again");
-            console.log("Error logging in with status ", err.status, " and ", JSON.stringify(err.error) || err);
+
             // Re-enable the submit button
             setFormState((prev) => ({ ...prev, disabled: false }));
             return false;

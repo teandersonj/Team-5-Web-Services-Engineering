@@ -35,11 +35,10 @@ def testEndPoint(request):
 # TODO: Extract this to the proper separate file
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
-# def playerInfo(request):
 def userInfo(request):
     if request.method == 'GET':
         data = f"Congratulation {request.user}, your API just responded to GET request"
-        return Response({'data': {"username": request.user.username,
+        return Response({'data': {"id": request.user.id, "username": request.user.username,
                                   "first_name": request.user.first_name, "last_name": request.user.last_name,
                                   "email": request.user.email}}, status=status.HTTP_200_OK)
     elif request.method == 'POST':

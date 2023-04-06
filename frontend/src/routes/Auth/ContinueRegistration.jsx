@@ -17,12 +17,12 @@ import Avatar from '../../components/Avatar';
  */
 
 export default function ContinueRegistration(props) {
-    const navigate = useNavigate();
-
     // TODO: If we're not coming here from the first Registration page, redirect them there
+    const navigate = useNavigate();
 
     // Check if the user's logged in and redirect them if they are
     const { user, updateUser } = useContext(UserContext);
+
     useEffect(() => {
         if (user.loggedIn) {
             navigate('/');
@@ -99,37 +99,42 @@ export default function ContinueRegistration(props) {
             return;
         }
 
-        const newData = ({
-            ...user,
-            playstyle: formState.playstyle,
-            avatar: formState.avatar,
-            memberSince: new Date(),
-            loggedIn: true
-        });
-
-        updateUser(newData);
-
         // Update the user's player-specific information
-        await axios(`/api/player/${user.id}/`, {
+        await axios(`/api/player/${user.id}`, {
             method: 'PUT',
             headers: {
-                'Content-Type': 'application/json',
-                "Authorization": `Bearer ${user.accessToken}`
+                "Content-Type": "application/json",
+                
+                // TODO: Make PUT /api/player/:id guarded with token?
+                // "Authorization": `Bearer ${user.accessToken}`
             },
-            body: {
-                /* PlayerId: user.id,
-                Username: user.username,
-                Email: user.email, */
-/*                 Playstyle: formState.playstyle,
-                AvatarName: formState.avatar,
-                CompositeSkillLevel: 0,
-                Attitude: "Unknown" */
+            data: {
+                "pk": user.id,
+                "user": {
+                    "id": user.id,
+                    "username": user.username,
+                    "first_name": user.first_name,
+                    "last_name": user.last_name,
+                    "email": user.email,
+                    "password": user.password,
+                },
+                "AvatarName": formState.avatar,
+                "Playstyle": formState.playstyle,
+                "CompositeSkillLevel": 0.0,
+                "Attitude": "Unset"
             }
         }).then(async (response) => {
-            if (response.status === 200) {                
+            if (response.status === 200) {
+                // Update the user's context
+                updateUser({
+                    ...user,
+                    playstyle: formState.playstyle,
+                    avatar: formState.avatar,
+                    loggedIn: true,
+                });
                 navigate('/register/finish');
             } else {
-                throw new Error("Unable to create player.");
+                throw new Error({ status: response.status, error: response });
             }
         }).catch((error) => {
             if (process.env.NODE_ENV === "development")
