@@ -55,7 +55,10 @@ Team 5's Git Repository for Web Services Engineering
 
 >(03/15/2023) While our development did not reach the 35.5 point total, we have still achieved our goals of creating a basic frontend and backend service as well as login authentication. We have also established the groundwork for other functionalities and pages within the application. We believe that our point totals did not match our original estimate as some stories were removed from the sprint due to redundancy, being out-of-scope, or unnecessary for the final product. For example, during the sprint, a total of 15 points were removed for being out-of-scope or unnecessary. Of these 15 points, 5 points were introduced during the sprint causing scope unnecessary scope creep during the project. Furthermore, our burndown chart (found in the documentation folder) saw a significant decrease in the last day of the sprint as at least 5-7 tickets were in code review for a week or longer (until reviewed and finalized on the last day).
 
-# Building and running the project
+# Viewing the application on Heroku
+* You may view our application in a production environment [here](https://fireside-gaming-frontend.herokuapp.com)
+
+# Building and running the project locally
 ## Prerequisites
 * [Python 3.8](https://www.python.org/downloads/) or higher
 * [Node.js](https://nodejs.org/en/download/)
