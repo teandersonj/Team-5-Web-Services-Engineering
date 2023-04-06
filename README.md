@@ -11,15 +11,15 @@ Team 5's Git Repository for Web Services Engineering
 * You may view our application in a production environment [here](https://fireside-gaming-frontend.herokuapp.com)
 
 # CI/CD Pipeline
-*To view the results of the CI via CircleCI integration, please click the green checkmark as seen below*
+**To view the results of the CI via CircleCI integration, please click the green checkmark as seen below**
 
-![CI/CD Integration](/Documentation/Diagrams/Github-CI-CD.JPG)
+> ![CI/CD Integration](/Documentation/Diagrams/Github-CI-CD.JPG)
 
-*Or view results of our CI pipeline below:*
-![MicrosoftTeams-image](https://user-images.githubusercontent.com/45239282/230271008-4b381ca3-0eef-4688-b8ac-6deec54d3464.png)
+**Or view results of our CI pipeline below:**
+> ![MicrosoftTeams-image](https://user-images.githubusercontent.com/45239282/230271008-4b381ca3-0eef-4688-b8ac-6deec54d3464.png)
 
-*Likewise for CD integration via Heroku, the image below demonstrates our successful build and deployments:*
-![CD-Heroku Integration](https://user-images.githubusercontent.com/45239282/230270394-df5bac2c-2814-4ac7-a24f-706b5d2bda1e.png)
+**Likewise for CD integration via Heroku, the image below demonstrates our successful build and deployments:**
+> ![CD-Heroku Integration](https://user-images.githubusercontent.com/45239282/230270394-df5bac2c-2814-4ac7-a24f-706b5d2bda1e.png)
 
 ## Sprint 2 (03/17/2023 - 04/05/2023)
 
