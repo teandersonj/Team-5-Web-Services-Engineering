@@ -62,13 +62,6 @@ export default function ContinueRegistration(props) {
         }
     };
 
-    // Style the avatar images
-    // const imageStyle = {
-    //     display: "block",
-    //     width: "100%",
-    //     height: "100%"
-    // };
-
     const handlePlaystyleChange = (event) => {
         setFormState((prev) => ({ ...prev, playstyle: event.target.value }));
     };
@@ -106,7 +99,7 @@ export default function ContinueRegistration(props) {
                 "Content-Type": "application/json",
                 
                 // TODO: Make PUT /api/player/:id guarded with token?
-                // "Authorization": `Bearer ${user.accessToken}`
+                "Authorization": `Bearer ${user.accessToken}`
             },
             data: {
                 "pk": user.id,
@@ -121,7 +114,8 @@ export default function ContinueRegistration(props) {
                 "AvatarName": formState.avatar,
                 "Playstyle": formState.playstyle,
                 "CompositeSkillLevel": 0.0,
-                "Attitude": "Unset"
+                "Attitude": "Unset",
+                "Bio": "Unset"
             }
         }).then(async (response) => {
             if (process.env.NODE_ENV === "development")

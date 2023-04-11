@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
+import axios from "axios";
 
 import LabeledInput from "../components/LabeledInput";
 import ValidationErrorList from "../components/ValidationErrorList";
+import toast from "react-hot-toast";
 
 // TODO: Apply validation rules
 
@@ -70,10 +72,65 @@ const AccountSettings = (props) => {
 
     const submitField = (e, fieldName) => {
         e.preventDefault();
-        // TODO: Send the changes to the server for validation and updating
-        updateUser({ [fieldName]: formState[fieldName] });
-        // Disable the field
-        toggleDisabled(e, fieldName);
+        
+        // TODO: Temporarily disable the field
+        
+        // TODO: Certain fields are related to the User (username, first_name, last_name) - Password will be handled elsewhere
+        // and others are related to the Player (email, avatar, playstyle, attitude, compositeSkillLevel, bio)
+        // We need to determine which one we're dealing with and send the appropriate data to the server
+        // For now this represents what the player/ endpoint expects
+        const requestBody = {
+            pk: user.playerId,
+            user: {
+                username: user.username,
+                first_name: user.first_name,
+                last_name: user.last_name,
+                email: user.email,
+            },
+            AvatarName: user.avatar,
+            Bio: formState.bio,
+            Playstyle: formState.playstyle,
+            CompositeSkillLevel: user.compositeSkillLevel,
+            Attitude: user.attitude,
+        };
+
+        // For now we only have PUT /player/:userId update endpoint so handle only those fields
+        axios.put(`/api/player/${user.playerId}`, requestBody).then((res) => {
+            if (process.env.NODE_ENV === "development")
+                console.log("PUT via AccountSettings res: ", res);
+            
+            if (res.status !== 200) {
+                throw new Error({ status: res.status, response: res.data });
+            }
+
+            // Get the updated value for the specific field passed in from the response
+            // But account for mismatch between the field name and the response key
+            const fieldNameMap = {
+                username: "username",
+                first_name: "first_name",
+                last_name: "last_name",
+                email: "email",
+                avatar: "AvatarName",
+                playstyle: "Playstyle",
+                bio: "Bio",
+                compositeSkillLevel: "CompositeSkillLevel",
+                attitude: "Attitude",
+            };
+            const updatedValue = res.data[fieldNameMap[fieldName]];
+
+            // Update the user state with the new value
+            updateUser({ [fieldName]: updatedValue });
+            // Disable the field
+            toast.success(`Successfully updated ${fieldName}!`);
+            toggleDisabled(e, fieldName);
+        }).catch((err) => {
+            if (process.env.NODE_ENV === "development")
+                console.log("PUT via AccountSettings err: ", err);
+            
+            toast.error("There was an error updating your profile. Please try again later.");
+            // Disable and reset the field
+            toggleDisabled(e, fieldName);
+        });
     };
 
     return (

@@ -10,7 +10,7 @@
     "flush-database": "cd backend && python inVenv.py run manage.py sqlflush",
     "create-backend-superuser": "cd backend && python inVenv.py run manage.py createsuperuser",
     "start-backend": "cd backend && python inVenv.py run manage.py runserver",
-    "start-frontend": "cd frontend && npm devstart",
+    "start-frontend": "cd frontend && npm run dev",
     "prepare-environment": "npm install && npm run install-backend-dependencies && npm run install-frontend-dependencies && npm run prepare-backend-database",
     "start": "concurrently \"npm run start-backend\" \"npm run start-frontend\"",
     "unit-test-frontend": "cd frontend && npm run testNoInteractive",

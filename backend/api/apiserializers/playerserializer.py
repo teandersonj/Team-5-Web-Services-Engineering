@@ -9,12 +9,12 @@ class UserSerializer(serializers.ModelSerializer):
     # Query the User model and return the following fields
     class Meta:
         model = get_user_model()
-        fields = ('id', 'username', 'first_name', 'last_name', 'email', 'password')
+        fields = ('id', 'username', 'first_name', 'last_name', 'email') #, 'password')
         extra_kwargs = {
-                            'username': {
-                            'validators': [UnicodeUsernameValidator()],
-                            }
-                        }
+            'username': {
+                'validators': [UnicodeUsernameValidator()],
+            }
+        }
 
 
 class PlayerSerializer(serializers.ModelSerializer):
@@ -22,7 +22,7 @@ class PlayerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Player
-        fields = ('pk', 'user', 'AvatarName', 'Playstyle', 'CompositeSkillLevel', 'Attitude')
+        fields = ('pk', 'user', 'AvatarName', 'Playstyle', 'CompositeSkillLevel', 'Attitude', 'Bio')
 
     def create(self, validated_data):
         _user = User.objects.create(data=validated_data.pop('user'))
@@ -38,5 +38,6 @@ class PlayerSerializer(serializers.ModelSerializer):
         instance.Playstyle = validated_data.get('Playstyle')
         instance.CompositeSkillLevel = validated_data.get('CompositeSkillLevel')
         instance.Attitude = validated_data.get('Attitude')
+        instance.Bio = validated_data.get('Bio')
         instance.save()
         return instance

@@ -6,7 +6,7 @@ from ..apimodels.player import Player
 class RegisterPlayerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Player
-        fields = ('AvatarName', 'Playstyle', 'CompositeSkillLevel', 'Attitude')
+        fields = ('AvatarName', 'Playstyle', 'CompositeSkillLevel', 'Attitude', 'Bio')
 
 
 class RegisterUserSerializer(serializers.ModelSerializer):
@@ -15,15 +15,18 @@ class RegisterUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'username', 'first_name', 'last_name', 'email', 'password', 'player')
-
+        extra_kwargs = {'password': {'write_only': True}, 'player': {'write_only': True}}
 
 class RegisterSerializer(serializers.ModelSerializer):
-    player = RegisterPlayerSerializer()
+    # Create an empty player for the user, allow the user to update later via PUT /api/player/:id
+    # player = RegisterPlayerSerializer()
     password2 = serializers.CharField(write_only=True, required=True)
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'first_name', 'last_name', 'email', 'password', 'player', 'password2')
+        fields = ('id', 'username', 'first_name', 'last_name',
+                  'email', 'password', 'password2')
+        extra_kwargs = {'password': {'write_only': True}}
 
     def validate(self, attrs):
         if attrs['password'] != attrs['password2']:
@@ -45,12 +48,15 @@ class RegisterSerializer(serializers.ModelSerializer):
 
         print("User created: " + _lUser.username)
         try:
+            # Create an empty player for the user, allow the user to update later via PUT /api/player/:id
             _lPlayer = Player.objects.create(
                 user=_lUser,
-                AvatarName=validated_data['player']['AvatarName'],
-                Playstyle=validated_data['player']['Playstyle'],
-                CompositeSkillLevel=validated_data['player']['CompositeSkillLevel'] or 0,
-                Attitude=validated_data['player']['Attitude']
+                pk=_lUser.id,
+                AvatarName="Unset",  # validated_data['player']['AvatarName'],
+                Playstyle="Unset", # validated_data['player']['Playstyle'],
+                CompositeSkillLevel=0.0, # validated_data['player']['CompositeSkillLevel'] or 0,
+                Attitude="Unset", # validated_data['player']['Attitude']
+                Bio="Unset" # validated_data['player']['Bio']
             )
             _lPlayer.save()
         except Exception as e:
