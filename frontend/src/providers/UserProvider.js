@@ -25,7 +25,10 @@ const UserProvider = ({ children }) => {
         refreshToken: "",
         memberSince: "",
         currentStatus: "Online",
-        currentParty: {},
+        currentParty: {
+            game: "",
+            members: []
+        },
         friendsList: [],
         favoriteGames: [],
         recentlyPlayedGames: [],

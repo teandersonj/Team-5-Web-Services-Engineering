@@ -28,7 +28,8 @@ export default function PlayerSearch(props) {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                "Accept": "application/json"
+                "Accept": "application/json",
+                // "Authorization": "Bearer " + localStorage.getItem("token")
             },
             params: {
                 // this'll be passed as a query string to the server
@@ -37,11 +38,24 @@ export default function PlayerSearch(props) {
         }).then((res) => {
             if (res.status === 200) {
                 res.json().then((data) => {
-                    setSearchState((prev) => ({ ...prev, results: data.users }));
+                    let searchResults = [];
+                    // TODO: Filter the results based on the filter rules
+                    // Select only the results that match the query
+                    // Right now, it just filters based on the player's username
+                    // If the query is empty, return all results
+                    if (searchState.query !== "" && data?.users?.length > 0) {
+                        searchResults = data.users?.filter((player) => {
+                            return (
+                                player.username.toLowerCase().includes(searchState.query.toLowerCase())
+                            )
+                        });
+
+                        setSearchState((prev) => ({ ...prev, results: searchResults }));
+                    }
                 });
             } else {
                 res.json().then((data) => {
-                    setSearchState((prev) => ({ ...prev, errors: data.users }));
+                    setSearchState((prev) => ({ ...prev, errors: data.errors }));
                 });
             }
         });
@@ -75,7 +89,7 @@ export default function PlayerSearch(props) {
         marginLeft: "24px",
         alignItems: "baseline",
     };
-    
+
     const playerDisplayName = {
         fontWeight: "600",
         fontSize: "26px",
@@ -94,19 +108,19 @@ export default function PlayerSearch(props) {
             <p>On this page, you can find other users who use Fireside Gaming. Users who we think you might get along with are highlighted in yellow with a star next to there name. If you find someone you enjoy gaming with, send them a friend request by clicking the “Add Friend” button under their username.</p>
             <hr className="width-100" />
             <div className="flexDirectionRow width-100">
-                <LabeledInput containerClassName="flexGrow-1" type="text" id="search" name="search" placeholder="Type username here..." onChange={handleSearchChange} data-testid="search-btn"/>
+                <LabeledInput containerClassName="flexGrow-1" type="text" id="search" name="search" placeholder="Type username here..." onChange={handleSearchChange} data-testid="search-btn" />
                 <div>
                     <button className="roundedBlueBtn" onClick={(e) => getSearchResults(e)}>Search</button>
                     <button className="roundedBlueBtn">Filter<img className="btnIcon" src="/img/icons/filterIcon.png"/></button>
                 </div>
             </div>
             <div className="flexDirectionColumn width-100">
-                {searchState.results && searchState.results.length > 0 && (
+                {searchState.results && (
                     <>
                         <div>Search Results:</div>
                         <div>{searchState.results.length || 0} users found.</div>
-                        {searchState.results.map((player) => (
-                            <div className="flexDirectionRow" style={{ ...rowStyle }}>
+                        {searchState.results.length > 0 && searchState.results.map((player) => (
+                            <div key={player.username} className="flexDirectionRow" style={{ ...rowStyle }}>
                                 <Avatar avatar={player.avatar} playerStatus={player.currentStatus} size="large" />
                                 <div className="flexDirectionColumn" style={{...playerColumn}}>
                                     <div style={{...playerDisplayName}}>{player.username}</div>

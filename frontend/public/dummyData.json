@@ -55,12 +55,45 @@
                 5,
                 6
             ]
+        },
+        {
+            "GameId": 5,
+            "name": "The Witcher 3",
+            "description": "Game 1 description",
+            "image": "/img/games/Witcher3_Cover.jpg",
+            "genre": "Action-RPG",
+            "totalPlayerCount": 15,
+            "activePlayerCount": 5,
+            "activePlayers": [
+                1,
+                2,
+                3
+            ],
+            "recommendedPlayers": [
+                4,
+                5,
+                6
+            ]
+        },
+        {
+            "GameId": 6,
+            "name": "Slay the Spire",
+            "description": "Game 2 description",
+            "image": "/img/games/SlayTheSpire_Cover.jpg",
+            "genre": "Roguelike, Deckbuilding",
+            "totalPlayerCount": 256,
+            "activePlayerCount": 1,
+            "recommendedPlayers": [
+                4,
+                5,
+                6
+            ]
         }
     ],
     "users": [
         {
             "id": 1,
-            "username": "User 1",
+            "username": "PixelatedNinja",
             "first_name": "Test",
             "last_name": "User",
             "avatar": "avatar3",
@@ -104,7 +137,7 @@
         },
         {
             "id": 2,
-            "username": "User 2",
+            "username": "MagicMage101",
             "first_name": "Test",
             "last_name": "User",
             "avatar": "avatar2",
@@ -148,7 +181,7 @@
         },
         {
             "id": 3,
-            "username": "User 3",
+            "username": "GoldenWarriorX",
             "first_name": "Test",
             "last_name": "User",
             "avatar": "avatar1",
@@ -165,28 +198,14 @@
                     "name": "Ark: Survival Evolved",
                     "description": "Game 1 description",
                     "image": "/img/games/Ark_Cover.jpg",
-                    "genre": "Action-Adventure",
-                    "totalPlayerCount": 15,
-                    "activePlayerCount": 5,
-                    "activePlayers": [
-                        1,
-                        2,
-                        3
-                    ]
+                    "genre": "Action-Adventure"
                 },
                 {
                     "GameId": 2,
                     "name": "Dark Souls 3",
                     "description": "Game 2 description",
                     "image": "/img/games/DarkSouls3_Cover.jpg",
-                    "genre": "Action-Adventure",
-                    "totalPlayerCount": 256,
-                    "activePlayerCount": 1,
-                    "recommendedPlayers": [
-                        4,
-                        5,
-                        6
-                    ]
+                    "genre": "Action-Adventure"
                 }
             ],
             "recentGames": [
@@ -195,34 +214,20 @@
                     "name": "Ark: Survival Evolved",
                     "description": "Game 1 description",
                     "image": "/img/games/Ark_Cover.jpg",
-                    "genre": "Action-Adventure",
-                    "totalPlayerCount": 15,
-                    "activePlayerCount": 5,
-                    "activePlayers": [
-                        1,
-                        2,
-                        3
-                    ]
+                    "genre": "Action-Adventure"
                 },
                 {
                     "GameId": 2,
                     "name": "Dark Souls 3",
                     "description": "Game 2 description",
                     "image": "/img/games/DarkSouls3_Cover.jpg",
-                    "genre": "Action-Adventure",
-                    "totalPlayerCount": 256,
-                    "activePlayerCount": 1,
-                    "recommendedPlayers": [
-                        4,
-                        5,
-                        6
-                    ]
+                    "genre": "Action-Adventure"
                 }
             ]
         },
         {
             "id": 4,
-            "username": "User 4",
+            "username": "LunarEclipse88",
             "first_name": "Test",
             "last_name": "User",
             "avatar": "avatar1",
@@ -232,16 +237,25 @@
             "lastSeen": "2016-03-01T12:00:00Z",
             "bio": "User 4 bio",
             "totalGames": 2,
-            "totalFriends": 2
+            "totalFriends": 2,
+            "recentGames": [
+                {
+                    "GameId": 5,
+                    "name": "The Witcher 3: Wild Hunt",
+                    "description": "Game 5 description",
+                    "image": "/img/games/Witcher3_Cover.jpg",
+                    "genre": "Action - RPG"
+                }
+            ]
         },
         {
             "id": 5,
-            "username": "User 5",
+            "username": "CaptainCrash",
             "first_name": "Test",
             "last_name": "User",
             "avatar": "avatar3",
             "blocked": false,
-            "currentStatus": "Offline",
+            "currentStatus": "Online",
             "playstyle": "Casual",
             "lastSeen": "2016-03-01T12:00:00Z",
             "bio": "User 5 bio",
@@ -250,7 +264,7 @@
         },
         {
             "id": 6,
-            "username": "User 6",
+            "username": "TheGamerGuy",
             "first_name": "Test",
             "last_name": "User",
             "avatar": "avatar2",

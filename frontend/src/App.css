@@ -543,3 +543,9 @@ form {
   cursor: default;
   box-shadow: rgba(0, 0, 0, 0.25) 3px 3px 5px;
 }
+
+/*Friends List*/
+.friends-list-body .flexDirectionColumn {
+  margin-bottom: 10px;
+  /* padding: 5px; */
+}
