@@ -21,6 +21,34 @@ Team 5's Git Repository for Web Services Engineering
 **Likewise for CD integration via Heroku, the image below demonstrates our successful build and deployments:**
 > ![CD-Heroku Integration](https://user-images.githubusercontent.com/45239282/230270394-df5bac2c-2814-4ac7-a24f-706b5d2bda1e.png)
 
+## Sprint 3 (04/06/2023 - 04/26/2023)
+
+### Goals & Objectives
+- [x] Complete Point Forecasting for Sprint
+- [x] Decompose Stories into Tasks on a Sprint Board (i.e., Jira/Kanban)
+- [ ] Create a Sprint Burndown Chart
+- [ ] Conduct Multiple, Documented Daily Scrums
+- [ ] Conduct a Documented Sprint Review
+- [ ] Provide Evidence of Mobbing on Code
+- [ ] CI Service is Running with all Tests Passing
+- [ ] CD Service is Running with all Tests Passing
+- [ ] Create at least 1 BDD Test Scenario that passes
+- [ ] Create at least 10 unit tests that pass
+- [ ] Submit a Final Product that is a Complete Software Solution
+- [ ] Submit a Final Presentation for the Project
+- [ ] Create a Demo for the Final Product
+- [ ] Submit a Research Presentation
+- [ ] Submit the Research Paper
+
+### Sprint Forecast
+**Forecasted Point Completion:** 24 Points
+
+>The point schema will follow a 1:1 ratio such that 1 point is equivalent to 1 day of development effort and so forth. Any stories above 5 total points would be broken down into smaller more subsequent stories. Utilizing Yesterday's Weather Forecasting for Sprint 3, our development team found that we have an average velocity of 29.75 points per Sprint. Assuming that our team on works 1-2 hours, 5 days a week, we average about 7.5 hours of work per person per week and assume that this frequency has not changed. As such, there is no need to adjust the point velocity/capacity based on work hours. Since there is no change in capacity, Yesterday's Weather Forecast suggests that our team undertake around 29.75 points this Sprint. With the remaining requirements to complete the project and this suggestion in mind, our team has settled on a more modest forecast of 24 points to ensure that can meet the deadlines of high priority deliverables.
+
+**Points Completed:** TBD
+
+>TBD
+
 ## Sprint 2 (03/17/2023 - 04/05/2023)
 
 ![Sprint 2 Burndown Diagram](/Documentation/Diagrams/Team5_Sprint2_Burndown_Chart.png)
