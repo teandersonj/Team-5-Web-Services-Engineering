@@ -3,11 +3,50 @@
 /* Only disabling these for now we're awaiting changes */
 
 import { useContext, useEffect, useState } from 'react';
+import { UserContext } from '../providers/UserProvider';
+import axios from 'axios';
 
 import Avatar from '../components/Avatar';
 import LabeledInput from '../components/LabeledInput';
 import PlayerPlaystyleDisplay from '../components/PlayerPlaystyleDisplay';
 import PlayerStatusDisplay from '../components/PlayerStatusDisplay';
+
+// These styles are used to style the individual search results
+// Could be extracted to the global CSS file somehow?
+const rowStyle = {
+    width: "100%",
+    margin: "15px 0px",
+    padding: "1em",
+    border: "1px solid var(--color-dark-gray)",
+    backgroundColor: "#3C3C3C",
+    borderRadius: "20px",
+    boxShadow: "rgba(0, 0, 0, 0.50) 3px 3px 8px",
+};
+
+// These styles are used to style the players' favorite games
+const imgProps = {
+    width: "90px",
+    height: "135px",
+    margin: "0em 0.5em",
+    boxShadow: "rgba(0, 0, 0, 0.25) 3px 3px 5px",
+};
+
+const playerColumn = {
+    marginLeft: "24px",
+    alignItems: "baseline",
+};
+
+const playerDisplayName = {
+    fontWeight: "600",
+    fontSize: "26px",
+    textShadow: "rgba(0, 0, 0, 0.25) 3px 3px 5px",
+};
+
+const gamesColumn = {
+    margin: "0em 2em",
+    top: "-10px",
+    position: "relative",
+};
 
 /**
  * Represents the user/player search page, allowing a user to search for players based on username or other criteria.
@@ -15,6 +54,7 @@ import PlayerStatusDisplay from '../components/PlayerStatusDisplay';
  * @returns {JSX.Element} <PlayerSearch />
  */
 export default function PlayerSearch(props) {
+    const { user, updateUser } = useContext(UserContext);
     const [searchState, setSearchState] = useState({
         query: "",
         filterRules: {},
@@ -65,42 +105,28 @@ export default function PlayerSearch(props) {
         setSearchState((prev) => ({ ...prev, query: e.target.value }));
     };
 
-    // These styles are used to style the individual search results
-    // Could be extracted to the global CSS file somehow?
-    const rowStyle = {
-        width: "100%",
-        margin: "15px 0px",
-        padding: "1em",
-        border: "1px solid var(--color-dark-gray)",
-        backgroundColor: "#3C3C3C",
-        borderRadius: "20px",
-        boxShadow: "rgba(0, 0, 0, 0.50) 3px 3px 8px",
+    // TODO: Error handling
+    const handleAddFriend = async (e, targetFriend) => {
+        e.preventDefault();
+        await axios.post('/api/friends/add', { friendId: targetFriend._id })
+            .then((res) => {
+                if (res.status === 200) {
+                    // Update the user's friends list
+                    updateUser(res.data.user);
+                }
+            });
     };
 
-    // These styles are used to style the players' favorite games
-    const imgProps = {
-        width: "90px",
-        height: "135px",
-        margin: "0em 0.5em",
-        boxShadow: "rgba(0, 0, 0, 0.25) 3px 3px 5px",
+    const handleBlockFriend = async (e, targetFriend) => {
+        e.preventDefault();
+        await axios.post('/api/friends/block', { friendId: targetFriend._id })
+            .then((res) => {
+                if (res.status === 200) {
+                    // Update the user's friends list
+                    updateUser(res.data.user);
+                }
+            });
     };
-
-    const playerColumn = {
-        marginLeft: "24px",
-        alignItems: "baseline",
-    };
-
-    const playerDisplayName = {
-        fontWeight: "600",
-        fontSize: "26px",
-        textShadow: "rgba(0, 0, 0, 0.25) 3px 3px 5px",
-    };
-
-    const gamesColumn = {
-        margin: "0em 2em",
-        top: "-10px",
-        position: "relative",
-    }
 
     return (
         <>
@@ -126,8 +152,8 @@ export default function PlayerSearch(props) {
                                     <div style={{...playerDisplayName}}>{player.username}</div>
                                     <PlayerStatusDisplay status={player.currentStatus} />
                                     <PlayerPlaystyleDisplay playstyle={player.playstyle} />
-                                    <button className="longRoundedBlueBtn">Add Friend</button>
-                                    <button className='longRoundedRedBtn'>Block User</button>
+                                    <button className="longRoundedBlueBtn" onClick={(e) => handleAddFriend(e, player.id)}>Add Friend</button>
+                                    <button className='longRoundedRedBtn' onClick={(e) => handleBlockFriend(e, player.id)}>Block User</button>
                                 </div>
                                 <div className="flexDirectionRow justifyContentCenter flexGrow-1">
                                     <div className="flexDirectionColumn" style={{ ...gamesColumn}}>

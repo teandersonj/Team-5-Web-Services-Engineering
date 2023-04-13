@@ -17,7 +17,6 @@ import UserProfile from "./routes/UserProfile";
 import GameSearch from "./routes/GameSearch";
 import PlayerSearch from "./routes/PlayerSearch";
 import UserSettings from "./routes/UserSettings";
-import FriendsList from "./routes/FriendsList";
 
 import './App.css';
 
@@ -69,7 +68,7 @@ function App() {
           <Route element={<PrivateRoute user={user} />}>
             <Route path="/profile" element={<UserProfile />} />
             {/* <Route path="/profile/:id" element={<UserProfile />} /> */}
-            <Route path="/friends" element={<FriendsList />} />
+            {/* <Route path="/friends" element={<FriendsList />} /> */}
             <Route path="/find-games" element={<GameSearch />} />
             <Route path="/find-players" element={<PlayerSearch />} />
             <Route path="/account-settings" element={<UserSettings />} />
