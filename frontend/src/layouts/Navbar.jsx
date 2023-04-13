@@ -23,7 +23,6 @@ export default function Navbar(props) {
             <hr className="width-100" />
             <div className="navLinks flexDirectionColumn justifyContentSpaceEvenly flexGrow-1">
                 <NavLink to={"/profile"}>My Profile</NavLink>
-                <NavLink to={"/friends"}>Friends</NavLink>
                 <NavLink to={"/find-games"}>Find Games</NavLink>
                 <NavLink to={"/find-players"}>Find Players</NavLink>
                 <NavLink to={"/account-settings"}>Settings</NavLink>
