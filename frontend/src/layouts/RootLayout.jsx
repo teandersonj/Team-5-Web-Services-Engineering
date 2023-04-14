@@ -2,9 +2,11 @@ import React, { useContext } from 'react';
 import { Outlet } from 'react-router-dom';
 import { UserContext } from '../providers/UserProvider';
 import Navbar from './Navbar';
+import FriendsList from '../components/FriendsList';
 
 export default function Layout(props) { 
     const userContext = useContext(UserContext);
+    const [friendsListOpen, setFriendsListOpen] = React.useState(false);
     // This component represents the root layout for the app that will give it a uniform structure
     // It'll hold the nav bar and the main content section, which in turn will render the appropriate
     // component based on the current path
@@ -19,6 +21,12 @@ export default function Layout(props) {
             <main>
                 {/* This renders any nested/child route appropriate to the current path */}
                 <Outlet />
+                {!!userContext.user.loggedIn && (
+                    <div id="friendsContainer">
+                        <button id="openFriendsListBtn" className={`${friendsListOpen && "hidden"}`} onClick={(e) => setFriendsListOpen((prev) => !prev)}>Friends &#9660;</button>
+                        <FriendsList open={friendsListOpen} closeFunction={() => setFriendsListOpen(false)} />
+                    </div>
+                )}
             </main>
         </div>
     );
