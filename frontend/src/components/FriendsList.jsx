@@ -34,7 +34,8 @@ const statusDisplayStyle = {
 const overrideAvatarContainerStyle = {
     width: '5rem',
     height: '5rem',
-    marginRight: '0.5rem'
+    marginRight: '0.5rem',
+    marginTop: '10px'
 };
 
 const closeButtonStyle = {
@@ -114,7 +115,7 @@ const FriendsList = (props) => {
                 <div className="friends-list-header">
                     <div className="flexDirectionRow">
                         <div>
-                            <Avatar avatar={user.avatar} containerStyle={overrideAvatarContainerStyle} />
+                            <Avatar avatar={user.avatar} containerStyle={overrideAvatarContainerStyle} playerStatus={user.currentStatus} />
                         </div>
                         <div className="flexDirectionColumn flexGrow-1">
                             <div><strong>{user.username}</strong></div>
@@ -217,7 +218,7 @@ const FriendEntry = (props) => {
     return (
         <div className="flexDirectionColumn">
             <div className="flexDirectionRow">
-                <Avatar avatar={friend.avatar} size="small" containerStyle={overrideAvatarContainerStyle} />
+                <Avatar avatar={friend.avatar} size="small" containerStyle={overrideAvatarContainerStyle} playerStatus={friend.currentStatus} />
                 <div className="flexDirectionColumn">
                     <div><strong>{friend.username}</strong> <button onClick={(e) => handleFriendControls(e, friend)}>&#9998;</button></div>
                     <PlayerStatusDisplay status={friend.currentStatus} overrideStyle={statusDisplayStyle} />
@@ -232,7 +233,8 @@ const GameAndPlayerCard = (props) => {
 
     const gameImageStyle = {
         display: 'block',
-        marginRight: '7px'
+        margin: '10px',
+        marginTop: '22px'
     }
 
     const friendEntryStyle = {
@@ -243,9 +245,7 @@ const GameAndPlayerCard = (props) => {
     return (
         <div className="flexDirectionRow width-100" style={friendEntryStyle}>
             {/* Show the game image */}
-            <div style={gameImageStyle}>
-                <img src={game.image} alt={game.name} width="50" height="60" />
-            </div>
+            <img src={game.image} alt={game.name} style={gameImageStyle} width="50" height="60" />
             {/* Show the player card */}
             <FriendEntry friend={friend} />
         </div>
