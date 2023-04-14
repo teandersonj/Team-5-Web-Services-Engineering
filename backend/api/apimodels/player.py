@@ -1,12 +1,12 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 # Create your models here.
 class Player(models.Model):
-    PlayerId = models.BigAutoField(primary_key=True, unique=True,auto_created=True)
-    Username = models.CharField(max_length=100, unique=True)
-    Email = models.EmailField()
+    user = models.OneToOneField(User, on_delete=models.CASCADE, default=1)
     AvatarName = models.CharField(max_length=300)
     Playstyle = models.CharField(max_length=100)
-    CompositeSkillLevel = models.FloatField()
+    CompositeSkillLevel = models.FloatField(default=0.0)
     Attitude = models.CharField(max_length=100)
+    Bio = models.CharField(max_length=1000, default="")

@@ -9,20 +9,30 @@ const UserProvider = ({ children }) => {
     const navigate = useNavigate();
 
     const getInitialState = () => ({
+        id: "-1",
+        playerId: "-1",
         loggedIn: false,
         username: null,
-        fName: null,
-        lName: null,
-        email: null,
-        avatar: null,
-        playstyle: null,
-        apiToken: null,
-        refreshToken: null,
-        memberSince: null,
-        currentGameStatus: null,
-        currentParty: null,
-        friendsList: null,
-        blockedPlayers: null 
+        first_name: "Unset",
+        last_name: "Unset",
+        email: "Unset",
+        avatar: "avatar1",
+        playstyle: "Casual",
+        bio: "Unset",
+        attitude: "",
+        compositeSkillLevel: 0,
+        accessToken: "",
+        refreshToken: "",
+        memberSince: "",
+        currentStatus: "Online",
+        currentParty: {},
+        friendsList: [],
+        favoriteGames: [],
+        recentlyPlayedGames: [],
+        blockedPlayers: [],
+        // Need to know how long they've been logged in for/when they first logged/or used refresh token
+        loggedInDateTime: "",
+        lastRefreshDateTime: "",
     });
 
     const [user, setUser] = useState(getInitialState());
@@ -38,41 +48,6 @@ const UserProvider = ({ children }) => {
         // Update the user in localStorage
         localStorage.setItem("user", JSON.stringify(user));
     }, [user]);
-
-    // Logs in the user clientside; need to eventually call the serverside login function
-    const login = (userInfo) => {
-        // TODO: Send the login info to the server to validate and login, retrieving the rest of the user's details
-        // If successful, update the user state and navigate to the profile page
-        // await axios.post("/api/login", userInfo).then((res) => {
-        //     console.log("Login response: ", res);
-        //     if (res.status === 200) {
-        //         // Update the user state
-        //         const newUser = { ...res.data, loggedIn: true };
-        //         setUser((prev) => newUser);
-        //         // Navigate to the profile page
-        //         return navigate("/profile");
-        //     } else {
-        //         // TODO: Display an error message
-        //         console.log("Login failed");
-        //     }
-        // }).catch((err) => {
-        //     console.log("Error logging in: ", err);
-        //     // Get validation errors from the server
-        //     if (err.response.data.errors) {
-        //         const errors = err.response.data.errors;
-        //         console.log("Validation errors: ", errors);
-        //         return errors;
-        //      }
-        // });
-
-        // For now we just take whatever's input in the
-        // login form and populate the user state with it
-        const newUser = { ...userInfo, loggedIn: true };
-        setUser((prev) => newUser);
-        navigate("/profile");
-        return true;
-        
-    }
 
     // Logs out the user clientside; need to eventually call the serverside logout function
     const logout = (e) => {
@@ -90,7 +65,7 @@ const UserProvider = ({ children }) => {
 
     return (
         // The value prop is what will be available to any component that consumes this context
-        <UserContext.Provider value={{ user, updateUser, login, logout }}>
+        <UserContext.Provider value={{ user, updateUser, logout }}>
             {children}
         </UserContext.Provider>
     );

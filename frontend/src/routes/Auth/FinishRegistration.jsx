@@ -10,18 +10,19 @@ import { UserContext } from '../../providers/UserProvider';
  * @returns <FinishRegistration />
  */
 export default function FinishRegistration(props) {
+    const navigate = useNavigate();
+
     // Check if the user's logged in and redirect them if they are
     const { user } = useContext(UserContext);
     useEffect(() => {
         if (user.loggedIn) {
             navigate('/');
         }
-    }, []);
+    });
 
-
-    const navigate = useNavigate();
-
-    const handleClick = () => {
+    const handleClick = (e) => {
+        e.preventDefault();
+        // Navigate to the login page
         navigate('/login');
     };
 
@@ -29,10 +30,9 @@ export default function FinishRegistration(props) {
         <>
             <div className="flexDirectionColumn">
                 <h1 className="pageHeading centerText">Registration Complete</h1>
-                <p>Account Created. We have sent a verification email to the email you provided.
-                    <br /><em>For now this is just a dummy page.</em>
+                <p>Account Created.<br /> Click the button below to continue to log in.
                 </p>
-                <button className="alignSelfCenter roundedBlue" onClick={handleClick}>Continue</button>
+                <button className="alignSelfCenter roundedBlueBtn" onClick={(e) => handleClick(e)}>Continue</button>
             </div>
         </>
     )

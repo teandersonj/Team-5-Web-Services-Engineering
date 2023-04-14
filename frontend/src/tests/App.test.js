@@ -1,8 +1,11 @@
+
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
-import App from '../App';
 
+import App from '../App';
 import UserProvider from '../providers/UserProvider';
+
+jest.mock("axios");
 
 // Mock the various routes
 // jest.mock('../routes/ErrorPage');

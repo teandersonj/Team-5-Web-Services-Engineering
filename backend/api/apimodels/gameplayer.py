@@ -1,7 +1,8 @@
 from django.db import models
 
-from backend.api.apimodels.game import Game
-from backend.api.apimodels.player import Player
+from game import Game
+from player import Player
+
 
 
 # Create your models here.
@@ -11,3 +12,6 @@ class GamePlayer(models.Model):
     Attitude = models.CharField(max_length=100)
     PlayStyle = models.CharField(max_length=100)
     SkillLevel = models.IntegerField()
+    class Meta:
+        unique_together = (('gameid', 'playerid'),)
+

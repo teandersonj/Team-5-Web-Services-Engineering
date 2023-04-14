@@ -1,4 +1,7 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+import Avatar from '../components/Avatar';
+
+// TODO Extract inline styles, update font and styling
 
 /**
  * Navbar component that will be displayed on the left side of the screen when user is logged in
@@ -8,22 +11,22 @@ import { Link, useNavigate } from 'react-router-dom';
  */
 export default function Navbar(props) {
     const { user, logout } = props.userContext;
-    const navigate = useNavigate();
 
     return (
         <nav className="UserNav">
-            {/* TODO: This'll be where the user's avatar appears */}
-            <img src="/img/logo.png" alt="User Avatar" className="avatar imageShadow" />
+            <Avatar avatar={user.avatar} size="medium" />
             <div className="flexDirectionColumn justifyContentCenter">
-                <div className="alignSelfCenter"><strong>Username: {user.username}</strong></div>
-                <div className="alignSelfCenter">Current Game / Status: {user.currentGameStatus || "Unset"}</div>
-                <div className="alignSelfCenter"><button onClick={() => logout()}>Log Out</button></div>
+                <div className="alignSelfCenter"><strong style={{ fontSize: "20px", margin: "10px 0" }}>{user.username}</strong></div>
+                <div className="alignSelfCenter centerText" style={{ backgroundColor: "var(--color-light-blue", padding: "5px 40px", borderRadius: "10px", boxShadow: "2px 5px 2px var(--color-black)" }}>{user.currentStatus}</div>
+                <div className="alignSelfCenter" style={{ margin: "10px 0" }}><button className="roundedBlueBtn" onClick={() => logout()}>Log Out</button></div>
             </div>
-            <hr />
-            <div className="flexDirectionColumn justifyContentSpaceBetween">
-                <button onClick={() => navigate("/profile")}>Home</button>
-                <button onClick={() => navigate("/find-games")}>Find Game</button>
-                <button onClick={() => navigate("/find-players")}>Find Players</button>
+            <hr className="width-100" />
+            <div className="navLinks flexDirectionColumn justifyContentSpaceEvenly flexGrow-1">
+                <NavLink to={"/profile"}>My Profile</NavLink>
+                <NavLink to={"/friends"}>Friends</NavLink>
+                <NavLink to={"/find-games"}>Find Games</NavLink>
+                <NavLink to={"/find-players"}>Find Players</NavLink>
+                <NavLink to={"/account-settings"}>Settings</NavLink>
             </div>
         </nav>
     );

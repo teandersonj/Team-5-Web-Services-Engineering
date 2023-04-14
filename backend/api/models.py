@@ -1,6 +1,7 @@
 from django.db import models
-from apimodels import game
-from apimodels import player
-from apimodels import blockeduser
-from apimodels import friendlist
-from apimodels import gameplayer
+
+from api.apimodels import friendlist
+from api.apimodels import gameplayer
+from api.apimodels import game
+from api.apimodels import player
+from api.apimodels import blockedplayer

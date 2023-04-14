@@ -1,10 +1,24 @@
 * {
   box-sizing: border-box;
-  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-family: "Noto Sans", sans-serif;
 }
+
 body {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
+}
+
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding: 0.5em;
+  margin: 0;
+  font-size: inherit;
+  font-family: inherit;
+  border: 1px solid var(--color-black);
+  background-color: var(--color-white);
+  color: var(--color-black);
 }
 
 /* Allow our color palette to be used as CSS variables */
@@ -12,7 +26,7 @@ body {
   /* Use these as var(--color-white) ... */
   --color-white: #F7F7F7;
   --color-black: #1F2421;
-  --color-gray: #858585;
+  --color-gray: #5b5b5b;
   --color-green: #4DA078;
   --color-light-blue: #2E8BD0;
   --color-dark-blue: #21699B;
@@ -32,18 +46,21 @@ body {
   height: 100vh;
   display: grid;
 }
+
 .App.GuestLayout {
   /* When a user's not logged in, don't show the nav on the left */
   grid-template:
     "main" 1fr
     / 100%;
 }
+
 .App.UserLayout {
   /* When the user's logged in, we want to display the UserNav side by side with the main content */
   grid-template:
     "UserNav main" 1fr
     / 20% 1fr;
 }
+
 /* End of App */
 
 .UserNav {
@@ -59,6 +76,23 @@ body {
   background-color: var(--color-gray);
   padding: 30px 20px;
   border-right: 1px solid var(--color-black);
+  color: var(--color-white)
+}
+
+.UserNav .navLinks a {
+  display: block;
+  text-decoration: none;
+  color: white;
+  font-size: 26px;
+  text-underline-offset: uppercase;
+}
+
+.UserNav .navLinks a.active {
+  color: var(--color-light-blue);
+}
+
+.UserNav .navLinks a:hover {
+  color: var(--color-dark-blue);
 }
 
 /* For buttons */
@@ -67,26 +101,58 @@ button {
   outline: none;
   border-radius: 5px;
   padding: 0.5em;
-  margin: 0.5em;
+  margin: 0.5em 0;
   font-size: 1em;
   font-weight: bold;
   background-color: var(--color-dark-blue);
   color: var(--color-white);
   cursor: pointer;
 }
-/* For rounded blue and gray buttons */
-.roundedBlue {
+
+.btnIcon {
+  height: 12px;
+  width: 12px;
+  margin: 0em 0.3em;
+}
+
+/* For rounded Buttons */
+.roundedBlueBtn {
   background-color: var(--color-dark-blue);
   color: var(--color-white);
   border: none;
-  border-radius: 5px;
+  border-radius: 7px;
   padding: 0.5em;
-  margin: 0.5em;
+  margin: 0.5em 0.1em;
   font-size: 1em;
   font-weight: bold;
   cursor: pointer;
+  box-shadow: 0 0 5px var(--color-black);
 }
-.roundedGray {
+
+.roundedBlueBtn:hover {
+  background-color: var(--color-light-blue);
+}
+
+.longRoundedBlueBtn {
+  background-color: var(--color-dark-blue);
+  color: var(--color-white);
+  border: none;
+  border-radius: 20px;
+  width: 10em;
+  height: 33px;
+  padding: 0.5em;
+  margin: 0.3em;
+  font-size: 1em;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.25) 3px 3px 5px;
+}
+
+.longRoundedBlueBtn:hover {
+  background-color: var(--color-light-blue);
+}
+
+.roundedGrayBtn {
   background-color: var(--color-gray);
   color: var(--color-white);
   border: none;
@@ -97,13 +163,38 @@ button {
   font-weight: bold;
   cursor: pointer;
 }
+
+.roundedGrayBtn:hover {
+  background-color: var(--color-black);
+}
+
+.longRoundedRedBtn {
+  background-color: #b02c20;
+  color: var(--color-white);
+  border: none;
+  border-radius: 20px;
+  width: 10em;
+  height: 33px;
+  padding: 0.5em;
+  margin: 0.3em;
+  font-size: 1em;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.25) 3px 3px 5px;
+}
+
+.longRoundedRedBtn:hover {
+  background-color: #e13e2e;
+}
 /* End Buttons */
 
 /* For text-like <input> elements */
 input[type="text"],
 input[type="password"],
 input[type="email"],
-input[type="number"] {
+input[type="number"],
+textarea,
+select {
   border: none;
   outline: none;
   border-radius: 5px;
@@ -114,23 +205,31 @@ input[type="number"] {
   background-color: var(--color-white);
   color: var(--color-black);
   width: 100%;
+  min-width: 125px;
 }
+
 input[type="text"]:focus,
 input[type="password"]:focus,
 input[type="email"]:focus,
-input[type="number"]:focus {
+input[type="number"]:focus,
+textarea:focus,
+select:focus {
   /* On focus, maybe have a box-shadow / glow outline appear */
   outline: 2px solid var(--color-dark-blue);
   box-shadow: 0 0 10px 2px var(--color-light-blue);
 }
+
 /* We need to style disabled inputs differently */
 input[type="text"]:disabled,
 input[type="password"]:disabled,
 input[type="email"]:disabled,
-input[type="number"]:disabled {
+input[type="number"]:disabled,
+textarea:disabled,
+select:disabled {
   background-color: var(--color-gray);
   color: var(--color-white);
 }
+
 .inputInvalid {
   background-color: var(--color-pink);
   color: var(--color-white);
@@ -138,6 +237,7 @@ input[type="number"]:disabled {
   /* We could use transitions to only show this error styling for a little bit to alert
     the user then hide it to enable normal input accessibility */
 }
+
 /* End of text-like <input> elements */
 
 main {
@@ -145,7 +245,7 @@ main {
   grid-area: main;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   align-self: stretch;
   flex-wrap: nowrap;
@@ -154,21 +254,52 @@ main {
   height: 100%;
   padding: 2%;
   color: var(--color-white);
+  overflow: auto;
+}
+
+.sectionContainer {
+  /* This is used to layout the leftSection and rightSections either side-to-side or top-to-bottom depending on viewport width */
+  /* We'll use a grid to have better control over section width, since leftSection will take up 25% width on desktop */
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  grid-template-areas: "leftSection" "rightSection";
+  width: 100%;
+  height: 100%;
+}
+
+.rightSection {
+  overflow: auto;
+}
+
+/* On large enough screens show the sections side by side */
+@media screen and (min-width: 768px) {
+  .sectionContainer {
+    grid-template-columns: 25% 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: "leftSection rightSection";
+  }
+
+  .rightSection {
+    padding: 0 1em;
+  }
 }
 
 /* For forms */
 /* #loginForm, #registerForm { */
-form { 
+form {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
   justify-self: flex-start;
 }
+
 .formRow {
   display: flex;
   width: 100%;
   margin-bottom: 0.5em;
 }
+
 /* End of forms */
 
 /* Styles <Link> components */
@@ -176,6 +307,7 @@ form {
   text-decoration: none;
   color: var(--color-dark-blue);
 }
+
 .Link:link {
   /* text-decoration: none;
   color: var(--color-dark-blue); */
@@ -189,54 +321,103 @@ form {
   color: var(--color-light-blue);
 } */
 
-
 /* Utility classes */
 .pageHeading {
-  margin: 0.67em 0;
+  width: fit-content;
+  margin: 0.67em auto;
   font-size: 2.5em;
+  font-family: "Inter", sans-serif;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--color-gold);
+  align-self: center;
+  letter-spacing: 5px;
 }
+
 .centerContent {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
+
 .centerText {
   text-align: center;
 }
+
 .width-100 {
   width: 100%;
 }
+
 .imageShadow {
   filter: drop-shadow(0px 0px 10px var(--color-dark-blue));
 }
+
 .flexDirectionColumn {
   display: flex;
   flex-direction: column;
 }
+
 .flexDirectionRow {
   display: flex;
   flex-direction: row;
 }
+
 .justifySelfCenter {
   display: flex;
   justify-self: center;
 }
+
 .alignSelfCenter {
   display: flex;
   align-self: center;
 }
+
+.justifyContentFlexStart {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.justifyContentFlexEnd {
+  display: flex;
+  justify-content: flex-end;
+}
+
 .justifyContentSpaceBetween {
   display: flex;
   justify-content: space-between;
 }
+
+.justifyContentSpaceEvenly {
+  display: flex;
+  justify-content: space-evenly;
+}
+
 .justifyContentCenter {
   display: flex;
   justify-content: center;
 }
+
+.justifyContentStretch {
+  display: flex;
+  justify-content: stretch;
+}
+
 .alignItemsCenter {
   align-items: center;
 }
+
+.flexGrow-1 {
+  flex-grow: 1;
+}
+
+.flexWrap-True {
+  flex-wrap: wrap;
+}
+
+.fontInter {
+  font-family: "Inter", sans-serif;
+}
+
 /* End of utility classes */
 
 /* For the <img> elements */
@@ -248,23 +429,117 @@ form {
   border: 1px solid var(--color-black);
   box-shadow: 0 0 10px 2px var(--color-dark-blue);
 }
-.avatar {
-  width: 100px;
-  height: 100px;
-}
 /* End of <img> elements */
 
-/* For avatar selection page */
-.avatarContainer label {
-  display: inline-block;
-  border-radius: 20px;
+/* For GameCard */
+.GameCard {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: space-between;
+  align-self: stretch;
+  height: 100%;
+  color: var(--color-white);
+  border-radius: 10px;
+  box-shadow: 0 0 10px 2px var(--color-gray);
+  /* background-color: var(--color-gray); */
+  width: 75%;
+  padding: 2%;
+  margin: 10px auto;
+  border: 1px solid var(--color-white);
+}
+
+.PlayerCard-small {
+  display: flex;
+  flex-direction: column;
+  max-width: 125px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  color: var(--color-white);
+  /* margin: 10px; */
+  text-align: center;
+}
+
+.PlayerCard-small .LabeledInput {
+  /* Ensure the inpt field is not wider than the card */
+  flex-wrap: wrap;
+  padding: 0;
+  margin: 0;
   overflow: hidden;
-  width: 100px;
-  height: 100px;
 }
-.avatarContainer label img {
-  display: block;
-  width: 100%;
-  height: auto;
+
+.PlayerCard-small .LabeledInput input {
+  padding: 0;
+  max-width: 100px;
+  text-align: center;
 }
-/* End of avatar selection page */
+
+/* For the large size player card we can show the first and last name in horizontal spread */
+.PlayerCard-large {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  align-self: stretch;
+  flex-wrap: wrap;
+  height: 100%;
+  color: var(--color-white);
+  border-radius: 10px;
+  box-shadow: 0 0 10px 2px var(--color-gray);
+  background-color: var(--color-gray);
+  width: 75%;
+  padding: 2%;
+  margin: 10px auto;
+  border: 1px solid var(--color-white);
+}
+
+/* Player Status Displays */
+/* Button like displays that show the player's status */
+.blueStatusWide {
+  background-color: var(--color-light-blue);
+  color: var(--color-white);
+  border: none;
+  border-radius: 20px;
+  width: 10em;
+  height: 33px;
+  padding: 0.5em;
+  margin: 0.3em;
+  font-size: 1em;
+  font-weight: bold;
+  text-align: center;
+  cursor: default;
+  box-shadow: rgba(0, 0, 0, 0.25) 3px 3px 5px;
+}
+
+.greenStatusWide {
+  background-color: var(--color-green);
+  color: var(--color-white);
+  border: none;
+  border-radius: 20px;
+  width: 10em;
+  height: 33px;
+  padding: 0.5em;
+  margin: 0.3em;
+  font-size: 1em;
+  font-weight: bold;
+  text-align: center;
+  cursor: default;
+  box-shadow: rgba(0, 0, 0, 0.25) 3px 3px 5px;
+}
+
+.greyStatusWide {
+  background-color: #535353;
+  color: var(--color-white);
+  border: none;
+  border-radius: 20px;
+  width: 10em;
+  height: 33px;
+  padding: 0.5em;
+  margin: 0.3em;
+  font-size: 1em;
+  font-weight: bold;
+  text-align: center;
+  cursor: default;
+  box-shadow: rgba(0, 0, 0, 0.25) 3px 3px 5px;
+}

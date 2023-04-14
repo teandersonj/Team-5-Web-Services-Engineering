@@ -1,6 +1,7 @@
-import { Link, useNavigate } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import axios from 'axios';
 
 import { UserContext } from '../../providers/UserProvider';
 import validateElement from '../../services/Validation';
@@ -8,21 +9,27 @@ import validateElement from '../../services/Validation';
 import LabeledInput from '../../components/LabeledInput';
 import ValidationErrorList from '../../components/ValidationErrorList';
 
+/** 
+ * Login component, used to log in a user
+ * @param {*} props
+ * @returns <Login />
+ **/
 export default function Login(props) {
     const navigate = useNavigate();
-    const { user, login: userLogin } = useContext(UserContext);
+    const { user, updateUser } = useContext(UserContext);
 
     // On page refresh or initial load, check if the user's already logged in
     useEffect(() => {
         if (user.loggedIn) {
             navigate("/profile");
         }
-    }, []);
+    });
 
     const [formState, setFormState] = useState({
         // TODO: We'll need to determine whether they entered an email or username.
         username: "",
         password: "",
+        disabled: false,
         errors: {}
     });
 
@@ -47,7 +54,7 @@ export default function Login(props) {
             // so we'll have an object like errors: { [inputId]: { [validationRule]: "Validation error message" } }
             // Have to keep track of the previous errors so we don't overwrite them later
             const errors = { ...formState.errors, [target.id]: validationResult };
-            
+
             // Now we begin to update our state here with the new errors,
             // keeping hold of the previous state (including other inputs' errors)
             setFormState((prev) => ({ ...prev, errors }));
@@ -63,48 +70,66 @@ export default function Login(props) {
         return;
     };
 
-    // TODO: Disable the submit button if there are any errors in the formState.errors object
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // We should re-validate the form
-        // And we could style the inputs to indicate which ones are invalid
-        // But for now we'll just check if there are any errors in the formState.errors object
+
+        // Disable the submit button so the user can't spam the form
+        setFormState((prev) => ({ ...prev, disabled: true }));
+
+        // Ensure there are no errors in the form before submitting
         if (Object.keys(formState.errors).length > 0) {
-            console.log(formState.errors)
             toast.error("Check your inputs and try again");
             return false;
         }
 
-        // Need to detect if the user entered an email or username
-        // If it's an email we'll pass it as an email, otherwise we'll pass it as a username
-        const newUser = formState.username.includes("@") ?
-            {
-                email: formState.username,
-                password: formState.password
-            } :
-            {
-                username: formState.username,
-                password: formState.password
-            };
+        const newUserData = {};
 
-        // Pass the user's login info to the userLogin function,
-        // which will send it to the server for validation
-        // If there's an error, it'll return an object with an errors property
-        // And we can display those errors to the user
-        const result = userLogin(newUser);
-        if (result.errors) {
-            toast.error("Login failed, check your inputs and try again");
-            setFormState((prev) => ({ ...prev, ...result.errors }));
+        // Send the login info to the server to validate and login, retrieving the rest of the user's details
+        // If successful, update the user state and navigate to the profile page
+        await axios.post("/api/login/", formState).then((res) => {
+            if (process.env.NODE_ENV === "development")
+                console.log("Login response: ", res);
+
+            if (res.status !== 200) 
+                throw new Error({ status: res.status, response: res.data });
+            
+            const { data } = res;
+            const { player } = data;
+            const { user } = player;
+
+            newUserData.accessToken = data.access;
+            newUserData.refreshToken = data.refresh;
+            newUserData.attitude = player.Attitude;
+            newUserData.avatar = player.AvatarName;
+            newUserData.compositeSkillLevel = player.CompositeSkillLevel;
+            newUserData.playstyle = player.Playstyle;
+            newUserData.bio = player.Bio;
+            newUserData.playerId = player.pk;
+            newUserData.username = user.username;
+            newUserData.email = user.email;
+            newUserData.first_name = user.first_name;
+            newUserData.last_name = user.last_name;
+            newUserData.id = user.id;
+            newUserData.loggedIn = true;
+
+            updateUser(newUserData);
+            // Navigate to the profile page
+            // return navigate("/profile");
+        }).catch((err) => {
+            if (process.env.NODE_ENV === "development")
+                console.log("Login error: ", err.status, err.response?.data?.error || err.response?.data || err);
+
+            toast.error("Login failed, please try again");
+
+            // Re-enable the submit button
+            setFormState((prev) => ({ ...prev, disabled: false }));
             return false;
-        } else {
-            toast.success("Login successful");
-            return true;
-        }
-    };
+        });
+    }
 
     return (
         <>
-            <h1 className="pageHeading"><span style={{ color: "var(--color-gold)" }}>Fireside</span> Gaming</h1>
+            <h1 className="centerText"><span style={{ color: "var(--color-gold)" }}>Fireside</span> Gaming</h1>
             <img className="Logo imageShadow" src="/img/logo.png" alt="Fireside Gaming Logo" />
             <h2 className="pageHeading">Login</h2>
             <form id="loginForm" aria-labelledby="Login Form" action="#" method="post" onSubmit={handleSubmit}>
@@ -124,21 +149,13 @@ export default function Login(props) {
                 <p>Forgot your password? Click <Link className="Link" to="/forgot-password">here</Link> to reset your password.</p>
                 <p>Don't have an account? <Link className="Link" to="/register">Register Now</Link></p>
                 <div className="formRow centerContent">
-                    <input type="submit" className="roundedBlue" value="Login" />
+                    <input type="submit" className="roundedBlueBtn" value="Login" disabled={formState.disabled} />
                 </div>
                 <div className="flexDirectionRow justifyContentSpaceBetween">
                     <button disabled>Login with Discord</button>
                     <button disabled>Login with Steam</button>
                 </div>
             </form>
-
-            {/* TODO: This is for debugging only */}
-            <div style={{ maxWidth: "300px", wordWrap: 'break-word' }}>
-                <h3>Form State: </h3>
-                <code>
-                    {JSON.stringify(formState)}
-                </code>
-            </div>
         </>
     )
 };
