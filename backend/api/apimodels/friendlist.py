@@ -1,7 +1,5 @@
 from django.db import models
-
-from backend.api.apimodels.player import Player
-
+from .player import Player
 
 # Create your models here.
 class FriendList(models.Model):
