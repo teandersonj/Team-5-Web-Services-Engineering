@@ -1,7 +1,7 @@
 from django.db import models
 
-from game import Game
-from player import Player
+from .game import Game
+from .player import Player
 
 
 
@@ -13,5 +13,4 @@ class GamePlayer(models.Model):
     PlayStyle = models.CharField(max_length=100)
     SkillLevel = models.IntegerField()
     class Meta:
-        unique_together = (('gameid', 'playerid'),)
-
+        unique_together = (('GameId', 'PlayerId'),)

@@ -28,7 +28,10 @@ const friendsControlsStyle = {
 };
 
 const statusDisplayStyle = {
-    maxHeight: '2rem', padding: '0.5rem 1.2rem', fontSize: '1rem', maxWidth: 'fit-content'
+    maxHeight: '2rem',
+    padding: '0.5rem 1.2rem',
+    fontSize: '1rem',
+    maxWidth: 'fit-content'
 };
 
 const overrideAvatarContainerStyle = {
