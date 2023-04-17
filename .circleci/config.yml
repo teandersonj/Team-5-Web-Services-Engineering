@@ -23,6 +23,7 @@ jobs:
       - heroku/deploy-via-git:
           app-name: $HEROKU_APP_NAME
           api-key: HEROKU_API_KEY
+          force: true
   deploy-frontend:
     docker:
       - image: cimg/base:stable-20.04
@@ -44,6 +45,7 @@ jobs:
       - heroku/deploy-via-git:
           app-name: $HEROKU_FRONTEND_APP_NAME
           api-key: HEROKU_API_KEY
+          force: true
   build-frontend:
     docker:
       - image: cimg/node:18.12.1
