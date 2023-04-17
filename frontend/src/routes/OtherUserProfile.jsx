@@ -8,7 +8,7 @@ import PlayerCard from "../components/PlayerCard";
 import LabeledInput from "../components/LabeledInput";
 import Avatar from "../components/Avatar";
 
-export default function UserProfile(props) {
+export default function OtherUserProfile(props) {
     const navigate = useNavigate();
     const { id } = useParams();
     const { user: loggedInUser, addFriend } = useContext(UserContext);
