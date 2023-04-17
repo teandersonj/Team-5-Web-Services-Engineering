@@ -42,13 +42,13 @@ export default function GameCard(props) {
                             <p>Recommended Players</p>
                             <div className="flexDirectionRow justifyContentSpaceEvenly">
                                 {game.recommendedPlayers?.map((player) => (
-                                    <PlayerCard key={player.id} player={player} size={"small"} />
+                                    <PlayerCard key={"recommended"+player.id} player={player} size={"small"} />
                                 )) || "No recommended players"}
                             </div>
                             <p>Active Players</p>
                             <div className="flexDirectionRow justifyContentSpaceEvenly">
                                 {game.activePlayers?.map((player) => (
-                                    <PlayerCard key={player.id} player={player} size={"small"} />
+                                    <PlayerCard key={"recent"+player.id} player={player} size={"small"} />
                                 )) || "No active players"}
                             </div>
                         </div>

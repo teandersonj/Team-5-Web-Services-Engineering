@@ -12,7 +12,6 @@ export default function GameSearch(props) {
     });
 
     const getSearchResults = (e) => {
-        alert("Searching for games with name " + searchState.query);
         e.preventDefault();
         // TODO: Make this actually search the database
         fetch("/dummyData.json", {

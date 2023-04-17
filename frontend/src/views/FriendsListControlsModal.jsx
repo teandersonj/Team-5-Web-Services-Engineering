@@ -13,7 +13,7 @@ const overrideAvatarContainerStyle = {
 };
 
 export default function FriendsListControlsModal(props) {
-    const { user, updateUser } = useContext(UserContext);
+    const { user, updateUser, addFriend, removeFriend } = useContext(UserContext);
     const { targetFriend, isOpen, closeModal } = props;
 
     const headerTitle = {
@@ -25,61 +25,62 @@ export default function FriendsListControlsModal(props) {
         closeModal(false);
     }
 
-    const handleAddFriend = async (e) => {
-        e.preventDefault();
-        await axios.post('/api/friends/add', { friendId: targetFriend._id })
-            .then((res) => {
-                if (res.status === 200) {
-                    // Update the user's friends list
-                    updateUser(res.data.user);
-                }
-            });
-    };
+    // const handleAddFriend = async (e) => {
+    //     e.preventDefault();
+    //     addFriend(e, targetFriend.pk);
+    // };
 
     const handleRemoveFriend = async (e) => {
         e.preventDefault();
-        await axios.post('/api/friends/remove', { friendId: targetFriend._id })
-            .then((res) => {
-                if (res.status === 200) {
-                    // Update the user's friends list
-                    updateUser(res.data.user);
-                }
-            });
+        if (removeFriend(e, targetFriend.pk)) {
+            closeModal(false);
+        }
+    };
+
+    const addToParty = async (e) => {
+        e.preventDefault();
+        updateUser({
+            currentParty: {
+                ...user.currentParty,
+                members: [...user.currentParty.members, targetFriend],
+            }
+        });
+    };
+
+    const removeFromParty = async (e) => {
+        e.preventDefault();
+        updateUser({
+            currentParty: {
+                ...user.currentParty,
+                members: user.currentParty.members.filter((member) => member?.pk !== targetFriend.pk),
+            }
+        });
     };
 
     const handleBlockFriend = async (e) => {
         e.preventDefault();
-        await axios.post('/api/friends/block', { friendId: targetFriend._id })
-            .then((res) => {
-                if (res.status === 200) {
-                    // Update the user's friends list
-                    updateUser(res.data.user);
-                }
-            });
     };
 
-
     return (
-        <Modal isOpen={isOpen} onRequestClose={() => closeModal(false)} rootElement={document.getElementById('root')} className="modal" overlayClassName="modalOverlay"
-            shouldCloseOnEsc={true} shouldCloseOnOverlayClick={true} shouldFocusAfterRender={true} shouldReturnFocusAfterClose={true} ariaHideApp={false}>
+        <Modal isOpen={isOpen} onRequestClose={() => closeModal(false)} appElement={document.getElementById("#root")} className="modal" overlayClassName="overlay"
+            shouldCloseOnEsc={true} shouldCloseOnOverlayClick={true} ariaHideApp={false}>
             <div className="modalContainer">
-                <div className="modalHeader" style={{...headerTitle}}>
+                <div style={{...headerTitle}} className='flexDirectionRow'>
                     <h2>Friend Controls</h2>
-                    <button className="closeButton" onClick={() => closeModal(false)}>X</button>
+                    <button className="roundedBlueBtn" onClick={() => closeModal(false)}>X</button>
                 </div>
-                <div className="modalBody">
-                    <h3 className='centerContent'><Avatar avatar={targetFriend.avatar} size="large" containerStyle={overrideAvatarContainerStyle} playerStatus={targetFriend.currentStatus}/></h3>
+                <div className="modalContent">
+                    <p className='centerContent'><Avatar avatar={targetFriend.avatar} size="large" containerStyle={overrideAvatarContainerStyle} playerStatus={targetFriend.currentStatus}/></p>
                     <h3 className='centerContent'>{targetFriend.username}</h3>
-                    <div className="modalBodyContent">
-                        <div>
-                            <button className="longRoundedRedBtn">Remove Friend</button>
-                        </div>
-                        <div>
-                            <button className="longRoundedRedBtn">Block Friend</button>
-                        </div>
-                        <div>
-                            <button className="longRoundedRedBtn">Report</button>
-                        </div>
+                    <div className="flexDirectionColumn">
+                        <button className="longRoundedBlueBtn">View Profile</button>
+                        {/* If the friend is in our party, show a button to remove them, otherwise show a button to add them */}
+                        {user.currentParty.members.find?.((member) => member.pk === targetFriend.pk) ? (
+                            <button className="longRoundedRedBtn" onClick={(e) => removeFromParty(e)}>Remove From Party</button>
+                        ) : (
+                            <button className="longRoundedBlueBtn" onClick={(e) => addToParty(e)}>Add To Party</button>
+                        )}
+                        <button className="longRoundedRedBtn" onClick={handleRemoveFriend}>Remove Friend</button>
                     </div>
                 </div>
             </div>
