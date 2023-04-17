@@ -14,6 +14,7 @@ import ErrorPage from "./routes/ErrorPage";
 
 import PrivateRoute from "./routes/PrivateRoute";
 import UserProfile from "./routes/UserProfile";
+import OtherUserProfile from "./routes/OtherUserProfile";
 import GameSearch from "./routes/GameSearch";
 import PlayerSearch from "./routes/PlayerSearch";
 import UserSettings from "./routes/UserSettings";
@@ -67,6 +68,7 @@ function App() {
           {/* This represents the private routes that can't be accessed without logging in */}
           <Route element={<PrivateRoute user={user} />}>
             <Route path="/profile" element={<UserProfile />} />
+            <Route path="/profile/:id" element={<OtherUserProfile />} />
             {/* <Route path="/profile/:id" element={<UserProfile />} /> */}
             {/* <Route path="/friends" element={<FriendsList />} /> */}
             <Route path="/find-games" element={<GameSearch />} />

@@ -9,7 +9,7 @@ def run(cmd):
     if platform.system() == "Windows":
         activate_cmd = "venv\\Scripts\\python.exe " + cmd
     else:
-        activate_cmd = "venv/bin/python " + cmd
+        activate_cmd = "venv/bin/python3 " + cmd
 
     # Activate the virtual environment and run the command
     subprocess.call(activate_cmd, shell=True)

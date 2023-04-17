@@ -88,20 +88,89 @@
                 5,
                 6
             ]
+        },
+        {
+            "GameId": 7,
+            "name": "League of Legends",
+            "description": "Game 1 description",
+            "image": "/img/games/LeagueOfLegends_Cover.jpg",
+            "genre": "MOBA",
+            "totalPlayerCount": 15,
+            "activePlayerCount": 5,
+            "activePlayers": [
+                1,
+                2,
+                3
+            ],
+            "recommendedPlayers": [
+                4,
+                5,
+                6
+            ]
+        },
+        {
+            "GameId": 8,
+            "name": "Monster Hunter World",
+            "description": "Game 2 description",
+            "image": "/img/games/MonsterHunterWorld_Cover.jpg",
+            "genre": "Action-RPG",
+            "totalPlayerCount": 256,
+            "activePlayerCount": 1,
+            "recommendedPlayers": [
+                4,
+                5,
+                6
+            ]
+        },
+        {
+            "GameId": 9,
+            "name": "Valorant",
+            "description": "Game 1 description",
+            "image": "/img/games/Valorant_Cover.jpg",
+            "genre": "Tactical Shooter",
+            "totalPlayerCount": 15,
+            "activePlayerCount": 5,
+            "activePlayers": [
+                1,
+                2,
+                3
+            ],
+            "recommendedPlayers": [
+                4,
+                5,
+                6
+            ]
+        },
+        {
+            "GameId": 10,
+            "name": "Rocket League",
+            "description": "Game 2 description",
+            "image": "/img/games/RocketLeague_Cover.jpg",
+            "genre": "Sports, Racing",
+            "totalPlayerCount": 256,
+            "activePlayerCount": 223,
+            "recommendedPlayers": [
+                4,
+                5,
+                6
+            ]
         }
     ],
     "users": [
         {
-            "id": 1,
-            "username": "PixelatedNinja",
-            "first_name": "Test",
-            "last_name": "User",
-            "avatar": "avatar3",
-            "blocked": true,
-            "currentStatus": "In-Game",
-            "playstyle": "Casual",
-            "lastSeen": "2016-03-01T12:00:00Z",
-            "bio": "User 1 bio",
+            "pk": 2,
+            "user": {
+                "id": 2,
+                "username": "TestUser",
+                "first_name": "Test",
+                "last_name": "User",
+                "email": "test@user.com"
+            },
+            "AvatarName": "avatar3",
+            "Playstyle": "Semi-Casual",
+            "CompositeSkillLevel": 0.0,
+            "Attitude": "Unset",
+            "Bio": "This is my bio",
             "totalGames": 2,
             "totalFriends": 2,
             "favoriteGames": [
@@ -136,10 +205,12 @@
             ]
         },
         {
-            "id": 2,
-            "username": "MagicMage101",
-            "first_name": "Test",
-            "last_name": "User",
+            "pk": 2,
+            "user": {
+                "username": "MagicMage101",
+                "first_name": "Test",
+                "last_name": "User"
+            },
             "avatar": "avatar2",
             "blocked": true,
             "currentStatus": "Offline",
@@ -180,10 +251,12 @@
             ]
         },
         {
-            "id": 3,
-            "username": "GoldenWarriorX",
-            "first_name": "Test",
-            "last_name": "User",
+            "pk": 3,
+            "user": {
+                "username": "GoldenWarriorX",
+                "first_name": "Test",
+                "last_name": "User"
+            },
             "avatar": "avatar1",
             "blocked": false,
             "currentStatus": "In-Game",
@@ -208,7 +281,7 @@
                     "genre": "Action-Adventure"
                 }
             ],
-            "recentGames": [
+            "recentlyPlayedGames": [
                 {
                     "GameId": 1,
                     "name": "Ark: Survival Evolved",
@@ -226,10 +299,12 @@
             ]
         },
         {
-            "id": 4,
-            "username": "LunarEclipse88",
-            "first_name": "Test",
-            "last_name": "User",
+            "pk": 4,
+            "user": {
+                "username": "LunarEclipse88",
+                "first_name": "Test",
+                "last_name": "User"
+            },
             "avatar": "avatar1",
             "blocked": false,
             "currentStatus": "Offline",
@@ -238,7 +313,7 @@
             "bio": "User 4 bio",
             "totalGames": 2,
             "totalFriends": 2,
-            "recentGames": [
+            "recentlyPlayedGames": [
                 {
                     "GameId": 5,
                     "name": "The Witcher 3: Wild Hunt",
@@ -249,10 +324,12 @@
             ]
         },
         {
-            "id": 5,
-            "username": "CaptainCrash",
-            "first_name": "Test",
-            "last_name": "User",
+            "pk": 5,
+            "user": {
+                "username": "CaptainCrash",
+                "first_name": "Test",
+                "last_name": "User"
+            },
             "avatar": "avatar3",
             "blocked": false,
             "currentStatus": "Online",
@@ -263,10 +340,12 @@
             "totalFriends": 2
         },
         {
-            "id": 6,
-            "username": "TheGamerGuy",
-            "first_name": "Test",
-            "last_name": "User",
+            "pk": 6,
+            "user": {
+                "username": "TheGamerGuy",
+                "first_name": "Test",
+                "last_name": "User"
+            },
             "avatar": "avatar2",
             "blocked": false,
             "currentStatus": "Offline",
@@ -275,6 +354,166 @@
             "bio": "User 5 bio",
             "totalGames": 2,
             "totalFriends": 2
+        },
+        {
+            "pk": 101,
+            "user": {
+                "username": "xXx_Gamer_Girl_xXx",
+                "first_name": "Test",
+                "last_name": "User"
+            },
+            "avatar": "avatar1",
+            "blocked": false,
+            "currentStatus": "Online",
+            "playstyle": "Casual",
+            "lastSeen": "2022-04-16T12:00:00Z",
+            "bio": "I'm a casual gamer who loves playing FPS games and RPGs!",
+            "totalGames": 30,
+            "totalFriends": 100
+        },
+        {
+            "pk": 102,
+            "user": {
+                "username": "GamerDude_420",
+                "first_name": "Test",
+                "last_name": "User"
+            },
+            "avatar": "avatar2",
+            "blocked": false,
+            "currentStatus": "Online",
+            "playstyle": "Competitive",
+            "lastSeen": "2022-04-15T12:00:00Z",
+            "bio": "I'm a competitive gamer who dominates in FPS games!",
+            "totalGames": 50,
+            "totalFriends": 200
+        },
+        {
+            "pk": 103,
+            "user": {
+                "username": "gamer_mom",
+                "first_name": "Test",
+                "last_name": "User"
+            },
+            "avatar": "avatar3",
+            "blocked": false,
+            "currentStatus": "Offline",
+            "playstyle": "Casual",
+            "lastSeen": "2022-04-14T12:00:00Z",
+            "bio": "I'm a mom who loves playing video games with my kids!",
+            "totalGames": 10,
+            "totalFriends": 50
+        },
+        {
+            "pk": 104,
+            "user": {
+                "username": "TheGamer",
+                "first_name": "Test",
+                "last_name": "User"
+            },
+            "avatar": "avatar4",
+            "blocked": false,
+            "currentStatus": "Online",
+            "playstyle": "Casual",
+            "lastSeen": "2022-04-16T12:00:00Z",
+            "bio": "I'm a gamer who plays all kinds of games!",
+            "totalGames": 100,
+            "totalFriends": 500
+        },
+        {
+            "pk": 105,
+            "user": {
+                "username": "gamer4life",
+                "first_name": "Test",
+                "last_name": "User"
+            },
+            "avatar": "avatar5",
+            "blocked": true,
+            "currentStatus": "Offline",
+            "playstyle": "Casual",
+            "lastSeen": "2022-04-16T12:00:00Z",
+            "bio": "I'm a gamer who loves playing all kinds of games, but I only play with close friends.",
+            "totalGames": 200,
+            "totalFriends": 20
+        },
+        {
+            "pk": 201,
+            "user": {
+                "username": "NinjaGamer123",
+                "first_name": "Test",
+                "last_name": "User"
+            },
+            "avatar": "avatar6",
+            "blocked": false,
+            "currentStatus": "Online",
+            "playstyle": "Competitive",
+            "lastSeen": "2022-04-16T12:00:00Z",
+            "bio": "I'm a competitive gamer who streams on Twitch!",
+            "totalGames": 75,
+            "totalFriends": 1000
+        },
+        {
+            "pk": 202,
+            "user": {
+                "username": "gamer_girl_97",
+                "first_name": "Test",
+                "last_name": "User"
+            },
+            "avatar": "avatar7",
+            "blocked": false,
+            "currentStatus": "Offline",
+            "playstyle": "Casual",
+            "lastSeen": "2022-04-14T12:00:00Z",
+            "bio": "I'm a casual gamer who loves playing story-driven games!",
+            "totalGames": 20,
+            "totalFriends": 200
+        },
+        {
+            "pk": 203,
+            "user": {
+                "username": "gamer_guy_69",
+                "first_name": "Test",
+                "last_name": "User"
+            },
+            "avatar": "avatar8",
+            "blocked": true,
+            "currentStatus": "Offline",
+            "playstyle": "Casual",
+            "lastSeen": "2022-04-16T12:00:00Z",
+            "bio": "I'm a casual gamer who only plays with close friends!",
+            "totalGames": 50,
+            "totalFriends": 10
+        },
+        {
+            "pk": 204,
+            "user": {
+                "username": "ProGamer123",
+                "first_name": "Test",
+                "last_name": "User"
+            },
+            "avatar": "avatar9",
+            "blocked": false,
+            "currentStatus": "Online",
+            "playstyle": "Competitive",
+            "lastSeen": "2022-04-15T12:00:00Z",
+            "bio": "I'm a professional gamer who competes in tournaments!",
+            "totalGames": 200,
+            "totalFriends": 500
+        },
+        {
+            "pk": 205,
+            "user": {
+                "username": "gamer_dad",
+                "first_name": "Test",
+                "last_name": "User"
+            },
+            "avatar": "avatar10",
+            "blocked": false,
+            "currentStatus": "Offline",
+            "playstyle": "Casual",
+            "lastSeen": "2022-04-16T12:00:00Z",
+            "bio": "I'm a dad who loves playing video games with my kids!",
+            "totalGames": 15,
+            "totalFriends": 100
         }
     ]
 }

@@ -86,7 +86,7 @@ export default function Login(props) {
 
         // Send the login info to the server to validate and login, retrieving the rest of the user's details
         // If successful, update the user state and navigate to the profile page
-        await axios.post("/api/login/", formState).then((res) => {
+        await axios.post("/api/login/", formState).then(async (res) => {
             if (process.env.NODE_ENV === "development")
                 console.log("Login response: ", res);
 
