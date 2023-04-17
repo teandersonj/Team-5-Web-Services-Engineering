@@ -7,6 +7,7 @@ import toast from 'react-hot-toast';
 export const UserContext = createContext({});
 
 // This is the provider that will wrap the entire app, giving User Context access to necessary components
+// TODO: Send token with protected routes
 const UserProvider = ({ children }) => {
     const navigate = useNavigate();
 
@@ -73,7 +74,7 @@ const UserProvider = ({ children }) => {
             const res = await axios.get(`/api/player/${friendId}`);
 
             if (res.status === 200) {
-                return {
+                return ({
                     "pk": res.data.pk,
                     "avatar": res.data.AvatarName,
                     "attitude": res.data.Attitude,
@@ -88,7 +89,7 @@ const UserProvider = ({ children }) => {
                     },
                     // Choose a random status within "Online", "In-Game", "Offline"
                     currentStatus: ["Online", "In-Game", "Offline"][Math.floor(Math.random() * 3)],
-                }
+                });
             } else {
                 return false;
             }
@@ -150,7 +151,7 @@ const UserProvider = ({ children }) => {
                 updateUser({
                     friendsList: [
                         ...user.friendsList,
-                        ...friendInfo
+                        friendInfo
                     ]
                 });
                 toast.success("Friend added!");

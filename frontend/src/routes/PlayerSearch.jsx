@@ -57,7 +57,7 @@ const statuses = ["Online", "In-Game", "Offline"];
  * @returns {JSX.Element} <PlayerSearch />
  */
 export default function PlayerSearch(props) {
-    const { user, updateUser, addFriend: handleAddFriend, removeFriend: handleRemoveFriend } = useContext(UserContext);
+    const { user, updateUser, addFriend, removeFriend } = useContext(UserContext);
     const [searchState, setSearchState] = useState({
         query: "",
         filterRules: {},
@@ -134,10 +134,10 @@ export default function PlayerSearch(props) {
                                     <PlayerStatusDisplay status={player.currentStatus} />
                                     <PlayerPlaystyleDisplay playstyle={player.Playstyle} />
                                     {/* Depdnding whether this user is a friend we show Remove Friend or Add Friend */}
-                                    {user.friendsList?.includes?.((friend) => friend.pk === player.pk) ? (
-                                        <button className="longRoundedRedBtn" onClick={(e) => handleRemoveFriend(e, player.pk)}>Remove Friend</button>
+                                    {user.friendsList?.find?.((friend) => friend.pk === player.pk) ? (
+                                        <button className="longRoundedRedBtn" onClick={(e) => removeFriend(e, player.pk)}>Remove Friend</button>
                                     ) : (
-                                        <button className="longRoundedBlueBtn" onClick={(e) => handleAddFriend(e, player.pk)}>Add Friend</button>
+                                        <button className="longRoundedBlueBtn" onClick={(e) => addFriend(e, player.pk)}>Add Friend</button>
                                     )}
                                     <button className='longRoundedRedBtn' onClick={(e) => handleBlockFriend(e, player.pk)}>Block User</button>
                                 </div>
