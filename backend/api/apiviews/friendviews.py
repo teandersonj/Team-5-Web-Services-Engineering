@@ -59,5 +59,4 @@ class FriendsAPI(generics.ListCreateAPIView, generics.UpdateAPIView, generics.Re
             friend.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
         else:
-            print('Friend object not found')
             return Response({'error': 'Friend object not found'}, status=status.HTTP_404_NOT_FOUND)

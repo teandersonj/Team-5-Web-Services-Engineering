@@ -49,15 +49,13 @@ const gamesColumn = {
     position: "relative",
 };
 
-const statuses = ["Online", "In-Game", "Offline"];
-
 /**
  * Represents the user/player search page, allowing a user to search for players based on username or other criteria.
  * @param {*} props 
  * @returns {JSX.Element} <PlayerSearch />
  */
 export default function PlayerSearch(props) {
-    const { user, updateUser, addFriend: handleAddFriend, removeFriend: handleRemoveFriend } = useContext(UserContext);
+    const { user, updateUser, addFriend, removeFriend } = useContext(UserContext);
     const [searchState, setSearchState] = useState({
         query: "",
         filterRules: {},
@@ -83,17 +81,22 @@ export default function PlayerSearch(props) {
                 // Add a random status to each player until we have it accounted for on backend
                 // Also add some favorite and recentlyPlayedGames provided by dummy data via getNRandomGames
                 // TODO: Remove this once we have the backend implemented
-                const randFavGames = await getNRandomGames(2);
-                const randRecentGames = await getNRandomGames(2);
-                searchResults = searchResults.map((player) => {
-                    return {
+                let promises = [];
+                for (let i = 0; i < searchResults.length; i++) {
+                    const player = searchResults[i];
+                    // Apply random favorite and recent games to each player from dummy data
+                    const randFavGames = getNRandomGames(2);
+                    const randRecentGames = getNRandomGames(2);
+                    const updatedPlayer = {
                         ...player,
-                        currentStatus: statuses[Math.floor(Math.random() * statuses.length)],
-                        favoriteGames: randFavGames,
-                        recentlyPlayedGames: randRecentGames
+                        currentStatus: ["Online", "In-Game", "Offline"][Math.floor(Math.random() * 3)],
+                        favoriteGames: await randFavGames,
+                        recentlyPlayedGames: await randRecentGames
                     };
-                });
-                // TODO: Apply random favorite and recent games to each player
+                    searchResults[i] = updatedPlayer;
+                    promises.push(randFavGames, randRecentGames);
+                }
+                await Promise.all(promises);
                 setSearchState((prev) => ({ ...prev, results: searchResults }));
             }
         }).catch((err) => {
@@ -126,18 +129,18 @@ export default function PlayerSearch(props) {
                 <div>{searchState.results?.length || 0} users found.</div>
                 {searchState.results && (
                     <>
-                        {searchState.results?.length > 0 && searchState.results.map((player) => (
-                            <div key={player.user.username} className="flexDirectionRow" style={{ ...rowStyle }}>
+                        {searchState.results?.length > 0 && searchState.results.map((player, idx) => (
+                            <div key={player?.user?.username || player.pk || idx} className="flexDirectionRow" style={{ ...rowStyle }}>
                                 <Avatar avatar={player.AvatarName} playerStatus={player.currentStatus} size="large" />
                                 <div className="flexDirectionColumn" style={{...playerColumn}}>
-                                    <div style={{...playerDisplayName}}>{player.user.username}</div>
+                                    <div style={{...playerDisplayName}}>{player?.user?.username}</div>
                                     <PlayerStatusDisplay status={player.currentStatus} />
                                     <PlayerPlaystyleDisplay playstyle={player.Playstyle} />
-                                    {/* Depdnding whether this user is a friend we show Remove Friend or Add Friend */}
-                                    {user.friendsList?.includes?.((friend) => friend.pk === player.pk) ? (
-                                        <button className="longRoundedRedBtn" onClick={(e) => handleRemoveFriend(e, player.pk)}>Remove Friend</button>
+                                    {/* Depending on whether this user is a friend we show Remove Friend or Add Friend */}
+                                    {user.friendsList?.find?.((friend) => friend.pk === player.pk) ? (
+                                        <button className="longRoundedRedBtn" onClick={(e) => removeFriend(e, player.pk)}>Remove Friend</button>
                                     ) : (
-                                        <button className="longRoundedBlueBtn" onClick={(e) => handleAddFriend(e, player.pk)}>Add Friend</button>
+                                        <button className="longRoundedBlueBtn" onClick={(e) => addFriend(e, player.pk)}>Add Friend</button>
                                     )}
                                     <button className='longRoundedRedBtn' onClick={(e) => handleBlockFriend(e, player.pk)}>Block User</button>
                                 </div>
@@ -146,7 +149,7 @@ export default function PlayerSearch(props) {
                                         <div className="pageHeading centerText" style={{ fontSize: "1.25em" }}>Favorite Games</div>
                                         <div className="flexDirectionRow">
                                             {player.favoriteGames?.map?.((game) => (
-                                                <div className="flexDirectionColumn">
+                                                <div key={"favoriteGame" + game.GameId} className="flexDirectionColumn">
                                                     <img src={game.image} style={{...imgProps}} />
                                                 </div>
                                             )) || []}
@@ -156,7 +159,7 @@ export default function PlayerSearch(props) {
                                         <div className="pageHeading centerText" style={{ fontSize: "1.25em" }}>Recent Games</div>
                                         <div className="flexDirectionRow">
                                             {player.recentlyPlayedGames?.map?.((game) => (
-                                                <div className="flexDirectionColumn">
+                                                <div key={"recentlyPlayed" + game.GameId} className="flexDirectionColumn">
                                                     <img src={game.image} style={{...imgProps}} />
                                                 </div>
                                             )) || []}

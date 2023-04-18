@@ -34,10 +34,10 @@ export default function GameSearch(props) {
                     // Right now, it just filters based on the player's username
                     // If the query is empty, return all results
                     if (searchState.query !== "" && data.games) {
-                        const res = data.games.filter((game) => {
+                        const res = data?.games?.filter((game) => {
                             return game.name.toLowerCase().includes(searchState.query.toLowerCase());
                         });
-                        setSearchState((prev) => ({ ...prev, results: res }));
+                        setSearchState((prev) => ({ ...prev, results: res || [] }));
                     }
                 });
             } else {
@@ -50,29 +50,29 @@ export default function GameSearch(props) {
     return (
         <>
             <h1 className="pageHeading centerText">Find Games</h1>
-            <p>Use this page to discover new games, and see who's playing them.</p>
+            <p>On this page, you can search for games supported by Fireside Gaming. Here, you can learn about the statistics of various games as well as the players who enjoys each one. To find your next gaming adventure, type in the search bar provided below.</p>
             <hr className="width-100" />
-            <div className="flexDirectionRow">
+            <div className="flexDirectionRow width-100">
                 {/* Search Bar */}
                 <LabeledInput type="text" id="search" label="" placeholder="Search for a game..." defaultValue={searchState.search} containerStyle={{ flexGrow: 1 }} orientation="horizontal" onChange={(e) => setSearchState((prev) => ({ ...prev, query: e.target.value }))} />
-                {/* Search Button */}
-                <button onClick={(e) => getSearchResults(e)}>Search</button>
+                {/* Search Buttons */}
+                <div>
+                    <button className="roundedBlueBtn" onClick={(e) => getSearchResults(e)}>Search</button>
+                    <button className="roundedBlueBtn">Filter<img className="btnIcon" alt="Filter" src="/img/icons/filterIcon.png" /></button>
+                </div>
             </div>
             <div className="flexDirectionColumn" style={{ alignSelf: "stretch" }}>
-                {/* Main Games Container */}
-                <div className="flexDirectionRow justifyContentSpaceBetween" style={{ width: "75%", margin: "0 auto" }}>
-                    {/* TODO: Fix this so the container doesn't render if not needed */}
-                    {searchState.results?.length > 0 && (
+                {searchState.results?.length > 0 && (
+                    <div className="flexDirectionRow justifyContentSpaceBetween">
                         <>
-                            <div>Search Results:</div>
-                            <div>{searchState.results?.length || 0} games found.</div>
+                            <div><strong>Results</strong></div>
+                            <div>{searchState.results?.length > 0 ? (`Displaying ${searchState.results.length} games`) : `0 results found.`}</div>
                         </>
-                    )}
-                </div>
-                <div className="flexDirectionColumn flexWrap">
+                    </div>
+                )}
+                <div className="flexDirectionColumn flexWrap flexGrow-1">
                     {searchState.results?.map((game) => (
-                        // TODO: Extract styling for GameCard and allow it to vary for GameSearch and when it's used in profiles
-                        <GameCard key={game.GameId} game={game} withPlayers={true} />
+                        <GameCard key={game.GameId} className="flexGrow-1" game={game} withPlayers={true} />
                     )) || <div>No games found.</div>}
                 </div>
             </div>

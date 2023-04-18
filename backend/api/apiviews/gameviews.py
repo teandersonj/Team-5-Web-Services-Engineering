@@ -12,8 +12,8 @@ class GameAPI(generics.CreateAPIView, generics.UpdateAPIView, generics.RetrieveD
     serializer_class = GameSerializer
     permission_classes = (AllowAny, )
     filter_backends = [filters.SearchFilter,DjangoFilterBackend]
-    filterset_fields = ['Name', 'Image', 'Genre', 'Platform', 'Gamemode']
-    search_fields = ['Name', 'Image', 'Genre', 'Platform', 'PlayerCount', 'Map', 'Gamemode']
+    filterset_fields = ['Name', 'Image', 'Genre', 'Description', 'Platform']
+    search_fields = ['Name', 'Image', 'Genre', 'Description', 'Platform', 'PlayerCount']
 
 
 class GamesAPI(generics.ListCreateAPIView):
@@ -21,5 +21,8 @@ class GamesAPI(generics.ListCreateAPIView):
     serializer_class = GameSerializer
     permission_classes = (AllowAny, )
     filter_backends = [filters.SearchFilter,DjangoFilterBackend]
-    filterset_fields = ['Name', 'Image', 'Genre', 'Platform', 'Gamemode']
-    search_fields = ['Name', 'Image', 'Genre', 'Platform', 'PlayerCount', 'Map', 'Gamemode']
+    filterset_fields = ['Name', 'Image', 'Genre', 'Description', 'Platform']
+    search_fields = ['Name', 'Image', 'Genre',
+                     'Description', 'Platform', 'PlayerCount']
+    # filterset_fields = ['Name', 'Image', 'Genre', 'Platform']
+    # search_fields = ['Name', 'Image', 'Genre', 'Platform', 'PlayerCount']

@@ -10,60 +10,62 @@
  * @returns {JSX.Element} - The Avatar component
  */
 export default function Avatar(props) {
-    const { avatar, playerStatus, alt, size="small", containerClassName, imageClassName, containerStyle, imageStyle } = props;
+  const { avatar, playerStatus, alt, size = "small", containerClassName, imageClassName, containerStyle, imageStyle } = props;
 
-    const containerStyles = {
-        small: {
-            width: "50px",
-            height: "50px",
-        },
-        medium: {
-            width: "150px",
-            height: "150px",
-        },
-        large: {
-            width: "200px",
-            height: "200px",
-        },
-        fill: {
-            width: "auto", // TODO: Might need to change this to 100%
-            height: "auto"
-        }
-    };
+  const containerStyles = {
+    small: {
+      width: "50px",
+      height: "50px",
+    },
+    medium: {
+      width: "150px",
+      height: "150px",
+    },
+    large: {
+      width: "200px",
+      height: "200px",
+    },
+    fill: {
+      width: "auto", // TODO: Might need to change this to 100%
+      height: "auto"
+    }
+  };
 
-    const imageStyles = {
-        borderRadius: "50%",
-        width: "100%",
-        height: "100%",
-        objectFit: "cover",
-    };
+  const imageStyles = {
+    borderRadius: "50%",
+    // minHeight: "125px",
+    // minWidth: "125px",
+    width: "100%",
+    maxHeight: "100%",
+    objectFit: "cover",
+  };
 
-    const profileGreenRing = {
-        border: "1px solid var(--color-green)",
-        boxShadow: "0 0 16px var(--color-green)",
-      }
-      
-    const profileBlueRing = {
-        border: "1px solid var(--color-light-blue)",
-        boxShadow: "0 0 16px var(--color-light-blue)",
-      }
+  const profileGreenRing = {
+    border: "1px solid var(--color-green)",
+    boxShadow: "0 0 16px var(--color-green)",
+  }
 
-    const getStatusClassName = (status) => {
-        switch (status) {
-          case 'Online':
-            return {...profileBlueRing};
-          case 'In-Game':
-            return {...profileGreenRing};
-          case 'Offline':
-            return '';
-          default:
-            return '';
-        }
-      };
-    
-    return (
-        <div className={containerClassName} style={{ ...containerStyles[size], ...containerStyle }}>
-            <img className={imageClassName} src={"/img/avatars/" + avatar + ".jpg"} alt={alt || "User Avatar"} style={{ ...imageStyles, ...imageStyle, ...getStatusClassName(playerStatus)}} {...props.rest} />
-        </div>
-    );
+  const profileBlueRing = {
+    border: "1px solid var(--color-light-blue)",
+    boxShadow: "0 0 16px var(--color-light-blue)",
+  }
+
+  const getStatusClassName = (status) => {
+    switch (status) {
+      case 'Online':
+        return { ...profileBlueRing };
+      case 'In-Game':
+        return { ...profileGreenRing };
+      case 'Offline':
+        return '';
+      default:
+        return '';
+    }
+  };
+
+  return (
+    <div className={containerClassName} style={{ ...containerStyles[size], ...containerStyle }}>
+      <img className={imageClassName} src={"/img/avatars/" + avatar + ".jpg"} alt={alt || "User Avatar"} style={{ ...imageStyles, ...imageStyle, ...getStatusClassName(playerStatus) }} {...props.rest} />
+    </div>
+  );
 };
