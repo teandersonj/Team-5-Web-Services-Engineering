@@ -29,10 +29,10 @@ Team 5's Git Repository for Web Services Engineering
 - [ ] Create a Sprint Burndown Chart
 - [ ] Conduct Multiple, Documented Daily Scrums
 - [ ] Conduct a Documented Sprint Review
-- [ ] Provide Evidence of Mobbing on Code
+- [x] Provide Evidence of Mobbing on Code
 - [ ] CI Service is Running with all Tests Passing
 - [ ] CD Service is Running with all Tests Passing
-- [ ] Create at least 1 BDD Test Scenario that passes
+- [x] Create at least 1 BDD Test Scenario that passes
 - [ ] Create at least 10 unit tests that pass
 - [ ] Submit a Final Product that is a Complete Software Solution
 - [ ] Submit a Final Presentation for the Project
