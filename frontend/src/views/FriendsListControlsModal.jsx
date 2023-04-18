@@ -10,6 +10,7 @@ import Avatar from '../components/Avatar';
 const overrideAvatarContainerStyle = {
     width: '7rem',
     height: '7rem',
+    margin: '2em auto 0px auto',
 };
 
 export default function FriendsListControlsModal(props) {
@@ -24,11 +25,6 @@ export default function FriendsListControlsModal(props) {
     if (targetFriend === undefined || targetFriend === null) {
         closeModal(false);
     }
-
-    // const handleAddFriend = async (e) => {
-    //     e.preventDefault();
-    //     addFriend(e, targetFriend.pk);
-    // };
 
     const handleRemoveFriend = async (e) => {
         e.preventDefault();
@@ -70,7 +66,7 @@ export default function FriendsListControlsModal(props) {
                     <button className="roundedBlueBtn" onClick={() => closeModal(false)}>X</button>
                 </div>
                 <div className="modalContent">
-                    <p className='centerContent'><Avatar avatar={targetFriend.avatar} size="large" containerStyle={overrideAvatarContainerStyle} playerStatus={targetFriend.currentStatus}/></p>
+                    <Avatar avatar={targetFriend.avatar} size="large" containerStyle={overrideAvatarContainerStyle} playerStatus={targetFriend.currentStatus}/>
                     <h3 className='centerContent'>{targetFriend.username}</h3>
                     <div className="flexDirectionColumn">
                         <button className="longRoundedBlueBtn">View Profile</button>

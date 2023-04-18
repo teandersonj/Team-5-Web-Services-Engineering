@@ -169,8 +169,8 @@ const FriendsList = (props) => {
                         <button className="roundedBlueBtn" style={closeButtonStyle} onClick={e => props.closeFunction()}>X</button>
                     </div>
                     <div className="flexDirectionRow">
-                        <LabeledInput containerClassName="flexGrow-1" label="" placeholder="Type username here..." id="search" name="search" value={search} onChange={e => setSearch(e.target.value)} />
-                        <button className="roundedBlueBtn" onClick={e => handleSearch(e)}>Search</button>
+                        <LabeledInput containerClassName="flexGrow-1" label="" placeholder="Type username here..." id="search" name="search" value={search} onChange={e => setSearch(e.target.value)} data-testid="friendSearchBar" />
+                        <button className="roundedBlueBtn" data-testid='friendSearchBtn' onClick={e => handleSearch(e)}>Search</button>
                         {/* <button className="roundedBlueBtn" onClick={e => handleFilter(e)}>Filter</button> */}
                         <button className="roundedBlueBtn" onClick={e => handleClear(e)}>Clear</button>
                     </div>
@@ -186,10 +186,10 @@ const FriendsList = (props) => {
                     <div className="flexDirectionColumn">
                         {/* If the user has a filled party show the Party section and populate */}
                         <div style={friendsBodyHeadingStyle}>In Party</div>
-                        {user.currentParty.members?.length > 0 ? (
+                        {user.currentParty?.members?.length > 0 ? (
                             <>
                                 <div className="flexDirectionRow">
-                                    <GameAndPlayerCard friend={user.currentParty.members[0]} game={user.currentParty.game || games[Math.floor(Math.random() * games.length)]} />
+                                    <GameAndPlayerCard friend={user.currentParty?.members[0]} game={user.currentParty?.game || games[Math.floor(Math.random() * games.length)]} />
                                 </div>
                                 {/* If the user has more than one friend in their party show the rest of the party, but without the game image in front */}
                                 {user.currentParty?.members?.length > 1 && (
@@ -211,7 +211,7 @@ const FriendsList = (props) => {
                             <>
                                 {/* If any of the friends have the status In-Game */}
                                 {filteredFriends?.filter?.(friend => friend.currentStatus === 'In-Game').map((friend, index) => (
-                                    <div key={"inGame"+friend.user.username} className="flexDirectionRow">
+                                    <div key={"inGame"+friend?.user.username} className="flexDirectionRow">
                                         <GameAndPlayerCard friend={friend} game={games[Math.floor(Math.random() * games.length)]} />
                                     </div>
                                 ))}
@@ -226,7 +226,7 @@ const FriendsList = (props) => {
                         {filteredFriends?.filter?.(friend => friend.currentStatus === 'Online').length > 0 ? (
                             <>
                                 {filteredFriends?.filter?.(friend => friend.currentStatus === 'Online').map((friend, index) => (
-                                    <div key={"online"+friend.user.username} className="flexDirectionRow">
+                                    <div key={"online"+friend?.user.username} className="flexDirectionRow">
                                         <FriendEntry friend={friend} />
                                     </div>
                                 ))}
@@ -241,7 +241,7 @@ const FriendsList = (props) => {
                         {filteredFriends?.filter?.(friend => friend.currentStatus === 'Offline').length > 0 ? (
                             <>
                                 {filteredFriends?.filter?.(friend => friend.currentStatus === 'Offline').map((friend, index) => (
-                                    <div key={"offline"+friend.user.username} className="flexDirectionRow">
+                                    <div key={"offline"+friend?.user.username} className="flexDirectionRow">
                                         <FriendEntry friend={friend} />
                                     </div>
                                 ))}
@@ -265,7 +265,7 @@ const FriendEntry = (props) => {
             <div className="flexDirectionRow">
                 <Avatar avatar={friend.avatar} size="small" containerStyle={overrideAvatarContainerStyle} playerStatus={friend.currentStatus} />
                 <div className="flexDirectionColumn">
-                    <div><strong>{friend.user.username}</strong> <button onClick={(e) => handleFriendControls(e, friend)}>&#9998;</button></div>
+                    <div><strong>{friend.user?.username}</strong> <button onClick={(e) => handleFriendControls(e, friend)}>&#9998;</button></div>
                     <PlayerStatusDisplay status={friend.currentStatus} overrideStyle={statusDisplayStyle} />
                 </div>
             </div>

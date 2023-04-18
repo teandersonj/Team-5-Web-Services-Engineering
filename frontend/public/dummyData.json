@@ -158,54 +158,7 @@
     ],
     "users": [
         {
-            "pk": 2,
-            "user": {
-                "id": 2,
-                "username": "TestUser",
-                "first_name": "Test",
-                "last_name": "User",
-                "email": "test@user.com"
-            },
-            "AvatarName": "avatar3",
-            "Playstyle": "Semi-Casual",
-            "CompositeSkillLevel": 0.0,
-            "Attitude": "Unset",
-            "Bio": "This is my bio",
-            "totalGames": 2,
-            "totalFriends": 2,
-            "favoriteGames": [
-                {
-                    "GameId": 1,
-                    "name": "Ark: Survival Evolved",
-                    "description": "Game 1 description",
-                    "image": "/img/games/Ark_Cover.jpg",
-                    "genre": "Action-Adventure",
-                    "totalPlayerCount": 15,
-                    "activePlayerCount": 5,
-                    "activePlayers": [
-                        1,
-                        2,
-                        3
-                    ]
-                },
-                {
-                    "GameId": 2,
-                    "name": "Dark Souls 3",
-                    "description": "Game 2 description",
-                    "image": "/img/games/DarkSouls3_Cover.jpg",
-                    "genre": "Action-Adventure",
-                    "totalPlayerCount": 256,
-                    "activePlayerCount": 1,
-                    "recommendedPlayers": [
-                        4,
-                        5,
-                        6
-                    ]
-                }
-            ]
-        },
-        {
-            "pk": 2,
+            "pk": 345635,
             "user": {
                 "username": "MagicMage101",
                 "first_name": "Test",
@@ -251,7 +204,7 @@
             ]
         },
         {
-            "pk": 3,
+            "pk": 54675647,
             "user": {
                 "username": "GoldenWarriorX",
                 "first_name": "Test",
@@ -299,13 +252,13 @@
             ]
         },
         {
-            "pk": 4,
+            "pk": 3245,
             "user": {
                 "username": "LunarEclipse88",
                 "first_name": "Test",
                 "last_name": "User"
             },
-            "avatar": "avatar1",
+            "avatar": "avatar3",
             "blocked": false,
             "currentStatus": "Offline",
             "playstyle": "Casual",
@@ -324,13 +277,13 @@
             ]
         },
         {
-            "pk": 5,
+            "pk": 534534,
             "user": {
                 "username": "CaptainCrash",
                 "first_name": "Test",
                 "last_name": "User"
             },
-            "avatar": "avatar3",
+            "avatar": "avatar4",
             "blocked": false,
             "currentStatus": "Online",
             "playstyle": "Casual",
@@ -346,7 +299,7 @@
                 "first_name": "Test",
                 "last_name": "User"
             },
-            "avatar": "avatar2",
+            "avatar": "avatar3",
             "blocked": false,
             "currentStatus": "Offline",
             "playstyle": "Casual",
@@ -362,7 +315,7 @@
                 "first_name": "Test",
                 "last_name": "User"
             },
-            "avatar": "avatar1",
+            "avatar": "avatar2",
             "blocked": false,
             "currentStatus": "Online",
             "playstyle": "Casual",
@@ -378,7 +331,7 @@
                 "first_name": "Test",
                 "last_name": "User"
             },
-            "avatar": "avatar2",
+            "avatar": "avatar1",
             "blocked": false,
             "currentStatus": "Online",
             "playstyle": "Competitive",
@@ -410,7 +363,7 @@
                 "first_name": "Test",
                 "last_name": "User"
             },
-            "avatar": "avatar4",
+            "avatar": "avatar2",
             "blocked": false,
             "currentStatus": "Online",
             "playstyle": "Casual",
@@ -426,7 +379,7 @@
                 "first_name": "Test",
                 "last_name": "User"
             },
-            "avatar": "avatar5",
+            "avatar": "avatar4",
             "blocked": true,
             "currentStatus": "Offline",
             "playstyle": "Casual",
@@ -442,7 +395,7 @@
                 "first_name": "Test",
                 "last_name": "User"
             },
-            "avatar": "avatar6",
+            "avatar": "avatar3",
             "blocked": false,
             "currentStatus": "Online",
             "playstyle": "Competitive",
@@ -458,7 +411,7 @@
                 "first_name": "Test",
                 "last_name": "User"
             },
-            "avatar": "avatar7",
+            "avatar": "avatar2",
             "blocked": false,
             "currentStatus": "Offline",
             "playstyle": "Casual",
@@ -474,7 +427,7 @@
                 "first_name": "Test",
                 "last_name": "User"
             },
-            "avatar": "avatar8",
+            "avatar": "avatar1",
             "blocked": true,
             "currentStatus": "Offline",
             "playstyle": "Casual",
@@ -490,7 +443,7 @@
                 "first_name": "Test",
                 "last_name": "User"
             },
-            "avatar": "avatar9",
+            "avatar": "avatar3",
             "blocked": false,
             "currentStatus": "Online",
             "playstyle": "Competitive",
@@ -506,7 +459,7 @@
                 "first_name": "Test",
                 "last_name": "User"
             },
-            "avatar": "avatar10",
+            "avatar": "avatar4",
             "blocked": false,
             "currentStatus": "Offline",
             "playstyle": "Casual",
