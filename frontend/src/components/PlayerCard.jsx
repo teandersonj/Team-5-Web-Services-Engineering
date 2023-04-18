@@ -39,6 +39,7 @@ const overrideStatusStyle = {
 
 export default function PlayerCard(props) {
     const { player, noLabels=false, withPlayerStatus=true, size } = props;
+
     return (
         <div className={`PlayerCard PlayerCard-${size}`}>
             <div className="justifyContentCenter">
@@ -48,8 +49,8 @@ export default function PlayerCard(props) {
             {withPlayerStatus && <PlayerStatusDisplay status={player.currentStatus} overrideStyle={overrideStatusStyle} />}
             {size !== "small" && (
                 <>
-                    <LabeledInput type="text" id="first_name" label={!noLabels && "First Name"} defaultValue={player.user.first_name || player.first_name || "Unset"} orientation="vertical" disabled />
-                    <LabeledInput type="text" id="last_name" label={!noLabels && "Last Name"} defaultValue={player.user.last_name || player.last_name || "Unset"} orientation="vertical" disabled />
+                    <LabeledInput type="text" id="first_name" label={!noLabels && "First Name"} defaultValue={player?.user.first_name || player.first_name || "Unset"} orientation="vertical" disabled />
+                    <LabeledInput type="text" id="last_name" label={!noLabels && "Last Name"} defaultValue={player?.user?.last_name || player.last_name || "Unset"} orientation="vertical" disabled />
                 </>
             )}
         </div>

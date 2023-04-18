@@ -19,7 +19,7 @@ export default function Navbar(props) {
 
     return (
         <nav className="UserNav">
-            <Avatar avatar={user.avatar} size="medium" />
+            <Avatar avatar={user.avatar} size="medium" playerStatus={user.currentStatus}/>
             <div className="flexDirectionColumn justifyContentCenter">
                 <div className="alignSelfCenter"><strong style={{ fontSize: "20px", margin: "10px 0" }}>{user.username}</strong></div>
                 <div className="alignSelfCenter centerText" style={userStatusStyle}>{user.currentStatus}</div>

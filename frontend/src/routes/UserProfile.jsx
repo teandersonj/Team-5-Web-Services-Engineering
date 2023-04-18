@@ -40,7 +40,7 @@ export default function UserProfile(props) {
             <div className="sectionContainer">
                 <div className="leftSection flexDirectionColumn centerText">
                     {/* This'll be the user's avatar in a circle, and we need to have a button on the bottom right corner for Edit */}
-                    <Avatar avatar={user.avatar} containerStyle={{ margin: "0 auto" }} size="large" />
+                    <Avatar avatar={user.avatar} containerStyle={{ margin: "0 auto" }} size="large" playerStatus={user.currentStatus}/>
                     <div className="width-100 centerText" style={{ ...fieldStyle }}>{user.username}</div>
                     <div className="width-100 centerText" style={{ ...fieldStyle, backgroundColor: "var(--color-light-blue)" }}>{user.currentStatus}</div>
                     <div className="width-100 centerText" style={{ ...fieldStyle, backgroundColor: "var(--color-green)" }}>{user.playstyle} Player</div>

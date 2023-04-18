@@ -2,6 +2,7 @@
 
 from django.conf import settings
 from django.db import migrations
+from django.contrib.auth.hashers import make_password
 from api.apimodels.player import Player  # import Player model
 import random
 
@@ -66,7 +67,7 @@ def create_test_users_and_players(apps, schema_editor):
             email=user_data['email'],
         )
         
-        user.set_password(user_data['username'] + "Password")
+        user.password = make_password(user_data['username'] + "Password")
         user.save()
 
         # create player
