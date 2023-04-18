@@ -23,7 +23,7 @@ export default function Navbar(props) {
             <div className="flexDirectionColumn justifyContentCenter">
                 <div className="alignSelfCenter"><strong style={{ fontSize: "20px", margin: "10px 0" }}>{user.username}</strong></div>
                 <div className="alignSelfCenter centerText" style={userStatusStyle}>{user.currentStatus}</div>
-                <div className="alignSelfCenter" style={{ margin: "10px 0" }}><button className="roundedBlueBtn" onClick={() => logout()}>Log Out</button></div>
+                <div className="alignSelfCenter" style={{ margin: "10px 0" }}><button className="roundedBlueBtn" data-testid="logoutBtn" onClick={() => logout()}>Log Out</button></div>
             </div>
             <hr className="width-100" />
             <div className="navLinks flexDirectionColumn justifyContentSpaceEvenly flexGrow-1">

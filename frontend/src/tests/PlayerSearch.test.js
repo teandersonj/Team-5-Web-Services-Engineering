@@ -24,7 +24,7 @@ const updateUser = jest.fn();
     Modal: ({ children }) => (<div>{children}</div>),
 })); */
 
-const UserSettingsComponent = () => {
+const PlayerSearchComponent = () => {
     return (
         <UserProvider>
             <UserContext.Provider value={{ user, updateUser }}>
@@ -47,7 +47,7 @@ const UserSettingsComponent = () => {
 // Test rendering of the page
 describe('Player Search page', () => {
     it('renders correctly', () => {
-        render(<UserSettingsComponent />);
+        render(<PlayerSearchComponent />);
         expect(screen.getByText('Player Search')).toBeInTheDocument();
     });
 });
@@ -57,7 +57,7 @@ describe('Search Bar', () => {
     it('renders correctly', () => {
         
         // Render the Component
-        render(<UserSettingsComponent />);
+        render(<PlayerSearchComponent />);
 
         // Obtain the search input field
         expect(screen.getByRole('textbox')).toBeInTheDocument();
@@ -66,7 +66,7 @@ describe('Search Bar', () => {
     it('accepts input', async () => {
 
         // Render the Component
-        render(<UserSettingsComponent />);
+        render(<PlayerSearchComponent />);
 
         // Obtain the search bar input field
         const searchField = screen.getByRole('textbox');
@@ -83,7 +83,7 @@ describe('Search Bar', () => {
     it('renders results correctly after recieving input', async () => {
 
         // Render the Component
-        render(<UserSettingsComponent />);
+        render(<PlayerSearchComponent />);
 
         // Obtain the search bar input field & search button
         const searchField = screen.getByRole('textbox');
@@ -91,18 +91,40 @@ describe('Search Bar', () => {
 
         // Input sample data into the field
         await act(async () => {
-            await user.type(searchField, "User");
+            await user.type(searchField, "Pixel");
         });
 
         // Test that the search field has the correct value
-        expect(searchField).toHaveValue("User");
+        expect(searchField).toHaveValue("Pixel");
 
         // Click the Search Button and check to see if results are displayed correctly
         await act(async () => {
             await userEvent.click(searchBtn);
         }).then(() => {
-            expect(screen.getByText('Favorite Games')).toBeInTheDocument();
+            expect(screen.getByText(/PixelatedNinja/)).toBeInTheDocument();
         });
     });
+
+    it('displays the number of users returned', async () => {
+        // Render the Component
+        render(<PlayerSearchComponent />);
+      
+       // Check that component rendered correctly
+        expect(screen.getByText('Player Search')).toBeInTheDocument();
+      
+        // Obtain the search bar input field
+        const searchField = screen.getByTestId('searchInput');
+      
+        // Input sample data into the field
+        await userEvent.type(searchField, 'Pixel');
+      
+        // Obtain the search button and click it
+        const searchBtn = screen.getByTestId('searchBtn');
+        await userEvent.click(searchBtn);
+      
+        // Test that the search field has the correct value
+        expect(await screen.findByText(/1 users found/)).toBeInTheDocument();
+    });
+      
 
 });

@@ -53,7 +53,7 @@ export default function UserSettings(props) {
                     </label>
                 </div>
                 <LabeledInput type="text" id="memberSince" label="Member Since" defaultValue={new Date(user.memberSince)?.toDateString()} orientation="vertical" disabled />
-                <button className="width-100" onClick={() => navigate("/profile")}>View Public Profile</button>
+                <button className="width-100" data-testid="viewPublicProfileBtn" onClick={() => navigate("/profile")}>View Public Profile</button>
                 {/* <button className="width-100" onClick={() => navigate("/general-settings")}>General Setttings</button> */}
                 {pageState === "accountSettings" ? <button className="width-100" onClick={() => setPageState("blockedUsers")} name="blockedUsersBtn">Blocked Users</button> : <button className="width-100" onClick={() => setPageState("accountSettings")} data-testid="accountSettingsBtn">Account Settings</button>}
                 <button className="width-100" data-testid="deactivateAccountBtn" style={{ backgroundColor: "var(--color-red)" }} onClick={(e) => handleDeactivateClicked(e)}>Deactivate Account</button>

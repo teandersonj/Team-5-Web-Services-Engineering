@@ -54,10 +54,10 @@ export default function GameSearch(props) {
             <hr className="width-100" />
             <div className="flexDirectionRow width-100">
                 {/* Search Bar */}
-                <LabeledInput type="text" id="search" label="" placeholder="Search for a game..." defaultValue={searchState.search} containerStyle={{ flexGrow: 1 }} orientation="horizontal" onChange={(e) => setSearchState((prev) => ({ ...prev, query: e.target.value }))} />
+                <LabeledInput type="text" id="search" data-testid="gameSearchField" label="" placeholder="Search for a game..." defaultValue={searchState.search} containerStyle={{ flexGrow: 1 }} orientation="horizontal" onChange={(e) => setSearchState((prev) => ({ ...prev, query: e.target.value }))} />
                 {/* Search Buttons */}
                 <div>
-                    <button className="roundedBlueBtn" onClick={(e) => getSearchResults(e)}>Search</button>
+                    <button className="roundedBlueBtn" data-testid="gameSearchBtn" onClick={(e) => getSearchResults(e)}>Search</button>
                     <button className="roundedBlueBtn">Filter<img className="btnIcon" alt="Filter" src="/img/icons/filterIcon.png" /></button>
                 </div>
             </div>
