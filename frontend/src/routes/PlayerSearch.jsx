@@ -120,11 +120,11 @@ export default function PlayerSearch(props) {
             <div className="flexDirectionRow width-100">
                 <LabeledInput containerClassName="flexGrow-1" type="text" id="search" name="search" placeholder="Type username here..." onChange={handleSearchChange} data-testid="searchInput" />
                 <div>
-                    <button className="roundedBlueBtn" onClick={(e) => getSearchResults(e)}>Search</button>
+                    <button className="roundedBlueBtn" data-testid="searchBtn" onClick={(e) => getSearchResults(e)}>Search</button>
                     <button className="roundedBlueBtn">Filter<img className="btnIcon" src="/img/icons/filterIcon.png"/></button>
                 </div>
             </div>
-            <div className="flexDirectionColumn width-100">
+            <div data-testid="searchResults" className="flexDirectionColumn width-100">
                 <div>Search Results:</div>
                 <div>{searchState.results?.length || 0} users found.</div>
                 {searchState.results && (

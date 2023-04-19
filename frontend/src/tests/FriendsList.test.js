@@ -204,7 +204,7 @@ describe('Friends List Component', () => {
     it('can successfully open the friend control modal', async () => {
         // Render FriendsList Component
         render(<FriendListComponent />);
-      
+
         // Wait for the component to render
         await waitFor(() => {
           // Check if something we know will be there is there
@@ -240,46 +240,46 @@ describe('Friends List Component', () => {
       it('can close the Friend Control Modal after opening it', async () => {
         // Render FriendsList Component
         render(<FriendListComponent />);
-      
+
         // Wait for the component to render
         await waitFor(() => {
           // Check if something we know will be there is there
-          expect(screen.getByText('In Party')).toBeInTheDocument();
+            expect(screen.getByText('In Party')).toBeInTheDocument();
         });
-      
+
         // Check if search bar rendered properly
         const friendsListSearch = screen.getByTestId('friendSearchBar');
-      
+
         // Input text into search bar and check if it is working as intended
         await userEvent.type(friendsListSearch, "Pixel");
-      
+
         // Check that input was registered correctly
         expect(friendsListSearch).toHaveValue("Pixel");
-      
+
         // Click the search button and check if expected results are displayed
         const searchBtn = screen.getByTestId("friendSearchBtn");
-      
+
         await userEvent.click(searchBtn);
-      
+
         expect(screen.getByText(/PixelatedNinja/im)).toBeInTheDocument();
-      
+
         // Get Friend Control Modal Button
         const friendControlBtn = screen.getByTestId("friendControlBtn");
-      
+
         // Click the Friend Control Modal Button
         await userEvent.click(friendControlBtn);
-      
+
         // Check if modal rendered correctly
         expect(await screen.findByText('Friend Controls')).toBeInTheDocument();
-      
+
         // Get Friend Control Modal Close Button and Click It
         const closeBtn = screen.getByTestId("closeModalBtn");
-      
+
         await userEvent.click(closeBtn);
-      
+
         // Check to make sure modal is closed
         await waitFor(() => {
-          expect(screen.queryByText('Friend Controls')).not.toBeInTheDocument();
+            expect(screen.queryByText('Friend Controls')).not.toBeInTheDocument();
         });
-      });
+    });
 });

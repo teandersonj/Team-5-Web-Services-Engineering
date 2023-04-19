@@ -12,6 +12,46 @@ jest.mock('react-router-dom', () => ({
     useNavigate: () => jest.fn(),
 }));
 
+// Since friendsList requires getNRandomGames as a stand-in for the games a user is currently playing, we need to mock that function
+jest.mock('../services/GameInfoService', () => ({
+    __esModule: true,
+    // Have it return a sample game
+    getNRandomGames: (n) => Promise.resolve([
+        {
+            "GameId": 1,
+            "name": "League of Legends",
+            "description": "League of Legends is a team-based game with over 140 champions to make epic plays with. Play now for free.",
+            "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/21779/header.jpg?t=1591083840",
+        }
+    ])
+}));
+
+// Since GameSearch requires getNRandomGames as a stand-in for the retrieved game information
+jest.mock('../services/GameInfoService', () => ({
+    __esModule: true,
+    // Have it return a sample game
+    getNRandomGames: (n) => Promise.resolve([
+        {
+            "GameId": 1,
+            "name": "League of Legends",
+            "description": "League of Legends is a team-based game with over 140 champions to make epic plays with. Play now for free.",
+            "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/21779/header.jpg?t=1591083840",
+        },
+        {
+            "GameId": 2,
+            "name": "Dark Souls III",
+            "description": "Dark Souls III is the latest chapter in the critically-acclaimed Dark Souls series. The game takes place in a dark fantasy universe, where players assume the role of a cursed undead character who begins a pilgrimage to discover the fate of their kind.",
+            "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/374320/header.jpg?t=1591083840",
+        },
+        {
+            "GameId": 3,
+            "name": "Star Wars: Battlefront II",
+            "description": "Star Wars Battlefront II is a sequel to the 2015 reboot of the Star Wars Battlefront series. The game is a first- and third-person shooter that features a single-player campaign and multiplayer modes.",
+            "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/606800/header.jpg?t=1591083840",
+        },
+    ])
+}));
+
 const user = userEvent.setup();
 const updateUser = jest.fn();
 
@@ -47,7 +87,9 @@ const GameSearchComponent = () => {
 describe('Game Search page', () => {
     it('renders correctly', () => {
         // Render the GameSearch Component and check that it rendered correctly
-        render(<GameSearchComponent />);
+        act(() => {
+            render(<GameSearchComponent />);
+        });
         expect(screen.getByText('Find Games')).toBeInTheDocument();
     });
 });
@@ -55,7 +97,9 @@ describe('Game Search page', () => {
 describe('Search Bar', () => {
     it('accepts user input', async () => {
         // Render the GameSearch Component and check that it rendered correctly
-        render(<GameSearchComponent />);
+        act(() => {
+            render(<GameSearchComponent />);
+        });
         expect(screen.getByText('Find Games')).toBeInTheDocument();
 
         // Get the Search Input Field
@@ -92,4 +136,3 @@ describe('Search Bar', () => {
     // });
       
 });
-
