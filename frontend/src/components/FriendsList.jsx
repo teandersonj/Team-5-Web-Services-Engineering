@@ -156,7 +156,7 @@ const FriendsList = (props) => {
 
     return (
         <FriendsControlsProvider>
-            <div className={`${props.open ? "friends-list" : 'hidden'}`}>
+            <div data-testid="friendsListContainer" className={`${props.open ? "friends-list" : 'hidden'}`}>
                 <div className="friends-list-header">
                     <div className="flexDirectionRow">
                         <div>
@@ -166,13 +166,13 @@ const FriendsList = (props) => {
                             <div><strong>{user.username}</strong></div>
                             <PlayerStatusDisplay status={user.currentStatus} overrideStyle={statusDisplayStyle} />
                         </div>
-                        <button className="roundedBlueBtn" style={closeButtonStyle} onClick={e => props.closeFunction()}>X</button>
+                        <button className="roundedBlueBtn" data-testid="listCloseBtn" style={closeButtonStyle} onClick={e => props.closeFunction()}>X</button>
                     </div>
                     <div className="flexDirectionRow">
-                        <LabeledInput containerClassName="flexGrow-1" label="" placeholder="Type username here..." id="search" name="search" value={search} onChange={e => setSearch(e.target.value)} data-testid="friendSearchBar" />
-                        <button className="roundedBlueBtn" data-testid='friendSearchBtn' onClick={e => handleSearch(e)}>Search</button>
+                        <LabeledInput label="" placeholder="Type username here..." id="search" data-testid="friendSearchBar" name="search" value={search} onChange={e => setSearch(e.target.value)} />
+                        <button className="roundedBlueBtn" data-testid="friendSearchBtn" onClick={e => handleSearch(e)}>Search</button>
                         {/* <button className="roundedBlueBtn" onClick={e => handleFilter(e)}>Filter</button> */}
-                        <button className="roundedBlueBtn" onClick={e => handleClear(e)}>Clear</button>
+                        <button className="roundedBlueBtn" data-testid="clearBtn" onClick={e => handleClear(e)}>Clear</button>
                     </div>
                     <div className="flexDirectionRow justifyContentSpaceBetween" style={friendsHeadingStyle}>
                         <div className="flexDirectionColumn">FRIENDS</div>
@@ -186,7 +186,7 @@ const FriendsList = (props) => {
                     <div className="flexDirectionColumn">
                         {/* If the user has a filled party show the Party section and populate */}
                         <div style={friendsBodyHeadingStyle}>In Party</div>
-                        {user.currentParty?.members?.length > 0 ? (
+                        {user?.currentParty?.members?.length > 0 ? (
                             <>
                                 <div className="flexDirectionRow">
                                     <GameAndPlayerCard friend={user.currentParty?.members[0]} game={user.currentParty?.game || games[Math.floor(Math.random() * games.length)]} />
@@ -194,7 +194,7 @@ const FriendsList = (props) => {
                                 {/* If the user has more than one friend in their party show the rest of the party, but without the game image in front */}
                                 {user.currentParty?.members?.length > 1 && (
                                     <div className="flexDirectionRow">
-                                        {user.currentParty?.members.slice(1).map((friend, index) => (
+                                        {user?.currentParty?.members?.slice(1).map((friend, index) => (
                                             <FriendEntry friend={friend} key={index} />
                                         ))}
                                     </div>
@@ -265,7 +265,7 @@ const FriendEntry = (props) => {
             <div className="flexDirectionRow">
                 <Avatar avatar={friend.avatar} size="small" containerStyle={overrideAvatarContainerStyle} playerStatus={friend.currentStatus} />
                 <div className="flexDirectionColumn">
-                    <div><strong>{friend.user?.username}</strong> <button onClick={(e) => handleFriendControls(e, friend)}>&#9998;</button></div>
+                    <div><strong>{friend.user?.username}</strong> <button data-testid="friendControlBtn" onClick={(e) => handleFriendControls(e, friend)}>&#9998;</button></div>
                     <PlayerStatusDisplay status={friend.currentStatus} overrideStyle={statusDisplayStyle} />
                 </div>
             </div>

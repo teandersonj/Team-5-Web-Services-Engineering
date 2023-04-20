@@ -118,13 +118,13 @@ export default function PlayerSearch(props) {
             <p>On this page, you can find other users who use Fireside Gaming. Users who we think you might get along with are highlighted in yellow with a star next to there name. If you find someone you enjoy gaming with, send them a friend request by clicking the “Add Friend” button under their username.</p>
             <hr className="width-100" />
             <div className="flexDirectionRow width-100">
-                <LabeledInput containerClassName="flexGrow-1" type="text" id="search" name="search" placeholder="Type username here..." onChange={handleSearchChange} data-testid="search-btn" />
+                <LabeledInput containerClassName="flexGrow-1" type="text" id="search" name="search" placeholder="Type username here..." onChange={handleSearchChange} data-testid="searchInput" />
                 <div>
-                    <button className="roundedBlueBtn" onClick={(e) => getSearchResults(e)}>Search</button>
+                    <button className="roundedBlueBtn" data-testid="searchBtn" onClick={(e) => getSearchResults(e)}>Search</button>
                     <button className="roundedBlueBtn">Filter<img className="btnIcon" src="/img/icons/filterIcon.png"/></button>
                 </div>
             </div>
-            <div className="flexDirectionColumn width-100">
+            <div data-testid="searchResults" className="flexDirectionColumn width-100">
                 <div>Search Results:</div>
                 <div>{searchState.results?.length || 0} users found.</div>
                 {searchState.results && (

@@ -134,7 +134,7 @@ describe('UserSettings', () => {
         }).then(() => {
             expect(screen.getByText('Account Settings')).toBeInTheDocument();
         });
-    });
+    });      
 
     it("responds to avatar Edit button click", async () => {
         const view = render(<UserSettingsComponent />);

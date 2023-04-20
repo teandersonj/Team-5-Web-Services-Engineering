@@ -63,7 +63,7 @@ export default function FriendsListControlsModal(props) {
             <div className="modalContainer">
                 <div style={{...headerTitle}} className='flexDirectionRow'>
                     <h2>Friend Controls</h2>
-                    <button className="roundedBlueBtn" onClick={() => closeModal(false)}>X</button>
+                    <button className="roundedBlueBtn" data-testid="closeModalBtn" onClick={() => closeModal(false)}>X</button>
                 </div>
                 <div className="modalContent">
                     <Avatar avatar={targetFriend.avatar} size="large" containerStyle={overrideAvatarContainerStyle} playerStatus={targetFriend.currentStatus}/>
@@ -71,7 +71,7 @@ export default function FriendsListControlsModal(props) {
                     <div className="flexDirectionColumn">
                         <button className="longRoundedBlueBtn">View Profile</button>
                         {/* If the friend is in our party, show a button to remove them, otherwise show a button to add them */}
-                        {user.currentParty.members.find?.((member) => member.pk === targetFriend.pk) ? (
+                        {user?.currentParty?.members?.find?.((member) => member.pk === targetFriend.pk) ? (
                             <button className="longRoundedRedBtn" onClick={(e) => removeFromParty(e)}>Remove From Party</button>
                         ) : (
                             <button className="longRoundedBlueBtn" onClick={(e) => addToParty(e)}>Add To Party</button>
