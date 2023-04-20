@@ -171,4 +171,29 @@ describe('Search Bar', () => {
         await waitFor(() => expect(axios.get).toHaveBeenCalledTimes(1))
         expect(await screen.findByText('PixelatedNinja')).toBeInTheDocument()
     });
+
+    it('displays the number of users returned', async () => {
+        // Mock the axios get method to return the expected results
+        axios.get.mockResolvedValue({ data: samplePlayers });
+
+        // Render the Component
+        render(<PlayerSearchComponent />);
+
+       // Check that component rendered correctly
+        expect(screen.getByText('Player Search')).toBeInTheDocument();
+
+        // Get the search input and submit button
+        const searchInput = screen.getByTestId('searchInput');
+        const submitButton = screen.getByTestId('searchBtn');
+
+        // Set the search input value and submit the form
+        fireEvent.change(searchInput, { target: { value: 'Pixel' } });
+        fireEvent.click(submitButton);
+
+        // Wait for the axios get method to resolve and for the state to update
+        await waitFor(() => expect(axios.get).toHaveBeenCalledTimes(1))
+
+        // Test that number of user returned is correct
+        expect(await screen.findByText(/1 users found/)).toBeInTheDocument();
+    });
 });
