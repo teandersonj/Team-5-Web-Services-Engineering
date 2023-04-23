@@ -25,8 +25,9 @@ describe('User Settings e2e', () => {
     // Click the username edit button
     cy.get('[data-testid="edit-username"]').click();
 
-    // Type some input into the input field
-    cy.get('#username').type('NewUsername123')
+    // Type some input into the input field after clearing it
+    cy.get('#username').clear();
+    cy.get('#username').type('NewUsername123');
     // Click the Submit Button
     cy.get('.LabeledInput > .flexDirectionRow > button').click();
 

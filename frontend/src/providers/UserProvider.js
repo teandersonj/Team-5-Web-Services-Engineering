@@ -1,10 +1,13 @@
 import React, { useState, createContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import toast from 'react-hot-toast';
 
 // We can use this context to pass the user object to any component that needs it
 export const UserContext = createContext({});
 
 // This is the provider that will wrap the entire app, giving User Context access to necessary components
+// TODO: Send token with protected routes
 const UserProvider = ({ children }) => {
     const navigate = useNavigate();
 
@@ -25,7 +28,10 @@ const UserProvider = ({ children }) => {
         refreshToken: "",
         memberSince: "",
         currentStatus: "Online",
-        currentParty: {},
+        currentParty: {
+            game: "",
+            members: []
+        },
         friendsList: [],
         favoriteGames: [],
         recentlyPlayedGames: [],
@@ -63,9 +69,133 @@ const UserProvider = ({ children }) => {
         setUser((prev) => ({ ...prev, ...userInfo }));
     };
 
+    const getFriendInfo = async (friendId) => {
+        try {
+            const res = await axios.get(`/api/player/${friendId}`);
+
+            if (res.status === 200) {
+                return ({
+                    "pk": res.data.pk,
+                    "avatar": res.data.AvatarName,
+                    "attitude": res.data.Attitude,
+                    "bio": res.data.Bio,
+                    "compositeSkillLevel": res.data.CompositeSkillLevel,
+                    user: {
+                        "id": res.data.user.id,
+                        "first_name": res.data.user.first_name,
+                        "last_name": res.data.user.last_name,
+                        "username": res.data.user.username,
+                        "email": res.data.user.email,
+                    },
+                    // Choose a random status within "Online", "In-Game", "Offline"
+                    currentStatus: ["Online", "In-Game", "Offline"][Math.floor(Math.random() * 3)],
+                });
+            } else {
+                return false;
+            }
+        } catch (err) {
+            console.log("Error getting friend info: ", err.response?.data?.message || err.message || err);
+            return false;
+        }
+    };
+
+    // Get the list of friend relationships and store those
+    // belonging to our user in the user's friendsList
+    const getFriends = async () => {
+        try {
+            const res = await axios.get('/api/friends/');
+
+            if (res.status === 200) {
+                // Filter out the friend relationships that don't belong to our user
+                // Get the "FriendPlayer" ID for each relationship
+                const friendIds = res.data.map((friend) => {
+                    if (friend.Primary === user.playerId && friend.ActiveStatus === true) {
+                        return friend.FriendPlayer;
+                    }
+                    return null;
+                });
+
+                // Get the friend info for each friend ID
+                const friendInfoPromises = friendIds
+                    .filter((friendId) => friendId !== null)
+                    .map((friendId) => getFriendInfo(friendId));
+                const friendInfo = await Promise.all(friendInfoPromises);
+
+                // Update the user's friends list
+                updateUser({
+                    friendsList: Array.isArray(friendInfo) ? friendInfo : friendInfo.filter((friend) => friend !== null)
+                });
+
+                return true;
+            }
+        } catch (err) {
+            console.log("Error getting friends: ", err.response?.data?.message || err.message || err);
+            return false;
+        }
+    };
+
+    // Given a target friend's playerId, add a new friend to the friends
+    // table and update the user's friendsList
+    const addFriend = async (e, targetFriendId) => {
+        e.preventDefault();
+        await axios.post('/api/friends/', {
+            "Primary": user.playerId,
+            "FriendPlayer": targetFriendId,
+            "ActiveStatus": true
+        }).then(async (res) => {
+            if (res.status === 201 || res.status === 200) {
+                // Get the friend's info
+                const friendInfo = await getFriendInfo(targetFriendId);
+
+                // Update the user's friends list
+                updateUser({
+                    friendsList: [
+                        ...user.friendsList,
+                        friendInfo
+                    ]
+                });
+                toast.success("Friend added!");
+                return true;
+            }
+        }).catch((err) => {
+            console.log("Error adding friend: ", err.response?.data?.message || err.message || err);
+            toast.error("Error adding friend. Please try again later.");
+            return false;
+        });
+    };
+
+    const removeFriend = async (e, targetFriendId) => {
+        e.preventDefault();
+        await axios.delete('/api/friends/', {
+            data: {
+                "Primary": user.playerId,
+                "FriendPlayer": targetFriendId,
+                "ActiveStatus": true
+            }
+        }).then(async (res) => {
+            if (res.status === 200 || res.status === 204) {
+                // Update the user's friends list, excluding the friend that was removed
+                updateUser({
+                    friendsList: user.friendsList.filter((friend) => friend.pk !== targetFriendId),
+                    // If the removed friend was part of the user's party, remove them from the party
+                    currentParty: {
+                        ...user.currentParty,
+                        members: user.currentParty.members.filter((member) => member.pk !== targetFriendId)
+                    }
+                });
+                toast.success("Friend removed!");
+                return true;
+            }
+        }).catch((err) => {
+            console.log("Error removing friend: ", err.response?.data?.message || err.message);
+            toast.error("Error removing friend. Please try again later.");
+            return false;
+        });
+    };
+
     return (
         // The value prop is what will be available to any component that consumes this context
-        <UserContext.Provider value={{ user, updateUser, logout }}>
+        <UserContext.Provider value={{ user, updateUser, getFriends, addFriend, removeFriend, logout }}>
             {children}
         </UserContext.Provider>
     );

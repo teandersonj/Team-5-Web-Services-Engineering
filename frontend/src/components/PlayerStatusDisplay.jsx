@@ -1,5 +1,5 @@
 //  Conditionally render style for player status
-const PlayerStatusDisplay = ({ status }) => {
+const PlayerStatusDisplay = ({ overrideStyle, status }) => {
     const getStatusClassName = () => {
       switch (status) {
         case 'Online':
@@ -14,7 +14,9 @@ const PlayerStatusDisplay = ({ status }) => {
     };
   
     return (
-      <div className={`${getStatusClassName()}`}> {status} </div>
+      <div className={`flexDirectionColumn alignContentCenter justifyContentCenter ${getStatusClassName()}`} style={overrideStyle ?? {}}>
+        {status}
+      </div>
     );
   };
 

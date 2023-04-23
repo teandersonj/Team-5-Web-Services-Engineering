@@ -144,9 +144,6 @@ export default function Register(props) {
 
         // Attempt to send the info to server
         await axios.post("/api/register/", formState).then(async (res) => {
-            if (process.env.NODE_ENV === "development") {
-                console.log("/register response: " + res);
-            }
             if (res.status !== 201) {
                 throw new Error({ status: res.status, data: res.data || res });
             }
@@ -166,9 +163,6 @@ export default function Register(props) {
                 username: formState.username,
                 password: formState.password,
             }).then((res) => {
-                if (process.env.NODE_ENV === "development") {
-                    console.log("/token response: " + res);
-                }
                 if (res.status !== 200) {
                     throw new Error({ status: res.status, data: res.data || res });
                 }
