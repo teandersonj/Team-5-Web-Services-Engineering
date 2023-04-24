@@ -13,7 +13,7 @@ class PlayerAPI(generics.RetrieveUpdateAPIView):
     model = Player
     queryset = Player.objects.all().select_related('user')
     serializer_class = PlayerSerializer
-    permission_classes = (AllowAny, )
+    permission_classes = (IsAuthenticated, )
     filter_backends = [filters.SearchFilter, DjangoFilterBackend]
     search_fields = ['user__username', 'user__email', 'Playstyle', 'CompositeSkillLevel', 'Attitude', 'Bio']
 
@@ -37,6 +37,6 @@ class PlayerAPI(generics.RetrieveUpdateAPIView):
 class PlayersAPI(generics.ListCreateAPIView):
     queryset = Player.objects.all().select_related('user')
     serializer_class = PlayerSerializer
-    permission_classes = (AllowAny, )
-    filter_backends = [filters.SearchFilter]
+    permission_classes = (IsAuthenticated, )
+    filter_backends = [filters.SearchFilter, DjangoFilterBackend]
     search_fields = ['user__username', 'user__email', 'Playstyle', 'CompositeSkillLevel', 'Attitude', 'Bio']
