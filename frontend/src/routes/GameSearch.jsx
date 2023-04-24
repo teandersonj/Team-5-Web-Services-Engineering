@@ -1,52 +1,53 @@
 import { useState } from "react";
+import axios from "axios";
 import LabeledInput from "../components/LabeledInput";
-
 import GameCard from "../components/GameCard";
 
 export default function GameSearch(props) {
     const [searchState, setSearchState] = useState({
         query: "",
-        filterRules: {},
+        // filterRules: {},
+        filter: "title",
+        searchActive: false, // Whether or not the user has clicked the search button
         results: [],
         errors: {}
     });
 
-    const getSearchResults = (e) => {
+    const changeFilter = (e) => {
         e.preventDefault();
-        // TODO: Make this actually search the database
-        fetch("/dummyData.json", {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json",
-                // "Authorization": "Bearer " + localStorage.getItem("token")
-            },
-            params: {
-                // this'll be passed as a query string to the server
-                search: encodeURIComponent(searchState.query)
-            }
-        }).then((res) => {
-            if (res.status === 200) {
-                res.json().then((data) => {
-                    // let searchResults = [];
-                    // TODO: Filter the results based on the filter rules
-                    // Select only the results that match the query
-                    // Right now, it just filters based on the player's username
-                    // If the query is empty, return all results
-                    if (searchState.query !== "" && data.games) {
-                        const res = data?.games?.filter((game) => {
-                            return game.name.toLowerCase().includes(searchState.query.toLowerCase());
-                        });
-                        setSearchState((prev) => ({ ...prev, results: res || [] }));
-                    }
-                });
-            } else {
-                res.json().then((data) => {
-                    setSearchState((prev) => ({ ...prev, errors: data.errors }));
-                });
-            }
+        setSearchState((prev) => ({
+            ...prev,
+            filter: prev.filter === "title" ? "genre" : "title"
+        }));
+    };
+
+    const getSearchResults = async (e) => {
+        e.preventDefault();
+        // Clear any previous errors
+        setSearchState((prev) => ({
+            ...prev,
+            searchActive: false,
+            errors: {}
+        }));
+
+        const { query, filter } = searchState;
+        const url = filter === "title" ? `/search/by/title/${query}` : `/search/by/genre/${query}`;
+        await axios.get(`${process.env.REACT_APP_GAMEINFO_API_URL}${url}`).then((res) => {
+            console.log(res.data)
+            setSearchState((prev) => ({
+                ...prev,
+                searchActive: true,
+                results: res.data
+            }));
+        }).catch((err) => {
+            setSearchState((prev) => ({
+                ...prev,
+                searchActive: true,
+                errors: err
+            }));
         });
     };
+
     return (
         <>
             <h1 className="pageHeading centerText">Find Games</h1>
@@ -54,15 +55,15 @@ export default function GameSearch(props) {
             <hr className="width-100" />
             <div className="flexDirectionRow width-100">
                 {/* Search Bar */}
-                <LabeledInput type="text" id="search" data-testid="gameSearchField" label="" placeholder="Search for a game..." defaultValue={searchState.search} containerStyle={{ flexGrow: 1 }} orientation="horizontal" onChange={(e) => setSearchState((prev) => ({ ...prev, query: e.target.value }))} />
+                <LabeledInput type="text" id="search" data-testid="gameSearchField" label="" placeholder={searchState.filter === "title" ? "Search for a game based on title..." : "Search for a game based on genre..."} defaultValue={searchState.search} containerStyle={{ flexGrow: 1 }} orientation="horizontal" onChange={(e) => setSearchState((prev) => ({ ...prev, query: e.target.value }))} />
                 {/* Search Buttons */}
                 <div>
                     <button className="roundedBlueBtn" data-testid="gameSearchBtn" onClick={(e) => getSearchResults(e)}>Search</button>
-                    <button className="roundedBlueBtn">Filter<img className="btnIcon" alt="Filter" src="/img/icons/filterIcon.png" /></button>
+                    <button className="roundedBlueBtn" onClick={e => changeFilter(e)}>{searchState.filter === "title" ? "By Title" : "By Genre"} <img className="btnIcon" alt="Filter" src="/img/icons/filterIcon.png" /></button>
                 </div>
             </div>
             <div className="flexDirectionColumn" style={{ alignSelf: "stretch" }}>
-                {searchState.results?.length > 0 && (
+                {searchState.searchActive && (
                     <div className="flexDirectionRow justifyContentSpaceBetween">
                         <>
                             <div><strong>Results</strong></div>

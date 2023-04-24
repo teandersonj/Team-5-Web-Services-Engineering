@@ -70,14 +70,15 @@ export default function PlayerSearch(props) {
         }
         await axios.get("/api/players").then(async (res) => {
             const { data } = res;
-            // We have access to all the players here
-            let searchResults = [];
             // TODO: Filter the results based on the filter rules
             // Select only the results that match the query
             // Right now, it just filters based on the player's username
             if (data?.length > 0) {
-                // Output users matching query, but exclude the current user
-                searchResults = data.filter((player) => player.user.username !== user.username && player.user.username.toLowerCase().includes(searchState.query.toLowerCase()));
+                // We have access to all the players here
+                let searchResults = [];
+                // Output users matching query, but exclude the current user, also if the target user is in the
+                // current user's blocked list then exclude them from the search results
+                searchResults = data.filter((player) => player.user.username.toLowerCase() !== user.username.toLowerCase() && player.user.username.toLowerCase().includes(searchState.query.toLowerCase()) && !user.blockedPlayers.includes(player.pk));
                 // Add a random status to each player until we have it accounted for on backend
                 // Also add some favorite and recentlyPlayedGames provided by dummy data via getNRandomGames
                 // TODO: Remove this once we have the backend implemented
@@ -110,6 +111,16 @@ export default function PlayerSearch(props) {
 
     const handleBlockFriend = async (e, targetFriend) => {
         e.preventDefault();
+        // Remove the blocked user from the user's friend list
+        await removeFriend(targetFriend.pk);
+
+        // TODO: Remove the user from the blocked user's friend list
+        // Remove the user from player search results
+        const newResults = searchState.results.filter((result) => result.user.username !== targetFriend.user.username);
+        setSearchState((prev) => ({ ...prev, results: newResults }));
+
+        // Add the blocked user to the user's blocked friends list
+        updateUser({ blockedPlayers: [...user.blockedPlayers, targetFriend] });
     };
 
     return (
@@ -142,7 +153,7 @@ export default function PlayerSearch(props) {
                                     ) : (
                                         <button className="longRoundedBlueBtn" onClick={(e) => addFriend(e, player.pk)}>Add Friend</button>
                                     )}
-                                    <button className='longRoundedRedBtn' onClick={(e) => handleBlockFriend(e, player.pk)}>Block User</button>
+                                    <button className='longRoundedRedBtn' onClick={(e) => handleBlockFriend(e, player)}>Block User</button>
                                 </div>
                                 <div className="flexDirectionRow justifyContentCenter flexGrow-1">
                                     <div className="flexDirectionColumn" style={{ ...gamesColumn}}>

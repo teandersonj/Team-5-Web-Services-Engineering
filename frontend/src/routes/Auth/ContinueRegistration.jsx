@@ -124,6 +124,7 @@ export default function ContinueRegistration(props) {
             if (response.status === 200) {
                 // Update the user's context
                 updateUser({
+                    playerId: response.data.pk,
                     playstyle: response.data.Playstyle,
                     avatar: response.data.AvatarName,
                     loggedIn: true,
