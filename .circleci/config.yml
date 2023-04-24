@@ -6,8 +6,8 @@ version: 2.1
 jobs:
   deploy-backend:
     docker:
-      - image: cimg/base:stable-20.04
-    resource_class: small
+      - image: cimg/base:current
+    resource_class: large
     steps:
       - checkout
       - run:
@@ -27,8 +27,8 @@ jobs:
       #     force: true
   deploy-frontend:
     docker:
-      - image: cimg/base:stable-20.04
-    resource_class: small
+      - image: cimg/base:current
+    resource_class: large
     steps:
       - checkout
       - run:
@@ -53,11 +53,12 @@ jobs:
     resource_class: large
     steps:
       - checkout
+      - run: |
+          cd frontend
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "package-lock.json" }}
       - run: |
-          cd frontend
           echo "Installing React dependencies"
           npm install
           echo "Running React tests"
@@ -75,11 +76,12 @@ jobs:
     resource_class: small
     steps:
       - checkout
+      - run: |
+          cd backend
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "requirements.txt" }}
       - run: |
-          cd backend
           echo "Creating virtual environment"
           python -m venv venv
           source venv/bin/activate
