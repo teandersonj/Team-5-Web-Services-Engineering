@@ -112,8 +112,12 @@ export default function PlayerSearch(props) {
     const handleBlockFriend = async (e, targetFriend) => {
         e.preventDefault();
         // Remove the blocked user from the user's friend list
-        await removeFriend(targetFriend.pk);
-
+        // If the user's in the friend list, remove them
+        // user.friendsList is an array of objects consisting of players with pk and user fields
+        if (user.friendsList?.some((friend) => friend.pk === targetFriend.pk)) {
+            await removeFriend(e, targetFriend.pk);
+        }
+        
         // TODO: Remove the user from the blocked user's friend list
         // Remove the user from player search results
         const newResults = searchState.results.filter((result) => result.user.username !== targetFriend.user.username);
