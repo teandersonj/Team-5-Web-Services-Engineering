@@ -5,14 +5,16 @@
   "main": "",
   "scripts": {
     "install-backend-dependencies": "cd backend && python -m venv venv && python inVenv.py run -m pip install --upgrade pip && python inVenv.py run -m pip install -r requirements.txt",
+    "install-middleware-dependencies": "cd middleware/GameInfoAPI && npm install",
     "install-frontend-dependencies": "cd frontend && npm install",
     "prepare-backend-database": "cd backend && python inVenv.py run manage.py makemigrations && python inVenv.py run manage.py migrate",
     "flush-database": "cd backend && python inVenv.py run manage.py sqlflush",
     "create-backend-superuser": "cd backend && python inVenv.py run manage.py createsuperuser",
     "start-backend": "cd backend && python inVenv.py run manage.py runserver",
+    "start-middleware": "cd middleware/GameInfoAPI && node index.js",
     "start-frontend": "cd frontend && npm run dev",
-    "prepare-environment": "npm install && npm run install-backend-dependencies && npm run install-frontend-dependencies && npm run prepare-backend-database",
-    "start": "concurrently \"npm run start-backend\" \"npm run start-frontend\"",
+    "prepare-environment": "npm install && npm run install-backend-dependencies && npm run install-frontend-dependencies && npm run prepare-backend-database && npm run install-middleware-dependencies",
+    "start": "concurrently \"npm run start-backend\" \"npm run start-frontend\" \"npm run start-middleware\"",
     "unit-test-frontend": "cd frontend && npm run testNoInteractive",
     "coverage-frontend": "cd frontend && npm run coverage",
     "e2e-test-frontend": "cd frontend && npx cypress open"

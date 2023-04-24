@@ -38,6 +38,8 @@ const playerColumn = {
 };
 
 const playerDisplayName = {
+    width: "100%",
+    textAlign: "center",
     fontWeight: "600",
     fontSize: "26px",
     textShadow: "rgba(0, 0, 0, 0.25) 3px 3px 5px",
@@ -146,6 +148,7 @@ export default function PlayerSearch(props) {
                     <>
                         {searchState.results?.length > 0 && searchState.results.map((player, idx) => (
                             <div key={player?.user?.username || player.pk || idx} className="flexDirectionRow" style={{ ...rowStyle }}>
+                                {player?.isRecommended && <em>Recommended Player</em>} {/* <img className="btnIcon" src="/img/icons/starIcon.png" />} */}
                                 <Avatar avatar={player.AvatarName} playerStatus={player.currentStatus} size="large" />
                                 <div className="flexDirectionColumn" style={{...playerColumn}}>
                                     <div style={{...playerDisplayName}}>{player?.user?.username}</div>
