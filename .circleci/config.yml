@@ -11,7 +11,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: "Prepare backend for deployment"
+          name: "Prepare and deploy backend"
           command: |
             cd backend
             ls -la
@@ -20,10 +20,11 @@ jobs:
             git config user.name "CircleCI"
             git config user.email "deploy@circleci.com"
             git add . && git commit -m "Committing backend"
-      - heroku/deploy-via-git:
-          app-name: $HEROKU_APP_NAME
-          api-key: HEROKU_API_KEY
-          force: true
+            git push https://$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git main --force
+      # - heroku/deploy-via-git:
+      #     app-name: $HEROKU_APP_NAME
+      #     api-key: HEROKU_API_KEY
+      #     force: true
   deploy-frontend:
     docker:
       - image: cimg/base:stable-20.04
@@ -31,7 +32,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: "Prepare frontend for deployment"
+          name: "Prepare and deploy frontend"
           command: |
             cd frontend
             ls -la
@@ -41,11 +42,11 @@ jobs:
             git config user.email "deploy@circleci.com"
             git add . && git commit -m "Committing frontend"
             echo "Deploying frontend to Heroku"
-            # git push https://:$HEROKU_API_KEY@git.heroku.com/$HEROKU_FRONTEND_APP_NAME.git main --force
-      - heroku/deploy-via-git:
-          app-name: $HEROKU_FRONTEND_APP_NAME
-          api-key: HEROKU_API_KEY
-          force: true
+            # git push https://$HEROKU_API_KEY@git.heroku.com/$HEROKU_FRONTEND_APP_NAME.git main --force
+      # - heroku/deploy-via-git:
+      #     app-name: $HEROKU_FRONTEND_APP_NAME
+      #     api-key: HEROKU_API_KEY
+      #     force: true
   build-frontend:
     docker:
       - image: cimg/node:18.12.1
