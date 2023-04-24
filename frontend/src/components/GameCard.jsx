@@ -44,7 +44,7 @@ export default function GameCard(props) {
     }, [withPlayers]);
 
     return (
-        <div key={game?.GameId || "gameCardKey"} className={`GameCard${className ? (" " + className) : ""} justifyContentSpaceBetween`} style={style}>
+        <div key={game?.GameId || "gameCardKey"} className={`GameCard${className ? (" " + className) : ""} flexGrow-1 justifyContentSpaceBetween`} style={style}>
             {/* Card Container */}
             {/* Game image and genre? */}
             <div className="flexDirectionColumn justifyContentCenter centerText" style={{ width: "10%" }}>

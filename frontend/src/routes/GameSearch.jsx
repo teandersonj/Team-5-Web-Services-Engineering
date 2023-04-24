@@ -59,7 +59,7 @@ export default function GameSearch(props) {
                 {/* Search Buttons */}
                 <div>
                     <button className="roundedBlueBtn" data-testid="gameSearchBtn" onClick={(e) => getSearchResults(e)}>Search</button>
-                    <button className="roundedBlueBtn" onClick={e => changeFilter(e)}>{searchState.filter === "title" ? "By Title" : "By Genre"} <img className="btnIcon" alt="Filter" src="/img/icons/filterIcon.png" /></button>
+                    <button data-testid="filterBtn" className="roundedBlueBtn" onClick={e => changeFilter(e)}>{searchState.filter === "title" ? "By Title" : "By Genre"} <img className="btnIcon" alt="Filter" src="/img/icons/filterIcon.png" /></button>
                 </div>
             </div>
             <div className="flexDirectionColumn" style={{ alignSelf: "stretch" }}>
@@ -73,7 +73,7 @@ export default function GameSearch(props) {
                 )}
                 <div className="flexDirectionColumn flexWrap flexGrow-1">
                     {searchState.results?.map((game) => (
-                        <GameCard key={game.GameId} className="flexGrow-1" game={game} withPlayers={true} />
+                        <GameCard key={"gameCard"+game.GameId} game={game} withPlayers={true} />
                     )) || <div>No games found.</div>}
                 </div>
             </div>
