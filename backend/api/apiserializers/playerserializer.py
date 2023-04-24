@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from api.apimodels.player import Player
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AnonymousUser
 from django.contrib.auth import get_user_model
 from django.contrib.auth.validators import UnicodeUsernameValidator
 
@@ -18,11 +18,21 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class PlayerSerializer(serializers.ModelSerializer):
+    isRecommended = serializers.SerializerMethodField('get_isrecommended')
     user = UserSerializer()
 
     class Meta:
         model = Player
-        fields = ('pk', 'user', 'AvatarName', 'Playstyle', 'CompositeSkillLevel', 'Attitude', 'Bio')
+        fields = ('pk', 'user', 'AvatarName', 'Playstyle', 'CompositeSkillLevel', 'Attitude', 'Bio', 'isRecommended')
+
+    def get_isrecommended(self, instance):
+        _lReturn = False
+        _request = self.context.get('request')
+        if _request is not None:
+            _refplayer = Player.objects.get(user=_request.user)
+            if instance.Playstyle == _refplayer.Playstyle:
+                _lReturn = True
+        return _lReturn
 
     def create(self, validated_data):
         _user = User.objects.create(data=validated_data.pop('user'))
