@@ -44,7 +44,7 @@ export default function GameCard(props) {
     }, [withPlayers]);
 
     return (
-        <div key={game?.GameId || "gameCardKey"} className={`GameCard${className ? (" " + className) : ""} flexGrow-1 justifyContentSpaceBetween`} style={style}>
+        <div key={game?.GameId || "gameCardKey"} className={`GameCard${className ? (" " + className) : ""} justifyContentSpaceBetween`} style={style}>
             {/* Card Container */}
             {/* Game image and genre? */}
             <div className="flexDirectionColumn justifyContentCenter centerText" style={{ width: "10%" }}>
@@ -75,7 +75,7 @@ export default function GameCard(props) {
                     </div>
                     {/* Game Players */}
                     {players?.length > 0 ? (
-                        <div className="flexDirectionRow centerContent flexGrow-1" style={{ overflowX: "auto" }}>
+                        <div className="flexDirectionRow centerContent flexGrow-1" style={{ overflowX: "hidden" }}>
                             {players?.map?.((player, index) => (
                                 <PlayerCard key={"recent" + (player?.pk || player?.user?.id || index)} player={player} size={"small"} noLabels={true} />
                             ))}

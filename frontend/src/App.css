@@ -489,7 +489,7 @@ form {
   justify-content: flex-start;
   align-items: space-between;
   align-self: stretch;
-  min-height: 25vh;
+  max-height: 35vh;
   width: 100%;
   color: var(--color-white);
   border-radius: 10px;
