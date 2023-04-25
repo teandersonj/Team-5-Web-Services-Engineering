@@ -136,7 +136,7 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
 
-CORS_ALLOWED_ORIGINS = ['localhost', "https://fireside-gaming-frontend.herokuapp.com",
+CORS_ALLOWED_ORIGINS = ['http://localhost:3000', "https://fireside-gaming-frontend.herokuapp.com",
                         "https://fireside-gaming-middleware.herokuapp.com",]
 CORS_ALLOW_METHODS = [
     'DELETE', 'GET', 'OPTIONS', 'PATCH', 'POST', 'PUT',

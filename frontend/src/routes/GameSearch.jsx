@@ -10,7 +10,8 @@ export default function GameSearch(props) {
         filter: "title",
         searchActive: false, // Whether or not the user has clicked the search button
         results: [],
-        errors: {}
+        errors: {},
+        isLoading: false
     });
 
     const changeFilter = (e) => {
@@ -27,6 +28,7 @@ export default function GameSearch(props) {
         setSearchState((prev) => ({
             ...prev,
             searchActive: false,
+            isLoading: true,
             errors: {}
         }));
 
@@ -37,11 +39,13 @@ export default function GameSearch(props) {
             setSearchState((prev) => ({
                 ...prev,
                 searchActive: true,
+                isLoading: false,
                 results: res?.data?.filter?.((result) => result !== undefined && result !== null)
             }));
         }).catch((err) => {
             setSearchState((prev) => ({     
                 ...prev,
+                isLoading: false,
                 searchActive: true,
                 errors: err
             }));
@@ -63,6 +67,7 @@ export default function GameSearch(props) {
                 </div>
             </div>
             <div className="flexDirectionColumn" style={{ alignSelf: "stretch" }}>
+                {searchState.isLoading && <div>Loading...</div>}
                 {searchState.searchActive && (
                     <div className="flexDirectionRow justifyContentSpaceBetween">
                         <>
