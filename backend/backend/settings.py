@@ -54,9 +54,9 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -136,7 +136,10 @@ SIMPLE_JWT = {
 }
 
 CORS_ALLOWED_ORIGINS = ['127.0.0.1', 'localhost' "https://fireside-gaming-frontend.herokuapp.com/",
-                        "https://fireside-gaming-middleware.herokuapp.com/"]
+                        "https://fireside-gaming-middleware.herokuapp.com/",]
+CORS_ALLOW_METHODS = [
+    'DELETE', 'GET', 'OPTIONS', 'PATCH', 'POST', 'PUT',
+]
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 

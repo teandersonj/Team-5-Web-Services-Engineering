@@ -7,6 +7,7 @@ import UserProvider from './providers/UserProvider';
 import axios from 'axios';
 
 // Set up axios to use the same base URL for all requests
+axios.defaults.contentType = 'application/json';
 axios.defaults.baseURL = process.env.REACT_APP_BACKEND_API_URL;
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
