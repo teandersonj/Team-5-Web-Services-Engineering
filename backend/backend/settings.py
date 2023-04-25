@@ -137,7 +137,7 @@ SIMPLE_JWT = {
 }
 
 CORS_ALLOWED_ORIGINS = [
-                         "https://fireside-gaming-frontend.herokuapp.com",
+                        "https://fireside-gaming-frontend.herokuapp.com",
                         "https://fireside-gaming-middleware.herokuapp.com",
                         'http://localhost:3000',
                         'http://localhost:8000',
