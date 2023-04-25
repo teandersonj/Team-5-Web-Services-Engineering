@@ -31,7 +31,8 @@ SECRET_KEY = 'django-insecure-ute_jwy6!ktjqq(mnv@%w44jl%#adt(pcjgz5$4owajzmp@ec&
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 DJANGO_LOG_LEVEL = "DEBUG" if DEBUG else "INFO"
 
-ALLOWED_HOSTS = ['http://localhost', "https://fireside-gaming-frontend.herokuapp.com", "https://fireside-gaming-middleware.herokuapp.com"]
+# If we're in debug mode, allow all hosts
+ALLOWED_HOSTS = ['*'] if DEBUG else ['https://fireside-gaming-middleware.herokuapp.com', 'https://fireside-gaming-frontend.herokuapp.com']
 
 
 # Application definition
