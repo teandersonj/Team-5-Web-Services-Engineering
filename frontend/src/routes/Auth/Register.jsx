@@ -169,6 +169,9 @@ export default function Register(props) {
                 const { data } = res;
                 newUser.accessToken = data.access;
                 newUser.refreshToken = data.refresh;
+
+                axios.defaults.headers.common.Authorization = `Bearer ${data.access}`;
+
                 updateUser(newUser);
                 return navigate("/register/continue");
             }).catch((err) => {

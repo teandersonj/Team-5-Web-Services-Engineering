@@ -43,14 +43,14 @@ export default function PlayerCard(props) {
     return (
         <div className={`PlayerCard PlayerCard-${size}`}>
             <div className="justifyContentCenter">
-                <Avatar avatar={player.avatar} size={size} />
+                <Avatar avatar={player?.avatar} size={size} />
             </div>
-            <LabeledInput type="text" id="username" label={!noLabels && "Username"} defaultValue={player.user.username || player.username || "Unset"} orientation="vertical" inputStyle={{ background: "none" }} disabled />
-            {withPlayerStatus && <PlayerStatusDisplay status={player.currentStatus} overrideStyle={overrideStatusStyle} />}
+            <LabeledInput type="text" id="username" label={!noLabels && "Username"} defaultValue={player?.user?.username || player?.username || "Unset"} orientation="vertical" inputStyle={{ background: "none" }} disabled />
+            {withPlayerStatus && <PlayerStatusDisplay status={player?.currentStatus} overrideStyle={overrideStatusStyle} />}
             {size !== "small" && (
                 <>
-                    <LabeledInput type="text" id="first_name" label={!noLabels && "First Name"} defaultValue={player?.user.first_name || player.first_name || "Unset"} orientation="vertical" disabled />
-                    <LabeledInput type="text" id="last_name" label={!noLabels && "Last Name"} defaultValue={player?.user?.last_name || player.last_name || "Unset"} orientation="vertical" disabled />
+                    <LabeledInput type="text" id="first_name" label={!noLabels && "First Name"} defaultValue={player?.user?.first_name || player?.first_name || "Unset"} orientation="vertical" disabled />
+                    <LabeledInput type="text" id="last_name" label={!noLabels && "Last Name"} defaultValue={player?.user?.last_name || player?.last_name || "Unset"} orientation="vertical" disabled />
                 </>
             )}
         </div>

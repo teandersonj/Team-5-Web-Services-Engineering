@@ -112,6 +112,10 @@ export default function Login(props) {
             newUserData.id = user.id;
             newUserData.loggedIn = true;
 
+            // Pass the access token in the Authorization header for future requests
+            axios.defaults.headers.common["Authorization"] = `Bearer ${newUserData.accessToken}`;
+
+            // Update the user state
             updateUser(newUserData);
             // Navigate to the profile page
             // return navigate("/profile");

@@ -34,10 +34,17 @@ const imgProps = {
 
 const playerColumn = {
     marginLeft: "24px",
-    alignItems: "baseline",
+    alignItems: "center",
+    display: "flex",
+    flexDirection: "column",
+    width: "100%",
+    maxWidth: "300px",
+    justifyContent: "space-evenly",
 };
 
 const playerDisplayName = {
+    width: "100%",
+    textAlign: "center",
     fontWeight: "600",
     fontSize: "26px",
     textShadow: "rgba(0, 0, 0, 0.25) 3px 3px 5px",
@@ -98,6 +105,17 @@ export default function PlayerSearch(props) {
                     promises.push(randFavGames, randRecentGames);
                 }
                 await Promise.all(promises);
+                // Sort searchResults by isRecommended, then by username
+                searchResults.sort((a, b) => {
+                    if (a.isRecommended && !b.isRecommended) {
+                        return -1;
+                    } else if (!a.isRecommended && b.isRecommended) {
+                        return 1;
+                    } else {
+                        return a.user?.username.localeCompare?.(b.user?.username);
+                    }
+                });
+                // Update the search results with the new data
                 setSearchState((prev) => ({ ...prev, results: searchResults }));
             }
         }).catch((err) => {
@@ -112,8 +130,12 @@ export default function PlayerSearch(props) {
     const handleBlockFriend = async (e, targetFriend) => {
         e.preventDefault();
         // Remove the blocked user from the user's friend list
-        await removeFriend(targetFriend.pk);
-
+        // If the user's in the friend list, remove them
+        // user.friendsList is an array of objects consisting of players with pk and user fields
+        if (user.friendsList?.some((friend) => friend.pk === targetFriend.pk)) {
+            await removeFriend(e, targetFriend.pk);
+        }
+        
         // TODO: Remove the user from the blocked user's friend list
         // Remove the user from player search results
         const newResults = searchState.results.filter((result) => result.user.username !== targetFriend.user.username);
@@ -142,7 +164,10 @@ export default function PlayerSearch(props) {
                     <>
                         {searchState.results?.length > 0 && searchState.results.map((player, idx) => (
                             <div key={player?.user?.username || player.pk || idx} className="flexDirectionRow" style={{ ...rowStyle }}>
-                                <Avatar avatar={player.AvatarName} playerStatus={player.currentStatus} size="large" />
+                                <div className="flexDirectionColumn">
+                                    {player?.isRecommended && <strong className="centerText" style={{ color: "var(--color-gold)", marginBottom: "8px" }}>Recommended Player</strong>} {/* <img className="btnIcon" src="/img/icons/starIcon.png" />} */}
+                                    <Avatar avatar={player.AvatarName} playerStatus={player.currentStatus} size="large" />
+                                </div>
                                 <div className="flexDirectionColumn" style={{...playerColumn}}>
                                     <div style={{...playerDisplayName}}>{player?.user?.username}</div>
                                     <PlayerStatusDisplay status={player.currentStatus} />

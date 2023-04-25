@@ -33,9 +33,10 @@ export default function Avatar(props) {
 
   const imageStyles = {
     borderRadius: "50%",
+    border: "1px solid var(--color-black)",
     // minHeight: "125px",
-    // minWidth: "125px",
-    width: "100%",
+    minWidth: (size == "large" ? "125px" : null),
+    width: (size == "large" ? null : "100%"),
     maxHeight: "100%",
     objectFit: "cover",
   };
