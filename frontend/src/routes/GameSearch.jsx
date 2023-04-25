@@ -37,10 +37,10 @@ export default function GameSearch(props) {
             setSearchState((prev) => ({
                 ...prev,
                 searchActive: true,
-                results: res.data
+                results: res?.data?.filter?.((result) => result !== undefined && result !== null)
             }));
         }).catch((err) => {
-            setSearchState((prev) => ({
+            setSearchState((prev) => ({     
                 ...prev,
                 searchActive: true,
                 errors: err

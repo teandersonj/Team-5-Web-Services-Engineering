@@ -61,6 +61,7 @@ const UserProvider = ({ children }) => {
         // Otherwise, the state will be set to the initial state, but state will still have any new keys added
         const stateReset = Object.keys(user).reduce((acc, v) => ({ ...acc, [v]: undefined }), {});
         // This should reset the state to the initial state and remove the user from localStorage
+        axios.defaults.headers.common["Authorization"] = "";
         setUser({ ...stateReset, ...getInitialState() });
         navigate("/");
     }

@@ -75,7 +75,7 @@ export default function GameCard(props) {
                     </div>
                     {/* Game Players */}
                     {players?.length > 0 ? (
-                        <div className="flexDirectionRow centerContent flexGrow-1" style={{ overflowX: "hidden" }}>
+                        <div className="flexDirectionRow centerContent justifyContentSpaceBetween flexGrow-1" style={{ overflowX: "auto" }}>
                             {players?.map?.((player, index) => (
                                 <PlayerCard key={"recent" + (player?.pk || player?.user?.id || index)} player={player} size={"small"} noLabels={true} />
                             ))}

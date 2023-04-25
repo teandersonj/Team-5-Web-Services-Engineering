@@ -26,7 +26,7 @@ app.get("/search/by/title/:title", async (req, res) => {
         url: gameUrl,
         method: 'POST',
         headers,
-        data: `${fields}; search "${title}"; ((where genre.name != null) & (summary != null) & (cover.url != null)); limit 10;`
+        data: `${fields}; search "${title}"; ((where genres != null) & (summary != null) & (cover != null)); limit 10;`
     })
         .then(response => {
             const filteredResults = response?.data;
@@ -34,6 +34,8 @@ app.get("/search/by/title/:title", async (req, res) => {
                 const randomTotalPlayers = Math.floor(Math.random() * 100000);
                 // Pick a number that is less than the Total Players stat to use as the Active Players stat
                 const randomActivePlayers = Math.floor(Math.random() * randomTotalPlayers);
+
+                if (result?.genres === undefined || result?.summary === undefined) return undefined;
 
                 return {
                     GameId: result?.id,
@@ -60,7 +62,7 @@ app.get("/search/by/genre/:genre", async (req, res) => {
         url: gameUrl,
         method: 'POST',
         headers,
-        data: `${fields}; where ((genres.name ~ "${genre}"*) | (genres.name ~ *"${genre}") | (genres.name ~ *"${genre}"*) & (cover.url != null)); limit 10;`
+        data: `${fields}; where ((genres.name ~ "${genre}"*) | (genres.name ~ *"${genre}") | (genres.name ~ *"${genre}"*) & (summary != null) & (cover.url != null)); limit 10;`
     })
         .then(response => {
             const filteredResults = response?.data; // .filter?.(result => result.cover !== undefined && result.genres !== undefined && result.summary !== undefined);
