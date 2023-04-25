@@ -145,7 +145,7 @@ export default function Register(props) {
         // Attempt to send the info to server
         await axios.post("/api/register/", formState).then(async (res) => {
             if (res.status !== 201) {
-                throw new Error({ status: res.status, data: res.data || res });
+                throw new Error({ status: res.status, data: res?.data || res });
             }
             const { data } = res;
             const newUser = {
@@ -164,7 +164,7 @@ export default function Register(props) {
                 password: formState.password,
             }).then((res) => {
                 if (res.status !== 200) {
-                    throw new Error({ status: res.status, data: res.data || res });
+                    throw new Error({ status: res?.status, data: res?.data || res });
                 }
                 const { data } = res;
                 newUser.accessToken = data.access;
@@ -175,17 +175,21 @@ export default function Register(props) {
                 updateUser(newUser);
                 return navigate("/register/continue");
             }).catch((err) => {
-                throw new Error({ status: err.status, data: err.data || err });
+                throw new Error({ status: err?.status, data: err?.data || err });
             });
         }).catch((err) => {
             if (process.env.NODE_ENV === "development") {
-                console.log(err.status + " " + (err?.data || err));
+                console.log(err?.status + " " + (err?.data || err));
             }
             toast.error("Registration failed. Please try again.");
+            if (!err?.status || !err?.data) {
+                return setFormState((prev) => ({ ...prev, disabled: false }));
+            }
+
             // This'll contain any errors from the server as [fieldName]: "Error message"
             // We can update our errors object with the new errors
             const errs = {};
-            for (const [key, value] of Object.entries(err.response.data)) {
+            for (const [key, value] of Object.entries(err?.response?.data)) {
                 // Check if the response contains keys from the formState because these will represent the errors related to the fields with the same name
                 if (formState.hasOwnProperty(key)) {
                     // We can associate the result of the validation function with the input's id

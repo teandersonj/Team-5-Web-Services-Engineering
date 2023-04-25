@@ -31,7 +31,7 @@ SECRET_KEY = 'django-insecure-ute_jwy6!ktjqq(mnv@%w44jl%#adt(pcjgz5$4owajzmp@ec&
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 DJANGO_LOG_LEVEL = "DEBUG" if DEBUG else "INFO"
 
-ALLOWED_HOSTS = ['127.0.0.1', '.herokuapp.com', 'localhost']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost' "https://fireside-gaming-frontend.herokuapp.com/", "https://fireside-gaming-middleware.herokuapp.com/"]
 
 
 # Application definition
@@ -53,8 +53,8 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -135,7 +135,8 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
 
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGINS = ['127.0.0.1', 'localhost' "https://fireside-gaming-frontend.herokuapp.com/",
+                        "https://fireside-gaming-middleware.herokuapp.com/"]
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
