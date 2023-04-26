@@ -22,6 +22,7 @@ jobs:
             git add .
             git commit -m "Committing backend"
             # export HEROKU_API_KEY=$HEROKU_API_KEY
+            export HEROKU_API_KEY=$HEROKU_API_KEY
             git push https://git.heroku.com/$HEROKU_APP_NAME.git main --force
       # - heroku/deploy-via-git:
       #     app-name: $HEROKU_APP_NAME
