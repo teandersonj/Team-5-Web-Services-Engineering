@@ -28,8 +28,8 @@ describe('Registration Page e2e', () => {
         cy.get('#email').should('have.value', 'test@test.com');
         cy.get('#password').type('p@ssw0rd!');
         cy.get('#password').should('have.value', 'p@ssw0rd!');
-        cy.get('#confirmPassword').type('p@ssw0rd!');
-        cy.get('#confirmPassword').should('have.value', 'p@ssw0rd!');
+        cy.get('#password2').type('p@ssw0rd!');
+        cy.get('#password2').should('have.value', 'p@ssw0rd!');
         // cy.get('#playstyle').select('Semi-Casual');
         cy.get('#submit').click(); // Click the submit button
 

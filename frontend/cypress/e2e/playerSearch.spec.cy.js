@@ -23,10 +23,10 @@ describe('Player Search e2e', () => {
     cy.contains('Search');
 
     // Type in Sample User name is searh bar
-    cy.get('[data-testid="search-btn"]').type('PixelatedNinja');
+    cy.get('[data-testid="searchInput"]').type('PixelatedNinja');
 
     // Click Search Button
-    cy.get('.flexDirectionRow > :nth-child(2) > :nth-child(1)').click();
+    cy.get('[data-testid="searchBtn"]').click();
 
     // Check if results rendered correctly
     cy.contains('PixelatedNinja');
