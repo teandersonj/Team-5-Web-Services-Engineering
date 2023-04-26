@@ -39,7 +39,7 @@ Team 5's Git Repository for Web Services Engineering
 >
 > **Sprint 2 Total BDD Tests:** 3 (1 New Test)
 >
-> **Sprint 3 Total Unit Tests:** 38 (10 New Tests)
+> **Sprint 3 Total Unit Tests:** 45 (17 New Tests)
 >
 > **Sprint 3 Total BDD Tests:** 4 (1 New Test)
 >
